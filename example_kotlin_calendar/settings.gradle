@@ -1,2 +1,0 @@
-include ':app', ':calendarlibrary'
-rootProject.name='example_kotlin_calendar'
