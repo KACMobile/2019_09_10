@@ -37,10 +37,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-<<<<<<< HEAD:example_kotlin_calendar/app/build.gradle
-    implementation project(path: ':calendarlibrary')
-=======
->>>>>>> f5aaa4392ef74b1e698f6a88e01b3dab96fcc405:example_kotlin_calendar2/app/build.gradle
     implementation 'com.applandeo:material-calendar-view:1.7.0'
 }
 
