@@ -30,13 +30,12 @@
     <ImageView
         android:id="@+id/calender_icon4"
         android:layout_width="45dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="79dp"
+        android:layout_height="45dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/subscribe_icon4"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_month"
+        app:layout_constraintTop_toTopOf="@+id/guideline3"
         app:srcCompat="@drawable/calender" />
 
     <ImageView
@@ -63,23 +62,13 @@
 
     <TextView
         android:id="@+id/text_month"
-<<<<<<< HEAD
-        android:layout_width="158dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="248dp"
-        android:layout_marginRight="248dp"
-        android:layout_marginBottom="582dp"
-=======
         android:layout_width="342dp"
         android:layout_height="27dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="48dp"
         android:layout_marginRight="48dp"
->>>>>>> b66cbd7b2fb70bfc783af5a76454e51376bb29f9
         android:textAlignment="center"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/calender_icon4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
