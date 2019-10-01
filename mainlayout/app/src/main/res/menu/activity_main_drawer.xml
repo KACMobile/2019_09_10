@@ -5,31 +5,39 @@
     tools:showIn="navigation_view">
 
     <item
-        android:id="@+id/check_user"
-        android:title="Switch"
-        app:actionLayout="@layout/switch_item"
-        app:showAsAction="always" />
+        android:id="@+id/daily_calender"
+        android:title="일간" />
     <item
-        android:id="@+id/check_group"
-        android:title="Switch"
-        app:actionLayout="@layout/switch_item"
-        app:showAsAction="always" />
+        android:id="@+id/week_calender"
+        android:title="주간" />
     <item
-        android:id="@+id/check_subs"
-        android:title="Switch"
-        app:actionLayout="@layout/switch_item"
-        app:showAsAction="always" />
-    <item android:title="Communicate">
+        android:id="@+id/month_calender"
+        android:title="월간" />
+    <item android:title="내 일정">
         <menu>
             <item
-                android:id="@+id/daily_calender"
-                android:title="일간" />
+                android:id="@+id/check_user"
+                android:title="users"
+                app:actionLayout="@layout/my_schedule_switch"
+                app:showAsAction="always" />
+        </menu>
+    </item>
+    <item android:title="그룹">
+        <menu>
             <item
-                android:id="@+id/week_calender"
-                android:title="주간" />
+                android:id="@+id/check_group"
+                android:title="Groups1"
+                app:actionLayout="@layout/my_schedule_switch"
+                app:showAsAction="always" />
+        </menu>
+    </item>
+    <item android:title="구독">
+        <menu>
             <item
-                android:id="@+id/month_calender"
-                android:title="월간" />
+                android:id="@+id/check_subs"
+                android:title="Subs1"
+                app:actionLayout="@layout/my_schedule_switch"
+                app:showAsAction="always" />
         </menu>
     </item>
 
