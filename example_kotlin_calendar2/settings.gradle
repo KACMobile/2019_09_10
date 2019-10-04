@@ -1,2 +1,2 @@
-include ':app', 'Material-Calendar'
+include ':app', ':week_calendar', 'Material-Calendar'
 rootProject.name='example_kotlin_calendar2'
