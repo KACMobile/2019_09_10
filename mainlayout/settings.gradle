@@ -1,2 +1,2 @@
-include ':app', ':materialcalendar'
+include ':app', ':materialcalendar', 'weekcalendar'
 rootProject.name='MainLayout'

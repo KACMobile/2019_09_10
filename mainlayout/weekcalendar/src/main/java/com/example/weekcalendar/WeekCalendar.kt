@@ -13,6 +13,8 @@ import kotlinx.android.synthetic.main.weekcalendar.*
 import kotlinx.android.synthetic.main.weekcalendar.view.*
 
 import org.w3c.dom.Attr
+import java.time.Month
+import java.time.Year
 import java.util.*
 import kotlin.math.abs
 
@@ -100,7 +102,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
         if(currentYear%4!=0) currentLastDayOfMonth = leapYearLastDayOfMonth[currentMonth]
 
-        textWeekInfo.text = ((currentMonth + 1).toString() + "월" + currentWOM.toString() + "주")
+        //textWeekInfo.text = ((currentMonth + 1).toString() + "월" + currentWOM.toString() + "주")
 
         if(currentMonth == todayMonth && thisYear == currentYear && todayDate == currentDate)
             dayText[todayDOW-1].setBackgroundColor(Color.YELLOW)
@@ -142,6 +144,13 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         currentDate = cal.get(Calendar.DATE)
 
     }
-
+    public fun setCurrent(year: Int, month: Int, date: Int){
+        currentYear = year
+        currentMonth = month
+        currentDate = date
+    }
 
 }
+
+
+

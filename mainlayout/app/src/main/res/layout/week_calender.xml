@@ -67,11 +67,12 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="528dp" />
 
-    <TextView
-        android:id="@+id/text_week"
-        android:layout_width="0dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="16dp"
+    <com.example.weekcalendar.WeekCalendar
+        android:id="@+id/week_CalendarView"
+        android:layout_width="450dp"
+        android:layout_height="550dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@id/group_icon3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

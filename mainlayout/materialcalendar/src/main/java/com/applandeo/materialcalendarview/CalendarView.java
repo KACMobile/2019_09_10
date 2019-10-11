@@ -488,4 +488,8 @@ public class CalendarView extends LinearLayout {
         mCalendarProperties.setSwipeEnabled(swipeEnabled);
         mViewPager.setSwipeEnabled(mCalendarProperties.getSwipeEnabled());
     }
+    public void setCurrentCal(Calendar currentCal){
+        DateUtils.setCalendar(currentCal);
+
+    }
 }

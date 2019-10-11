@@ -17,7 +17,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textWeekInfo">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.6">
 
         <TableRow
             android:id="@+id/headertableRow"
@@ -265,7 +266,7 @@
             <ScrollView
                 android:id="@+id/weekTableScroll"
                 android:layout_width="match_parent"
-                android:layout_height="480dp"
+                android:layout_height="460dp"
                 android:layout_span="2">
 
                 <TableLayout
@@ -281,7 +282,7 @@
 
                         <TextView
                             android:id="@+id/time0"
-                            android:layout_width="49dp"
+                            android:layout_width="58dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -4870,16 +4871,5 @@
         </TableRow>
 
     </TableLayout>
-
-    <TextView
-        android:id="@+id/textWeekInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Month Week"
-        android:textSize="36dp"
-        app:layout_constraintBottom_toTopOf="@+id/weekcalendarview"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

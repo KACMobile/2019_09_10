@@ -14,15 +14,22 @@ import java.util.concurrent.TimeUnit;
  */
 
 public class DateUtils {
+    static Calendar calendar;
 
     /**
      * @return An instance of the Calendar object with hour set to 00:00:00:00
      */
     public static Calendar getCalendar() {
-        Calendar calendar = Calendar.getInstance();
-        setMidnight(calendar);
+        if (calendar==null) {
+            calendar = Calendar.getInstance();
+            setMidnight(calendar);
+        }
 
         return calendar;
+    }
+
+    public static void setCalendar(Calendar cal){
+        calendar = cal;
     }
 
     /**
@@ -94,8 +101,8 @@ public class DateUtils {
      */
     public static String getMonthAndYearDate(Context context, Calendar calendar) {
         return String.format("%s  %s",
-                context.getResources().getStringArray(R.array.material_calendar_months_array)[calendar.get(Calendar.MONTH)],
-                calendar.get(Calendar.YEAR));
+                calendar.get(Calendar.YEAR),
+                context.getResources().getStringArray(R.array.material_calendar_months_array)[calendar.get(Calendar.MONTH)]);
     }
 
     /**
