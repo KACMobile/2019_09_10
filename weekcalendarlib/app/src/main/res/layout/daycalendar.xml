@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/dailyCalendarLayout"
+    android:id="@+id/weekCalendarLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -28,7 +28,7 @@
 
             <TextView
                 android:id="@+id/nullspace"
-                android:layout_width="42dp"
+                android:layout_width="45dp"
                 android:layout_height="80dp"
 
 
@@ -266,14 +266,14 @@
             <ScrollView
                 android:id="@+id/dayTableScroll"
                 android:layout_width="wrap_content"
-                android:layout_height="460dp"
+                android:layout_height="480dp"
                 android:layout_span="2">
 
                 <TableLayout
                     android:id="@+id/scheduletable"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_height="wrap_content">
+                    android:layout_weight="1"
 
 
                     <TableRow
@@ -283,7 +283,7 @@
 
                         <TextView
                             android:id="@+id/time0"
-                            android:layout_width="58dp"
+                            android:layout_width="42dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -304,7 +304,7 @@
 
                                     <TextView
                                         android:id="@+id/day000"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginRight="1dp"
@@ -323,7 +323,7 @@
 
                                     <TextView
                                         android:id="@+id/day030"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -347,7 +347,7 @@
 
                         <TextView
                             android:id="@+id/time1"
-                            android:layout_width="58dp"
+                            android:layout_width="42dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -368,7 +368,7 @@
 
                                     <TextView
                                         android:id="@+id/day100"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -389,7 +389,7 @@
 
                                     <TextView
                                         android:id="@+id/day130"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginRight="1dp"
@@ -412,7 +412,7 @@
 
                         <TextView
                             android:id="@+id/time2"
-                            android:layout_width="58dp"
+                            android:layout_width="42dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -432,7 +432,7 @@
 
                                     <TextView
                                         android:id="@+id/day200"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="1dp"
 
@@ -452,7 +452,7 @@
 
                                     <TextView
                                         android:id="@+id/day230"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="1dp"
 
@@ -477,7 +477,7 @@
 
                         <TextView
                             android:id="@+id/time3"
-                            android:layout_width="58dp"
+                            android:layout_width="42dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -497,7 +497,7 @@
 
                                     <TextView
                                         android:id="@+id/day300"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="1dp"
 
@@ -517,7 +517,7 @@
 
                                     <TextView
                                         android:id="@+id/day330"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="1dp"
 
@@ -542,7 +542,7 @@
 
                         <TextView
                             android:id="@+id/time4"
-                            android:layout_width="58dp"
+                            android:layout_width="42dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -562,7 +562,7 @@
 
                                     <TextView
                                         android:id="@+id/day400"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -581,7 +581,7 @@
 
                                     <TextView
                                         android:id="@+id/day430"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -605,7 +605,7 @@
 
                         <TextView
                             android:id="@+id/time5"
-                            android:layout_width="58dp"
+                            android:layout_width="42dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -625,7 +625,7 @@
 
                                     <TextView
                                         android:id="@+id/day500"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -644,7 +644,7 @@
 
                                     <TextView
                                         android:id="@+id/day530"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -668,7 +668,7 @@
 
                         <TextView
                             android:id="@+id/time6"
-                            android:layout_width="58dp"
+                            android:layout_width="42dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -688,7 +688,7 @@
 
                                     <TextView
                                         android:id="@+id/day600"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -707,7 +707,7 @@
 
                                     <TextView
                                         android:id="@+id/day630"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -751,7 +751,7 @@
 
                                     <TextView
                                         android:id="@+id/day700"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -770,7 +770,7 @@
 
                                     <TextView
                                         android:id="@+id/day730"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -814,7 +814,7 @@
 
                                     <TextView
                                         android:id="@+id/day800"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -833,7 +833,7 @@
 
                                     <TextView
                                         android:id="@+id/day830"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -877,7 +877,7 @@
 
                                     <TextView
                                         android:id="@+id/day900"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -896,7 +896,7 @@
 
                                     <TextView
                                         android:id="@+id/day930"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -940,7 +940,7 @@
 
                                     <TextView
                                         android:id="@+id/day1000"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -959,7 +959,7 @@
 
                                     <TextView
                                         android:id="@+id/day1030"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1003,7 +1003,7 @@
 
                                     <TextView
                                         android:id="@+id/day1100"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1022,7 +1022,7 @@
 
                                     <TextView
                                         android:id="@+id/day1130"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1066,7 +1066,7 @@
 
                                     <TextView
                                         android:id="@+id/day1200"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1085,7 +1085,7 @@
 
                                     <TextView
                                         android:id="@+id/day1230"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1129,7 +1129,7 @@
 
                                     <TextView
                                         android:id="@+id/day1300"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1148,7 +1148,7 @@
 
                                     <TextView
                                         android:id="@+id/day1330"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1192,7 +1192,7 @@
 
                                     <TextView
                                         android:id="@+id/day1400"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1211,7 +1211,7 @@
 
                                     <TextView
                                         android:id="@+id/day1430"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1255,7 +1255,7 @@
 
                                     <TextView
                                         android:id="@+id/day1500"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1274,7 +1274,7 @@
 
                                     <TextView
                                         android:id="@+id/day1550"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1318,7 +1318,7 @@
 
                                     <TextView
                                         android:id="@+id/day1600"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1337,7 +1337,7 @@
 
                                     <TextView
                                         android:id="@+id/day1630"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1381,7 +1381,7 @@
 
                                     <TextView
                                         android:id="@+id/day1700"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1400,7 +1400,7 @@
 
                                     <TextView
                                         android:id="@+id/day1730"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1444,7 +1444,7 @@
 
                                     <TextView
                                         android:id="@+id/day1800"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1463,7 +1463,7 @@
 
                                     <TextView
                                         android:id="@+id/day1830"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1507,7 +1507,7 @@
 
                                     <TextView
                                         android:id="@+id/day1900"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1526,7 +1526,7 @@
 
                                     <TextView
                                         android:id="@+id/day1930"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1570,7 +1570,7 @@
 
                                     <TextView
                                         android:id="@+id/day2000"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1589,7 +1589,7 @@
 
                                     <TextView
                                         android:id="@+id/day2030"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1633,7 +1633,7 @@
 
                                     <TextView
                                         android:id="@+id/day2100"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1652,7 +1652,7 @@
 
                                     <TextView
                                         android:id="@+id/day2130"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1696,7 +1696,7 @@
 
                                     <TextView
                                         android:id="@+id/day2200"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1715,7 +1715,7 @@
 
                                     <TextView
                                         android:id="@+id/day2230"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1759,7 +1759,7 @@
 
                                     <TextView
                                         android:id="@+id/day2300"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
@@ -1778,7 +1778,7 @@
 
                                     <TextView
                                         android:id="@+id/day2330"
-                                        android:layout_width="370dp"
+                                        android:layout_width="367dp"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"

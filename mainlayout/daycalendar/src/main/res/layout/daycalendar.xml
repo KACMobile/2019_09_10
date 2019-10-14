@@ -731,7 +731,7 @@
 
                         <TextView
                             android:id="@+id/time7"
-                            android:layout_width="42dp"
+                            android:layout_width="58dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -794,7 +794,7 @@
 
                         <TextView
                             android:id="@+id/time8"
-                            android:layout_width="42dp"
+                            android:layout_width="58dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -857,7 +857,7 @@
 
                         <TextView
                             android:id="@+id/time9"
-                            android:layout_width="42dp"
+                            android:layout_width="58dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -920,7 +920,7 @@
 
                         <TextView
                             android:id="@+id/time10"
-                            android:layout_width="42dp"
+                            android:layout_width="58dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -983,7 +983,7 @@
 
                         <TextView
                             android:id="@+id/time11"
-                            android:layout_width="42dp"
+                            android:layout_width="58dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1046,7 +1046,7 @@
 
                         <TextView
                             android:id="@+id/time12"
-                            android:layout_width="42dp"
+                            android:layout_width="58dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1109,7 +1109,7 @@
 
                         <TextView
                             android:id="@+id/time13"
-                            android:layout_width="42dp"
+                            android:layout_width="58dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1172,7 +1172,7 @@
 
                         <TextView
                             android:id="@+id/time14"
-                            android:layout_width="42dp"
+                            android:layout_width="58dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1235,7 +1235,7 @@
 
                         <TextView
                             android:id="@+id/time15"
-                            android:layout_width="42dp"
+                            android:layout_width="58dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1298,7 +1298,7 @@
 
                         <TextView
                             android:id="@+id/time16"
-                            android:layout_width="42dp"
+                            android:layout_width="58dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1361,7 +1361,7 @@
 
                         <TextView
                             android:id="@+id/time17"
-                            android:layout_width="42dp"
+                            android:layout_width="58dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1424,7 +1424,7 @@
 
                         <TextView
                             android:id="@+id/time18"
-                            android:layout_width="42dp"
+                            android:layout_width="58dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1487,7 +1487,7 @@
 
                         <TextView
                             android:id="@+id/time19"
-                            android:layout_width="42dp"
+                            android:layout_width="58dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1550,7 +1550,7 @@
 
                         <TextView
                             android:id="@+id/time20"
-                            android:layout_width="42dp"
+                            android:layout_width="58dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1613,7 +1613,7 @@
 
                         <TextView
                             android:id="@+id/time21"
-                            android:layout_width="42dp"
+                            android:layout_width="58dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1676,7 +1676,7 @@
 
                         <TextView
                             android:id="@+id/time22"
-                            android:layout_width="42dp"
+                            android:layout_width="58dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1739,7 +1739,7 @@
 
                         <TextView
                             android:id="@+id/time23"
-                            android:layout_width="42dp"
+                            android:layout_width="58dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"

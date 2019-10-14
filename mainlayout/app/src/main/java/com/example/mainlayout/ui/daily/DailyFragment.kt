@@ -22,9 +22,7 @@ class DailyFragment : Fragment() {//일간 캘린더
         dailyViewModel =
             ViewModelProviders.of(this).get(DailyViewModel::class.java)
         val root = inflater.inflate(R.layout.daily_calender, container, false)
-        val textView: TextView = root.findViewById(R.id.text_daily)
         dailyViewModel.text.observe(this, Observer {
-            textView.text = it
         })
         return root
     }

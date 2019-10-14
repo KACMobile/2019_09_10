@@ -1,4 +1,4 @@
-package com.example.weekcalendar
+package com.example.daycalendar
 
 import android.content.Context
 import android.graphics.Color
@@ -7,17 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.view.size
 import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.weekcalendar.*
-import kotlinx.android.synthetic.main.weekcalendar.view.*
+import kotlinx.android.synthetic.main.daycalendar.*
+import kotlinx.android.synthetic.main.daycalendar.view.*
 
 import org.w3c.dom.Attr
+import java.sql.Types.NULL
 import java.util.*
 import kotlin.math.abs
 
 
-class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0 )
+class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0 )
     : ConstraintLayout(context,attrs,defStyleAttr)
 {
     var cal: Calendar = Calendar.getInstance()
@@ -25,92 +29,87 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
     val lastDayOfMonth = arrayOf(31,28,31,30,31,30,31,31,30,31,30,31)
     val leapYearLastDayOfMonth = arrayOf(31,29,31,30,31,30,31,31,30,31,30,31)
     val todayMonth = cal.get(Calendar.MONTH)
-    val todayDOW = cal.get(Calendar.DAY_OF_WEEK)
+    var todayDOW = cal.get(Calendar.DAY_OF_WEEK)
     val todayDate = cal.get(Calendar.DATE)
     val thisYear = cal.get(Calendar.YEAR)
     var currentYear = cal.get(Calendar.YEAR)
     var currentMonth = cal.get(Calendar.MONTH)
     var currentWOM = cal.get(Calendar.WEEK_OF_MONTH)
     var currentDate = cal.get(Calendar.DATE)
+    var currentDOW = cal.get(Calendar.DAY_OF_WEEK)
+
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.weekcalendar,this,true)
+        LayoutInflater.from(context).inflate(R.layout.daycalendar,this,true)
         calendardefaultsetting()
 
         this.setOnTouchListener(object : OnSwipeTouchListener(context) {
             override fun onSwipeLeft() {
                 super.onSwipeLeft()
-                setNextWeek()
+                setNextDay()
                 calendardefaultsetting()
             }
 
             override fun onSwipeRight() {
                 super.onSwipeRight()
-                setPreWeek()
+                setPreDay()
                 calendardefaultsetting()
-
             }
-
-
         } )
-        this.weekTableScroll.setOnTouchListener(object : OnSwipeTouchListener(context) {
+
+        this.dayTableScroll.setOnTouchListener(object : OnSwipeTouchListener(context) {
             override fun onSwipeLeft() {
                 super.onSwipeLeft()
-                setNextWeek()
+                setNextDay()
                 calendardefaultsetting()
             }
 
             override fun onSwipeRight() {
                 super.onSwipeRight()
-                setPreWeek()
+                setPreDay()
                 calendardefaultsetting()
-
             }
-
-
         } )
-
     }
 
-    fun calendardefaultsetting()
-    {
+    fun calendardefaultsetting() {
         var currentLastDayOfMonth = cal.getActualMaximum(Calendar.DATE)
         var currentTime = cal.get(Calendar.HOUR_OF_DAY)
-        val dateArray = arrayOf(weekcalendarview.dateSun,weekcalendarview.dateMon,
-            weekcalendarview.dateTue, weekcalendarview.dateWen,
-            weekcalendarview.dateThur, weekcalendarview.dateFri,
-            weekcalendarview.dateSat)
-        val dayText = arrayOf(weekcalendarview.textSun,weekcalendarview.textMon,
-            weekcalendarview.textTue, weekcalendarview.textWen,
-            weekcalendarview.textThur, weekcalendarview.textFri,
-            weekcalendarview.textSat
+        val dateArray = arrayOf(daycalendarview.dateSun,daycalendarview.dateMon,
+            daycalendarview.dateTue, daycalendarview.dateWen,
+            daycalendarview.dateThur, daycalendarview.dateFri,
+            daycalendarview.dateSat)
+        val dayText = arrayOf(daycalendarview.textSun,daycalendarview.textMon,
+            daycalendarview.textTue, daycalendarview.textWen,
+            daycalendarview.textThur, daycalendarview.textFri,
+            daycalendarview.textSat
         )
-        val timeRow = arrayOf(weekcalendarview.time0, weekcalendarview.time1, weekcalendarview.time2,
-            weekcalendarview.time3, weekcalendarview.time4, weekcalendarview.time5,
-            weekcalendarview.time6, weekcalendarview.time7, weekcalendarview.time8,
-            weekcalendarview.time9, weekcalendarview.time10, weekcalendarview.time11,
-            weekcalendarview.time12, weekcalendarview.time13, weekcalendarview.time14,
-            weekcalendarview.time15, weekcalendarview.time16, weekcalendarview.time17,
-            weekcalendarview.time18, weekcalendarview.time19, weekcalendarview.time20,
-            weekcalendarview.time21, weekcalendarview.time22, weekcalendarview.time23)
+        val timeRow = arrayOf(daycalendarview.time0, daycalendarview.time1, daycalendarview.time2,
+            daycalendarview.time3, daycalendarview.time4, daycalendarview.time5,
+            daycalendarview.time6, daycalendarview.time7, daycalendarview.time8,
+            daycalendarview.time9, daycalendarview.time10, daycalendarview.time11,
+            daycalendarview.time12, daycalendarview.time13, daycalendarview.time14,
+            daycalendarview.time15, daycalendarview.time16, daycalendarview.time17,
+            daycalendarview.time18, daycalendarview.time19, daycalendarview.time20,
+            daycalendarview.time21, daycalendarview.time22, daycalendarview.time23)
 
         val currentDOW = cal.get(Calendar.DAY_OF_WEEK)
 
-
-
         if(currentYear%4!=0) currentLastDayOfMonth = leapYearLastDayOfMonth[currentMonth]
 
-        textWeekInfo.text = ((currentMonth + 1).toString() + "월" + currentWOM.toString() + "주")
+        for (i in 0..6) {
+            dayText[i].setBackgroundColor(Color.WHITE)
+        } // 요일 배경색 초기화
 
-        if(currentMonth == todayMonth && thisYear == currentYear && todayDate == currentDate)
-            dayText[todayDOW-1].setBackgroundColor(Color.YELLOW)
-        else
-            dayText[todayDOW-1].setBackgroundColor(Color.WHITE)
-        timeRow[currentTime].setBackgroundColor(Color.YELLOW)
+        for (i in 0..23) {
+            timeRow[i].setBackgroundColor(Color.WHITE)
+        } // 시간 배경색 초기화
 
+        dayText[currentDOW-1].setBackgroundColor(Color.YELLOW) // current 요일 배경색 설정
 
-        for(i in 1..7)
-        {
+        timeRow[currentTime].setBackgroundColor(Color.YELLOW) // current 시간 배경색 설정
+
+        for(i in 1..7) {
             var date = currentDate - currentDOW  + i
 
             if(date>currentLastDayOfMonth)
@@ -121,27 +120,30 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             else
                 dateArray[i-1].text =  date.toString()
         }
-
     }
-    fun setPreWeek()
-    {
-        cal.add(Calendar.DATE,-7)
+
+    fun setPreDay() {
+        cal.add(Calendar.DATE,-1)
         currentYear = cal.get(Calendar.YEAR)
         currentMonth = cal.get(Calendar.MONTH)
         currentWOM = cal.get(Calendar.WEEK_OF_MONTH)
         currentDate = cal.get(Calendar.DATE)
-
+        currentDOW = cal.get(Calendar.DAY_OF_WEEK)
     }
 
-    fun setNextWeek()
-    {
-        cal.add(Calendar.DATE,+7)
+    fun setNextDay() {
+        cal.add(Calendar.DATE,+1)
         currentYear = cal.get(Calendar.YEAR)
         currentMonth = cal.get(Calendar.MONTH)
         currentWOM = cal.get(Calendar.WEEK_OF_MONTH)
         currentDate = cal.get(Calendar.DATE)
-
+        currentDOW = cal.get(Calendar.DAY_OF_WEEK)
     }
 
-
+    public fun setCurrent(year: Int, month: Int, date: Int){
+        currentYear = year
+        currentMonth = month
+        currentDate = date
+    }
 }
+
