@@ -10,6 +10,4 @@ class CalendarInfo(){
         var currentWOM = calendar.get(Calendar.WEEK_OF_MONTH)
         var currentDate = calendar.get(Calendar.DATE)
     }
-
-
 }

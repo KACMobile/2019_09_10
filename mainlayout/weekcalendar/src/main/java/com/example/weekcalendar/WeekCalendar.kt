@@ -7,12 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.weekcalendar.*
 import kotlinx.android.synthetic.main.weekcalendar.view.*
 
+
 import org.w3c.dom.Attr
+import org.w3c.dom.Text
 import java.time.Month
 import java.time.Year
 import java.util.*
@@ -23,6 +27,8 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
     : ConstraintLayout(context,attrs,defStyleAttr)
 {
     var cal: Calendar = Calendar.getInstance()
+    val database = FirebaseDatabase.getInstance()
+    val databaseReference = database.reference
 
     val lastDayOfMonth = arrayOf(31,28,31,30,31,30,31,31,30,31,30,31)
     val leapYearLastDayOfMonth = arrayOf(31,29,31,30,31,30,31,31,30,31,30,31)
@@ -35,9 +41,12 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
     var currentWOM = cal.get(Calendar.WEEK_OF_MONTH)
     var currentDate = cal.get(Calendar.DATE)
 
+    var scheduletext: String? = " "
+
     init {
         LayoutInflater.from(context).inflate(R.layout.weekcalendar,this,true)
         calendardefaultsetting()
+
 
         this.setOnTouchListener(object : OnSwipeTouchListener(context) {
             override fun onSwipeLeft() {
@@ -71,6 +80,38 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
 
         } )
+
+        databaseReference.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
+                val dataSnapChild = dataSnapshot.child("UserId/tag/MobileProject")//그냥 경로로 임시지정 추후 수정
+                setScheduleOnCalendar(dataSnapChild)
+
+            }
+
+            override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
+
+            }
+
+            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
+
+            }
+
+            override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+
+            }
+        })
+
+        insertSchedule("User01","할 일", "MobileProject", "false", "1600", "1530", "Mobile",
+            false, false, 2019, 10,17)
+
+
+
+
+
 
     }
 
@@ -142,12 +183,59 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         currentMonth = cal.get(Calendar.MONTH)
         currentWOM = cal.get(Calendar.WEEK_OF_MONTH)
         currentDate = cal.get(Calendar.DATE)
+        val textsample = findViewById<TextView>(R.id.thur000)
+        textsample.text = scheduletext.toString()
 
     }
     public fun setCurrent(year: Int, month: Int, date: Int){
         currentYear = year
         currentMonth = month
         currentDate = date
+    }
+
+    @IgnoreExtraProperties
+
+    data class Schedule(
+        var alarm: String? = "",
+        var endTime: String?="",
+        var startTime: String?="",
+        var scheduleInfo: String?="",
+        var shareAble: Boolean? = true,
+        var shareEditAble: Boolean? = false,
+        var dateYear: Int? = 0,
+        var dateMonth: Int? = 0,
+        var date: Int? = 0
+
+    )
+
+    fun insertSchedule(userName:String, tag: String,scheduleName: String, alarm: String, endTime: String,
+                       startTime:String, scheduleInfo:String?, shareAble:Boolean?,shareEditAble:Boolean?,dateYear:Int, dateMonth:Int, date:Int){
+        val schedule = Schedule(alarm,endTime,startTime, scheduleInfo, shareAble, shareEditAble, dateYear, dateMonth, date)
+        databaseReference.child("Users").child("UserId").child("tag").child(scheduleName).setValue(schedule)
+
+
+    }
+
+    fun setScheduleOnCalendar(dataSnapshot: DataSnapshot){
+        val startTime = dataSnapshot.child("startTime").value
+        val endTime = dataSnapshot.child("endTime").value
+        val scheduleName= dataSnapshot.child("scheduleInfo").value
+        var count = startTime.toString().toInt()
+        var idFromTime = resources.getIdentifier("thur"+startTime.toString(),"id", context.packageName)
+        var view = findViewById<TextView>(idFromTime)
+        view.text= scheduleName.toString()
+        while(count < endTime.toString().toInt())
+        {
+            idFromTime = resources.getIdentifier("thur"+count,"id", context.packageName)
+            view = findViewById<TextView>(idFromTime)
+            view.setBackgroundColor(Color.CYAN)
+            if(count%100==0)
+                count+=30
+            else
+                count+=70
+
+        }
+
     }
 
 }
