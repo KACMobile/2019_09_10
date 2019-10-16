@@ -16,13 +16,35 @@ import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import com.applandeo.materialcalendarview.utils.*
 import com.applandeo.materialcalendarview.CalendarView
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.month_calender.*
 import kotlinx.android.synthetic.main.week_calender.*
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.ValueEventListener
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import androidx.fragment.app.FragmentActivity
+import com.google.firebase.database.DatabaseReference
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import com.google.firebase.database.ChildEventListener
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private var calendarInfo: CalendarInfo = CalendarInfo()
+
+    private val firebaseDatabase = FirebaseDatabase.getInstance()
+
+    private val databaseReference = firebaseDatabase.reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +57,7 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
+
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
@@ -47,6 +70,41 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        val database = FirebaseDatabase.getInstance()
+        val endTime_String = database.getReference("Users/UserID/Tag/Schedule/endTime_String")
+        val startTime_String = database.getReference("Users/UserID/Tag/Schedule/startTime_String")
+        val date_String = database.getReference("Users/UserID/Tag/Schedule/date_String")
+        val month_String = database.getReference("Users/UserID/Tag/Schedule/month_String")
+        val year_String = database.getReference("Users/UserID/Tag/Schedule/year_String")
+        endTime_String.setValue("1530")
+        startTime_String.setValue("1600")
+        date_String.setValue("17")
+        month_String.setValue("10")
+        year_String.setValue("2019")
+
+
+        FirebaseDatabase.getInstance().reference.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
+                Log.d("MainActivity", "ChildEventListener - onChildAdded : " + dataSnapshot.value!!)
+            }
+
+            override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
+                Log.d("MainActivity", "ChildEventListener - onChildChanged : " + s!!)
+            }
+
+            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
+                Log.d("MainActivity", "ChildEventListener - onChildRemoved : " + dataSnapshot.key!!)
+            }
+
+            override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {
+                Log.d("MainActivity", "ChildEventListener - onChildMoved" + s!!)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.d("MainActivity", "ChildEventListener - onCancelled" + databaseError.message)
+            }
+        })
 
 
     }
@@ -61,4 +119,5 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
 }

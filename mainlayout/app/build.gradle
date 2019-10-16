@@ -47,6 +47,9 @@ dependencies {
     apply plugin: 'com.android.application'
     implementation project(path: ':weekcalendar')
     implementation project(path: ':daycalendar')
+    implementation 'com.google.firebase:firebase-core:17.0.0'
+    implementation 'com.google.firebase:firebase-auth:10.2.1'
+    implementation 'com.google.firebase:firebase-database:19.1.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
