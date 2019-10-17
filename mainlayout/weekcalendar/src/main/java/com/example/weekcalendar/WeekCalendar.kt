@@ -223,10 +223,12 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         var count = startTime.toString().toInt()
         var idFromTime = resources.getIdentifier("thur"+startTime.toString(),"id", context.packageName)
         var view = findViewById<TextView>(idFromTime)
+        cal.set(dataSnapshot.child("dateYear").value.toString().toInt(), dataSnapshot.child("dateMonth").value.toString().toInt(),dataSnapshot.child("date").value.toString().toInt())
+        var dOW = dateToDOW()
         view.text= scheduleName.toString()
         while(count < endTime.toString().toInt())
         {
-            idFromTime = resources.getIdentifier("thur"+count,"id", context.packageName)
+            idFromTime = resources.getIdentifier(dOW+count,"id", context.packageName)
             view = findViewById<TextView>(idFromTime)
             view.setBackgroundColor(Color.CYAN)
             if(count%100==0)
@@ -235,6 +237,28 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
                 count+=70
 
         }
+    }
+
+    fun dateToDOW():String{
+        val DOW: Int = cal.get(Calendar.DAY_OF_WEEK)
+        if(DOW==0)
+            return "sun"
+        else if(DOW==1)
+            return "mon"
+        else if(DOW==2)
+            return "tue"
+        else if(DOW==3)
+            return "wen"
+        else if(DOW==4)
+            return "thur"
+        else if(DOW==5)
+            return "fri"
+        else if(DOW==6)
+            return "sat"
+        else
+            return " "
+
+
 
     }
 
