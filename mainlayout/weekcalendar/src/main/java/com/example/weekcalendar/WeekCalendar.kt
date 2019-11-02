@@ -83,6 +83,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
         databaseReference.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
+
                 val dataSnapChild = dataSnapshot.child("UserId/tag/MobileProject")//그냥 경로로 임시지정 추후 수정
                 setScheduleOnCalendar(dataSnapChild)
 
@@ -217,25 +218,30 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
     }
 
     fun setScheduleOnCalendar(dataSnapshot: DataSnapshot){
+        val dateArray = arrayOf(weekcalendarview.dateSun,weekcalendarview.dateMon,
+            weekcalendarview.dateTue, weekcalendarview.dateWen,
+            weekcalendarview.dateThur, weekcalendarview.dateFri,
+            weekcalendarview.dateSat)
         val startTime = dataSnapshot.child("startTime").value
         val endTime = dataSnapshot.child("endTime").value
         val scheduleName= dataSnapshot.child("scheduleInfo").value
         var count = startTime.toString().toInt()
         var idFromTime = resources.getIdentifier("thur"+startTime.toString(),"id", context.packageName)
         var view = findViewById<TextView>(idFromTime)
-        cal.set(dataSnapshot.child("dateYear").value.toString().toInt(), dataSnapshot.child("dateMonth").value.toString().toInt(),dataSnapshot.child("date").value.toString().toInt())
+        cal.set(dataSnapshot.child("dateYear").value.toString().toInt(), dataSnapshot.child("dateMonth").value.toString().toInt()-1,dataSnapshot.child("date").value.toString().toInt()-1)
         var dOW = dateToDOW()
-        view.text= scheduleName.toString()
-        while(count < endTime.toString().toInt())
-        {
-            idFromTime = resources.getIdentifier(dOW+count,"id", context.packageName)
-            view = findViewById<TextView>(idFromTime)
-            view.setBackgroundColor(Color.CYAN)
-            if(count%100==0)
-                count+=30
-            else
-                count+=70
+        if (dateArray[cal.get(Calendar.DAY_OF_WEEK)].text==(cal.get(Calendar.DATE)+1).toString()) {
+            view.text = scheduleName.toString()
+            while (count < endTime.toString().toInt()) {
+                idFromTime = resources.getIdentifier(dOW + count, "id", context.packageName)
+                view = findViewById<TextView>(idFromTime)
+                view.setBackgroundColor(Color.CYAN)
+                if (count % 100 == 0)
+                    count += 30
+                else
+                    count += 70
 
+            }
         }
     }
 
