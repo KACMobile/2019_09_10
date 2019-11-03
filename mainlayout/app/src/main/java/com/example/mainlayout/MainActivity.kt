@@ -45,7 +45,7 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ChildEventListener
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
+import android.view.MenuItem
 
 
 class MainActivity : AppCompatActivity() {
@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
 
             }
         })*/
-        val database = FirebaseDatabase.getInstance()
+        /*val database = FirebaseDatabase.getInstance()
         val endTime_String = database.getReference("Users/UserID/Tag/Schedule/endTime_String")
         val startTime_String = database.getReference("Users/UserID/Tag/Schedule/startTime_String")
         val date_String = database.getReference("Users/UserID/Tag/Schedule/date_String")
@@ -145,13 +145,13 @@ class MainActivity : AppCompatActivity() {
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.d("MainActivity", "ChildEventListener - onCancelled" + databaseError.message)
             }
-        })
+        })*/
 
 
     }
 
-    /*override fun onNavigationItemSelected(item: MenuItem): Boolean {
-    }*/
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
