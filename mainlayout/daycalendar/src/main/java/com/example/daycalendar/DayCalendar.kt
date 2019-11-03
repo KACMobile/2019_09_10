@@ -164,10 +164,33 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         var date: Int? = 0
     )
 
-    fun insertSchedule(userName:String, tag: String,scheduleName: String, alarm: String, endTime: String,
-                       startTime:String, scheduleInfo:String?, shareAble:Boolean?,shareEditAble:Boolean?,dateYear:Int, dateMonth:Int, date:Int){
-        val schedule = Schedule(alarm,endTime,startTime, scheduleInfo, shareAble, shareEditAble, dateYear, dateMonth, date)
-        databaseReference.child("Users").child("UserId").child("tag").child(scheduleName).setValue(schedule)
+    fun insertSchedule(
+        userName: String,
+        tag: String,
+        scheduleName: String,
+        alarm: String,
+        endTime: String,
+        startTime: String,
+        scheduleInfo: String?,
+        shareAble: Boolean?,
+        shareEditAble: Boolean?,
+        dateYear: Int,
+        dateMonth: Int,
+        date: Int
+    ) {
+        val schedule = Schedule(
+            alarm,
+            endTime,
+            startTime,
+            scheduleInfo,
+            shareAble,
+            shareEditAble,
+            dateYear,
+            dateMonth,
+            date
+        )
+        databaseReference.child("Users").child("UserId").child("tag").child(scheduleName)
+            .setValue(schedule)
     }
 
     fun setScheduleOnCalendar(dataSnapshot: DataSnapshot){
@@ -191,6 +214,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 count+=70
         }
     }
+
     /*
     fun dateToDOW():String{
         val DOW: Int = cal.get(Calendar.DAY_OF_WEEK)
@@ -211,7 +235,6 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         else
             return " "
     }
-
      */
 }
 

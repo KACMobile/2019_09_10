@@ -109,10 +109,6 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             false, false, 2019, 10,17)
 
 
-
-
-
-
     }
 
     fun calendardefaultsetting()

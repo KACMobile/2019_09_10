@@ -168,7 +168,6 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             else
                 dateArray[i - 1].text = date.toString()
         }
-
     }
 
     fun setPreWeek() {
@@ -177,7 +176,6 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         currentMonth = cal.get(Calendar.MONTH)
         currentWOM = cal.get(Calendar.WEEK_OF_MONTH)
         currentDate = cal.get(Calendar.DATE)
-
     }
 
     fun setNextWeek() {
