@@ -24,14 +24,13 @@ import kotlin.math.abs
 
 
 class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0 )
-    : ConstraintLayout(context,attrs,defStyleAttr)
-{
+    : ConstraintLayout(context,attrs,defStyleAttr) {
     var cal: Calendar = Calendar.getInstance()
     val database = FirebaseDatabase.getInstance()
     val databaseReference = database.reference
 
-    val lastDayOfMonth = arrayOf(31,28,31,30,31,30,31,31,30,31,30,31)
-    val leapYearLastDayOfMonth = arrayOf(31,29,31,30,31,30,31,31,30,31,30,31)
+    val lastDayOfMonth = arrayOf(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+    val leapYearLastDayOfMonth = arrayOf(31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
     val todayMonth = cal.get(Calendar.MONTH)
     val todayDOW = cal.get(Calendar.DAY_OF_WEEK)
     val todayDate = cal.get(Calendar.DATE)
@@ -44,7 +43,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
     var scheduletext: String? = " "
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.weekcalendar,this,true)
+        LayoutInflater.from(context).inflate(R.layout.weekcalendar, this, true)
         calendardefaultsetting()
 
 
@@ -63,7 +62,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             }
 
 
-        } )
+        })
         this.weekTableScroll.setOnTouchListener(object : OnSwipeTouchListener(context) {
             override fun onSwipeLeft() {
                 super.onSwipeLeft()
@@ -79,12 +78,13 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             }
 
 
-        } )
+        })
 
         databaseReference.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
 
-                val dataSnapChild = dataSnapshot.child("UserId/tag/MobileProject")//그냥 경로로 임시지정 추후 수정
+                val dataSnapChild =
+                    dataSnapshot.child("UserId/tag/MobileProject")//그냥 경로로 임시지정 추후 수정
                 setScheduleOnCalendar(dataSnapChild)
 
             }
@@ -106,70 +106,73 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             }
         })
 
-        insertSchedule("User01","할 일", "MobileProject", "false", "1600", "1530", "Mobile",
-            false, false, 2019, 10,17)
-
-
-
-
+        insertSchedule(
+            "User01", "할 일", "MobileProject", "false", "1600", "1530", "Mobile",
+            false, false, 2019, 10, 17
+        )
 
 
     }
 
-    fun calendardefaultsetting()
-    {
+    fun calendardefaultsetting() {
         var currentLastDayOfMonth = cal.getActualMaximum(Calendar.DATE)
         var currentTime = cal.get(Calendar.HOUR_OF_DAY)
-        val dateArray = arrayOf(weekcalendarview.dateSun,weekcalendarview.dateMon,
+        val dateArray = arrayOf(
+            weekcalendarview.dateSun, weekcalendarview.dateMon,
             weekcalendarview.dateTue, weekcalendarview.dateWen,
             weekcalendarview.dateThur, weekcalendarview.dateFri,
-            weekcalendarview.dateSat)
-        val dayText = arrayOf(weekcalendarview.textSun,weekcalendarview.textMon,
+            weekcalendarview.dateSat
+        )
+        val dayText = arrayOf(
+            weekcalendarview.textSun, weekcalendarview.textMon,
             weekcalendarview.textTue, weekcalendarview.textWen,
             weekcalendarview.textThur, weekcalendarview.textFri,
             weekcalendarview.textSat
         )
-        val timeRow = arrayOf(weekcalendarview.time0, weekcalendarview.time1, weekcalendarview.time2,
+        val timeRow = arrayOf(
+            weekcalendarview.time0, weekcalendarview.time1, weekcalendarview.time2,
             weekcalendarview.time3, weekcalendarview.time4, weekcalendarview.time5,
             weekcalendarview.time6, weekcalendarview.time7, weekcalendarview.time8,
             weekcalendarview.time9, weekcalendarview.time10, weekcalendarview.time11,
             weekcalendarview.time12, weekcalendarview.time13, weekcalendarview.time14,
             weekcalendarview.time15, weekcalendarview.time16, weekcalendarview.time17,
             weekcalendarview.time18, weekcalendarview.time19, weekcalendarview.time20,
-            weekcalendarview.time21, weekcalendarview.time22, weekcalendarview.time23)
+            weekcalendarview.time21, weekcalendarview.time22, weekcalendarview.time23
+        )
 
         val currentDOW = cal.get(Calendar.DAY_OF_WEEK)
 
 
 
-        if(currentYear%4!=0) currentLastDayOfMonth = leapYearLastDayOfMonth[currentMonth]
+        if (currentYear % 4 != 0) currentLastDayOfMonth = leapYearLastDayOfMonth[currentMonth]
 
         //textWeekInfo.text = ((currentMonth + 1).toString() + "월" + currentWOM.toString() + "주")
 
-        if(currentMonth == todayMonth && thisYear == currentYear && todayDate == currentDate)
-            dayText[todayDOW-1].setBackgroundColor(Color.YELLOW)
+        if (currentMonth == todayMonth && thisYear == currentYear && todayDate == currentDate)
+            dayText[todayDOW - 1].setBackgroundColor(Color.YELLOW)
         else
-            dayText[todayDOW-1].setBackgroundColor(Color.WHITE)
+            dayText[todayDOW - 1].setBackgroundColor(Color.WHITE)
         timeRow[currentTime].setBackgroundColor(Color.YELLOW)
 
 
-        for(i in 1..7)
-        {
-            var date = currentDate - currentDOW  + i
+        for (i in 1..7) {
+            var date = currentDate - currentDOW + i
 
-            if(date>currentLastDayOfMonth)
-                dateArray[i-1].text = (date-currentLastDayOfMonth).toString()
-            else if(date<1)
-                if(currentYear%4 == 0) dateArray[i-1].text = (leapYearLastDayOfMonth[currentMonth-1]-abs(date)).toString()
-                else dateArray[i-1].text = (lastDayOfMonth[currentMonth-1] - abs(date) ).toString()
+            if (date > currentLastDayOfMonth)
+                dateArray[i - 1].text = (date - currentLastDayOfMonth).toString()
+            else if (date < 1)
+                if (currentYear % 4 == 0) dateArray[i - 1].text =
+                    (leapYearLastDayOfMonth[currentMonth - 1] - abs(date)).toString()
+                else dateArray[i - 1].text =
+                    (lastDayOfMonth[currentMonth - 1] - abs(date)).toString()
             else
-                dateArray[i-1].text =  date.toString()
+                dateArray[i - 1].text = date.toString()
         }
 
     }
-    fun setPreWeek()
-    {
-        cal.add(Calendar.DATE,-7)
+
+    fun setPreWeek() {
+        cal.add(Calendar.DATE, -7)
         currentYear = cal.get(Calendar.YEAR)
         currentMonth = cal.get(Calendar.MONTH)
         currentWOM = cal.get(Calendar.WEEK_OF_MONTH)
@@ -177,9 +180,8 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     }
 
-    fun setNextWeek()
-    {
-        cal.add(Calendar.DATE,+7)
+    fun setNextWeek() {
+        cal.add(Calendar.DATE, +7)
         currentYear = cal.get(Calendar.YEAR)
         currentMonth = cal.get(Calendar.MONTH)
         currentWOM = cal.get(Calendar.WEEK_OF_MONTH)
@@ -188,7 +190,8 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         textsample.text = scheduletext.toString()
 
     }
-    public fun setCurrent(year: Int, month: Int, date: Int){
+
+    public fun setCurrent(year: Int, month: Int, date: Int) {
         currentYear = year
         currentMonth = month
         currentDate = date
@@ -198,80 +201,90 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     data class Schedule(
         var alarm: String? = "",
-        var endTime: String?="",
-        var startTime: String?="",
-        var scheduleInfo: String?="",
+        var endTime: String? = "",
+        var startTime: String? = "",
+        var scheduleInfo: String? = "",
         var shareAble: Boolean? = true,
         var shareEditAble: Boolean? = false,
         var dateYear: Int? = 0,
         var dateMonth: Int? = 0,
         var date: Int? = 0
     )
-    fun insertSchedule(userName:String, tag: String,scheduleName: String, alarm: String, endTime: String,
-                       startTime:String, scheduleInfo:String?, shareAble:Boolean?,shareEditAble:Boolean?,dateYear:Int, dateMonth:Int, date:Int){
-        val schedule = Schedule(alarm,endTime,startTime, scheduleInfo, shareAble, shareEditAble, dateYear, dateMonth, date)
-        databaseReference.child("Users").child("UserId").child("tag").child(scheduleName).setValue(schedule)
+
+    fun insertSchedule(
+        userName: String,
+        tag: String,
+        scheduleName: String,
+        alarm: String,
+        endTime: String,
+        startTime: String,
+        scheduleInfo: String?,
+        shareAble: Boolean?,
+        shareEditAble: Boolean?,
+        dateYear: Int,
+        dateMonth: Int,
+        date: Int
+    ) {
+        val schedule = Schedule(
+            alarm,
+            endTime,
+            startTime,
+            scheduleInfo,
+            shareAble,
+            shareEditAble,
+            dateYear,
+            dateMonth,
+            date
+        )
+        databaseReference.child("Users").child("UserId").child("tag").child(scheduleName)
+            .setValue(schedule)
     }
 
-    fun setScheduleOnCalendar(dataSnapshot: DataSnapshot){
-        val dateArray = arrayOf(weekcalendarview.dateSun,weekcalendarview.dateMon,
-            weekcalendarview.dateTue, weekcalendarview.dateWen,
-            weekcalendarview.dateThur, weekcalendarview.dateFri,
-            weekcalendarview.dateSat)
+    fun setScheduleOnCalendar(dataSnapshot: DataSnapshot) {
         val startTime = dataSnapshot.child("startTime").value
         val endTime = dataSnapshot.child("endTime").value
-        val scheduleName= dataSnapshot.child("scheduleInfo").value
+        val scheduleName = dataSnapshot.child("scheduleInfo").value
         var count = startTime.toString().toInt()
-        var idFromTime = resources.getIdentifier("thur"+startTime.toString(),"id", context.packageName)
+        var idFromTime =
+            resources.getIdentifier("thur" + startTime.toString(), "id", context.packageName)
         var view = findViewById<TextView>(idFromTime)
-        cal.set(dataSnapshot.child("dateYear").value.toString().toInt(), dataSnapshot.child("dateMonth").value.toString().toInt()-1,dataSnapshot.child("date").value.toString().toInt()-1)
+        cal.set(
+            dataSnapshot.child("dateYear").value.toString().toInt(),
+            dataSnapshot.child("dateMonth").value.toString().toInt(),
+            dataSnapshot.child("date").value.toString().toInt()
+        )
         var dOW = dateToDOW()
-        view.text= scheduleName.toString()
-        while(count < endTime.toString().toInt())
-        {
-            idFromTime = resources.getIdentifier(dOW+count,"id", context.packageName)
+        view.text = scheduleName.toString()
+        while (count < endTime.toString().toInt()) {
+            idFromTime = resources.getIdentifier(dOW + count, "id", context.packageName)
             view = findViewById<TextView>(idFromTime)
             view.setBackgroundColor(Color.CYAN)
-            if(count%100==0)
-                count+=30
+            if (count % 100 == 0)
+                count += 30
             else
-                count+=70
-        if (dateArray[cal.get(Calendar.DAY_OF_WEEK)].text==(cal.get(Calendar.DATE)+1).toString()) {
-            view.text = scheduleName.toString()
-            while (count < endTime.toString().toInt()) {
-                idFromTime = resources.getIdentifier(dOW + count, "id", context.packageName)
-                view = findViewById<TextView>(idFromTime)
-                view.setBackgroundColor(Color.CYAN)
-                if (count % 100 == 0)
-                    count += 30
-                else
-                    count += 70
+                count += 70
 
-            }
         }
     }
 
-    fun dateToDOW():String{
+    fun dateToDOW(): String {
         val DOW: Int = cal.get(Calendar.DAY_OF_WEEK)
-        if(DOW==0)
+        if (DOW == 0)
             return "sun"
-        else if(DOW==1)
+        else if (DOW == 1)
             return "mon"
-        else if(DOW==2)
+        else if (DOW == 2)
             return "tue"
-        else if(DOW==3)
+        else if (DOW == 3)
             return "wen"
-        else if(DOW==4)
+        else if (DOW == 4)
             return "thur"
-        else if(DOW==5)
+        else if (DOW == 5)
             return "fri"
-        else if(DOW==6)
+        else if (DOW == 6)
             return "sat"
         else
             return " "
     }
-
 }
-
-
 

@@ -45,7 +45,7 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ChildEventListener
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
+import android.view.MenuItem
 
 
 class MainActivity : AppCompatActivity() {
@@ -150,8 +150,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    /*
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-    }
+    }*/
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

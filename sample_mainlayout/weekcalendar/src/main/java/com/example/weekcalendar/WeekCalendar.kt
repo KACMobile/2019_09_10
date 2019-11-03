@@ -207,7 +207,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         var date: Int? = 0
 
     )
-/////////////////////////
+
     fun insertSchedule(userName:String, tag: String,scheduleName: String, alarm: String, endTime: String,
                        startTime:String, scheduleInfo:String?, shareAble:Boolean?,shareEditAble:Boolean?,dateYear:Int, dateMonth:Int, date:Int){
         val schedule = Schedule(alarm,endTime,startTime, scheduleInfo, shareAble, shareEditAble, dateYear, dateMonth, date)
@@ -257,9 +257,6 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             return "sat"
         else
             return " "
-
-
-
     }
 
 }
