@@ -205,15 +205,12 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         var dateYear: Int? = 0,
         var dateMonth: Int? = 0,
         var date: Int? = 0
-
     )
 
     fun insertSchedule(userName:String, tag: String,scheduleName: String, alarm: String, endTime: String,
                        startTime:String, scheduleInfo:String?, shareAble:Boolean?,shareEditAble:Boolean?,dateYear:Int, dateMonth:Int, date:Int){
         val schedule = Schedule(alarm,endTime,startTime, scheduleInfo, shareAble, shareEditAble, dateYear, dateMonth, date)
         databaseReference.child("Users").child("UserId").child("tag").child(scheduleName).setValue(schedule)
-
-
     }
 
     fun setScheduleOnCalendar(dataSnapshot: DataSnapshot){
@@ -235,7 +232,6 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
                 count+=30
             else
                 count+=70
-
         }
     }
 
@@ -257,9 +253,6 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             return "sat"
         else
             return " "
-
-
-
     }
 
 }
