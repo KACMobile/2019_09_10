@@ -150,8 +150,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             else
                 dateArray[i - 1].text = date.toString()
         }
-<<<<<<< HEAD
-=======
+
         for(i in changedCell){
             i.text= null
             i.setBackgroundColor(Color.WHITE)
@@ -165,7 +164,6 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             }
         }
 
->>>>>>> 1859c5d23d0e0ce7579acf3f73454c281752fe6e
     }
 
     fun setPreWeek() {
