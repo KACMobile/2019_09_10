@@ -3,6 +3,7 @@ package com.example.daycalendar
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,11 +35,6 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
     val lastDayOfMonth = arrayOf(31,28,31,30,31,30,31,31,30,31,30,31)
     val leapYearLastDayOfMonth = arrayOf(31,29,31,30,31,30,31,31,30,31,30,31)
-    val todayMonth = cal.get(Calendar.MONTH)
-    var todayDOW = cal.get(Calendar.DAY_OF_WEEK)
-    val todayDate = cal.get(Calendar.DATE)
-    val thisYear = cal.get(Calendar.YEAR)
-    val thisWOM = cal.get(Calendar.WEEK_OF_MONTH)
     var currentYear = cal.get(Calendar.YEAR)
     var currentMonth = cal.get(Calendar.MONTH)
     var currentWOM = cal.get(Calendar.WEEK_OF_MONTH)
@@ -115,17 +111,22 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
     fun calendardefaultsetting() {
         var currentLastDayOfMonth = cal.getActualMaximum(Calendar.DATE)
         var currentTime = cal.get(Calendar.HOUR_OF_DAY)
-        val dateArray = arrayOf(daycalendarview.dateSun,daycalendarview.dateMon,
+
+        val dateArray = arrayOf(
+            daycalendarview.dateSun,daycalendarview.dateMon,
             daycalendarview.dateTue, daycalendarview.dateWen,
             daycalendarview.dateThur, daycalendarview.dateFri,
             daycalendarview.dateSat)
-        val dayText = arrayOf(daycalendarview.textSun,daycalendarview.textMon,
+
+        val dayText = arrayOf(
+            daycalendarview.textSun,daycalendarview.textMon,
             daycalendarview.textTue, daycalendarview.textWen,
             daycalendarview.textThur, daycalendarview.textFri,
             daycalendarview.textSat
         )
 
-        val timeRow = arrayOf(daycalendarview.time0, daycalendarview.time1, daycalendarview.time2,
+        val timeRow = arrayOf(
+            daycalendarview.time0, daycalendarview.time1, daycalendarview.time2,
             daycalendarview.time3, daycalendarview.time4, daycalendarview.time5,
             daycalendarview.time6, daycalendarview.time7, daycalendarview.time8,
             daycalendarview.time9, daycalendarview.time10, daycalendarview.time11,
@@ -166,6 +167,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             i.text= null
             i.setBackgroundColor(Color.WHITE)
         }
+
         changedCell.clear()
         if(::saveDataSnap.isInitialized) {
             for (snapShot in saveDataSnap.children) {
@@ -174,6 +176,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 }
             }
         }
+
 
     }
 
@@ -254,15 +257,11 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
         val startTime = dataSnapshot.child("startTime").value
         val endTime = dataSnapshot.child("endTime").value
-        val scheduleName= dataSnapshot.child("scheduleInfo").value
-        val date= dataSnapshot.child("date").value
-        val dateMonth= dataSnapshot.child("dateMonth").value
-        val dateYear= dataSnapshot.child("dateYear").value
+        val scheduleInfo= dataSnapshot.child("scheduleInfo").value
+        val date = dataSnapshot.child("date").value
+        val dateMonth = dataSnapshot.child("dateMonth").value
+        val dateYear = dataSnapshot.child("dateYear").value
         var count = startTime.toString().toInt()
-        /*
-        var idFromTime = resources.getIdentifier("thur"+startTime.toString(),"id", context.packageName)
-        var view = findViewById<TextView>(idFromTime)
-         */
 
         cal.set(
             dataSnapshot.child("dateYear").value.toString().toInt(),
@@ -270,12 +269,10 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             dataSnapshot.child("date").value.toString().toInt() - 1
         )
 
-        //var dOW = dateToDOW()
-
         var idFromTime = resources.getIdentifier("day" + count, "id", context.packageName)
         var view = findViewById<TextView>(idFromTime)
-        if (dateArray[cal.get(Calendar.DAY_OF_WEEK) - 1].text == (cal.get(Calendar.DATE) + 1).toString()) {
-            view.text = scheduleName.toString()
+        if(currentDate.toString() == date.toString() && (currentMonth + 1).toString() == dateMonth.toString() && currentYear.toString() == dateYear.toString()) {
+            view.text = scheduleInfo.toString()
             while (count < endTime.toString().toInt()) {
                 idFromTime = resources.getIdentifier("day" + count, "id", context.packageName)
                 view = findViewById<TextView>(idFromTime)
@@ -290,29 +287,6 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
         cal.set(currentYear,currentMonth,currentDate)
     }
-
-    /*
-    fun dateToDOW():String{
-        val DOW: Int = cal.get(Calendar.DAY_OF_WEEK)
-        if(DOW==0)
-            return "sun"
-        else if(DOW==1)
-            return "mon"
-        else if(DOW==2)
-            return "tue"
-        else if(DOW==3)
-            return "wen"
-        else if(DOW==4)
-            return "thur"
-        else if(DOW==5)
-            return "fri"
-        else if(DOW==6)
-            return "sat"
-        else
-            return " "
-    }
-     */
-
 
 }
 
