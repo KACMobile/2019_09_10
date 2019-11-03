@@ -150,11 +150,17 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+<<<<<<< HEAD
 
     /*
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
     }*/
 
+=======
+    /*
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+    }*/
+>>>>>>> 34efa0806daf36244afcceeda2e247c5e7c6f7b6
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

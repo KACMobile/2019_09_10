@@ -30,8 +30,11 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
     val database = FirebaseDatabase.getInstance()
     val databaseReference = database.reference
 
+<<<<<<< HEAD
     val UserId: String = "User01"
 
+=======
+>>>>>>> 34efa0806daf36244afcceeda2e247c5e7c6f7b6
     val lastDayOfMonth = arrayOf(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
     val leapYearLastDayOfMonth = arrayOf(31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
     val todayMonth = cal.get(Calendar.MONTH)
@@ -93,6 +96,24 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
 
         })
+<<<<<<< HEAD
+=======
+
+        databaseReference.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
+
+                val dataSnapChild =
+                    dataSnapshot.child("UserId/tag/MobileProject")//그냥 경로로 임시지정 추후 수정
+                setScheduleOnCalendar(dataSnapChild)
+
+            }
+
+            override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
+
+            }
+
+            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
+>>>>>>> 34efa0806daf36244afcceeda2e247c5e7c6f7b6
 
         val userDB = databaseReference.child("Users/" + UserId)
         userDB.addValueEventListener( object: ValueEventListener{
@@ -108,6 +129,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
         })
+<<<<<<< HEAD
         insertSchedule(
             UserId, "할 일", "sample2", "false", "400", "200", "Mob",
             false, false, 2019, 10, 30
@@ -115,12 +137,21 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         insertSchedule(
             UserId, "할 일", "sample", "false", "400", "100", "test",
             false, false, 2019, 11, 2
+=======
+
+        insertSchedule(
+            "User01", "할 일", "MobileProject", "false", "1600", "1530", "Mobile",
+            false, false, 2019, 10, 17
+>>>>>>> 34efa0806daf36244afcceeda2e247c5e7c6f7b6
         )
 
 
     }
 
+<<<<<<< HEAD
     //달력 기본 설정
+=======
+>>>>>>> 34efa0806daf36244afcceeda2e247c5e7c6f7b6
     fun calendardefaultsetting() {
         var currentLastDayOfMonth = cal.getActualMaximum(Calendar.DATE)
         var currentTime = cal.get(Calendar.HOUR_OF_DAY)
@@ -152,7 +183,15 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         if (currentYear % 4 != 0) currentLastDayOfMonth = leapYearLastDayOfMonth[currentMonth]
 
 
+<<<<<<< HEAD
         if (currentMonth == todayMonth && thisYear == currentYear && thisWOM ==currentWOM)
+=======
+        if (currentYear % 4 != 0) currentLastDayOfMonth = leapYearLastDayOfMonth[currentMonth]
+
+        //textWeekInfo.text = ((currentMonth + 1).toString() + "월" + currentWOM.toString() + "주")
+
+        if (currentMonth == todayMonth && thisYear == currentYear && todayDate == currentDate)
+>>>>>>> 34efa0806daf36244afcceeda2e247c5e7c6f7b6
             dayText[todayDOW - 1].setBackgroundColor(Color.YELLOW)
         else
             dayText[todayDOW - 1].setBackgroundColor(Color.WHITE)
@@ -211,8 +250,8 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         var dateYear: Int? = 0,
         var dateMonth: Int? = 0,
         var date: Int? = 0
-
     )
+<<<<<<< HEAD
 
     /////////////////////////
     //스케줄추가(임시)
@@ -244,20 +283,53 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         )
         databaseReference.child("Users").child(userName).child(tag).child(scheduleName).setValue(schedule)
 
+=======
+>>>>>>> 34efa0806daf36244afcceeda2e247c5e7c6f7b6
 
+    fun insertSchedule(
+        userName: String,
+        tag: String,
+        scheduleName: String,
+        alarm: String,
+        endTime: String,
+        startTime: String,
+        scheduleInfo: String?,
+        shareAble: Boolean?,
+        shareEditAble: Boolean?,
+        dateYear: Int,
+        dateMonth: Int,
+        date: Int
+    ) {
+        val schedule = Schedule(
+            alarm,
+            endTime,
+            startTime,
+            scheduleInfo,
+            shareAble,
+            shareEditAble,
+            dateYear,
+            dateMonth,
+            date
+        )
+        databaseReference.child("Users").child("UserId").child("tag").child(scheduleName)
+            .setValue(schedule)
     }
 
     fun setScheduleOnCalendar(dataSnapshot: DataSnapshot) {
+<<<<<<< HEAD
         val dateArray = arrayOf(
             weekcalendarview.dateSun, weekcalendarview.dateMon,
             weekcalendarview.dateTue, weekcalendarview.dateWen,
             weekcalendarview.dateThur, weekcalendarview.dateFri,
             weekcalendarview.dateSat
         )
+=======
+>>>>>>> 34efa0806daf36244afcceeda2e247c5e7c6f7b6
         val startTime = dataSnapshot.child("startTime").value
         val endTime = dataSnapshot.child("endTime").value
         val scheduleName = dataSnapshot.child("scheduleInfo").value
         var count = startTime.toString().toInt()
+<<<<<<< HEAD
 
         cal.set(
             dataSnapshot.child("dateYear").value.toString().toInt(),
@@ -282,6 +354,27 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
             }
 
+=======
+        var idFromTime =
+            resources.getIdentifier("thur" + startTime.toString(), "id", context.packageName)
+        var view = findViewById<TextView>(idFromTime)
+        cal.set(
+            dataSnapshot.child("dateYear").value.toString().toInt(),
+            dataSnapshot.child("dateMonth").value.toString().toInt(),
+            dataSnapshot.child("date").value.toString().toInt()
+        )
+        var dOW = dateToDOW()
+        view.text = scheduleName.toString()
+        while (count < endTime.toString().toInt()) {
+            idFromTime = resources.getIdentifier(dOW + count, "id", context.packageName)
+            view = findViewById<TextView>(idFromTime)
+            view.setBackgroundColor(Color.CYAN)
+            if (count % 100 == 0)
+                count += 30
+            else
+                count += 70
+
+>>>>>>> 34efa0806daf36244afcceeda2e247c5e7c6f7b6
         }
 
 
@@ -305,10 +398,11 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             return "sat"
         else
             return " "
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 34efa0806daf36244afcceeda2e247c5e7c6f7b6
     }
 }
-
-
 
