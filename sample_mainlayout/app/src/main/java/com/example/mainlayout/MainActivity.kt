@@ -5,10 +5,6 @@ import android.util.Log
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -45,7 +41,12 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ChildEventListener
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
+import android.net.Uri
+import android.view.MenuItem
+import android.view.View
+import androidx.core.view.GravityCompat
+import androidx.navigation.ui.*
+import kotlinx.android.synthetic.main.app_bar_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -61,11 +62,16 @@ class MainActivity : AppCompatActivity() {
 
     private val databaseReference = firebaseDatabase.reference
 
+    val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+    val navView: NavigationView = findViewById(R.id.nav_view)
+    val navController = findNavController(R.id.nav_host_fragment)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+        setupViews()
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
@@ -73,9 +79,7 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
@@ -150,14 +154,64 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+    private fun setupNavigation() {
+        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
+
+        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id in arrayOf(
+                R.layout.make_schedule_fragment
+                )
+            ) {
+                fab.hide()
+            } else {
+                fab.show()
+            }
+
+            if (destination.id == R.layout.make_schedule_fragment) {
+                toolbar.visibility = View.GONE
+            } else {
+                toolbar.visibility = View.VISIBLE
+            }
+        }
+
     }
+
+    private fun setupViews() {
+        fab.setOnClickListener {
+            navController.navigate(R.id.makeSchedule)
+        }
+    }
+
+    /*override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+
+            R.id.daily_Calender -> {
+                navController.navigate(R.id.daily_calender)
+            }
+
+            R.id.week_Calender -> {
+                navController.navigate(R.id.week_calender)
+            }
+
+            R.id.month_Calender -> {
+                navController.navigate(R.id.month_calender)
+            }
+
+        }
+        return true
+    }*/
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
+
+    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
+    }*/
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
