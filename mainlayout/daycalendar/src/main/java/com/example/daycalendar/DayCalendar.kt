@@ -30,18 +30,23 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
     val database = FirebaseDatabase.getInstance()
     val databaseReference = database.reference
 
+    val UserId:String= "User_daytest"
+
     val lastDayOfMonth = arrayOf(31,28,31,30,31,30,31,31,30,31,30,31)
     val leapYearLastDayOfMonth = arrayOf(31,29,31,30,31,30,31,31,30,31,30,31)
     val todayMonth = cal.get(Calendar.MONTH)
     var todayDOW = cal.get(Calendar.DAY_OF_WEEK)
     val todayDate = cal.get(Calendar.DATE)
     val thisYear = cal.get(Calendar.YEAR)
+    val thisWOM = cal.get(Calendar.WEEK_OF_MONTH)
     var currentYear = cal.get(Calendar.YEAR)
     var currentMonth = cal.get(Calendar.MONTH)
     var currentWOM = cal.get(Calendar.WEEK_OF_MONTH)
     var currentDate = cal.get(Calendar.DATE)
     var currentDOW = cal.get(Calendar.DAY_OF_WEEK)
 
+    var changedCell= arrayListOf<TextView>()
+    lateinit var saveDataSnap: DataSnapshot //DataSnapshot을 받으면 set함
 
     init {
         LayoutInflater.from(context).inflate(R.layout.daycalendar,this,true)
@@ -60,6 +65,37 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 calendardefaultsetting()
             }
         } )
+
+        val userDB = databaseReference.child("Users/" + UserId)
+        userDB.addValueEventListener( object: ValueEventListener{
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                saveDataSnap = dataSnapshot
+                for(snapShot in dataSnapshot.children){
+                    for(deeperSnapShot in snapShot.children){
+                        setScheduleOnCalendar(deeperSnapShot)
+                    }
+                }
+
+
+            }
+            override fun onCancelled(dataSnapshot: DatabaseError) {
+            }
+        })
+
+
+        insertSchedule(
+            UserId, "할 일", "서양철학의 이해", "false", "1500", "1800", "과학관 115",
+            false, false, 2019, 11, 4
+        )
+        insertSchedule(
+            UserId, "할 일", "컴퓨터 구조", "false", "1030", "1200", "과학관 110",
+            false, false, 2019, 11, 4
+        )
+        insertSchedule(
+            UserId, "할 일", "모바일 SW", "false", "900", "1300", "전자관 420",
+            false, false, 2019, 11, 5
+        )
+
 
         this.dayTableScroll.setOnTouchListener(object : OnSwipeTouchListener(context) {
             override fun onSwipeLeft() {
@@ -88,6 +124,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             daycalendarview.textThur, daycalendarview.textFri,
             daycalendarview.textSat
         )
+
         val timeRow = arrayOf(daycalendarview.time0, daycalendarview.time1, daycalendarview.time2,
             daycalendarview.time3, daycalendarview.time4, daycalendarview.time5,
             daycalendarview.time6, daycalendarview.time7, daycalendarview.time8,
@@ -124,6 +161,20 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             else
                 dateArray[i-1].text =  date.toString()
         }
+
+        for(i in changedCell){
+            i.text= null
+            i.setBackgroundColor(Color.WHITE)
+        }
+        changedCell.clear()
+        if(::saveDataSnap.isInitialized) {
+            for (snapShot in saveDataSnap.children) {
+                for (deeperSnapShot in snapShot.children) {
+                    setScheduleOnCalendar(deeperSnapShot)
+                }
+            }
+        }
+
     }
 
     fun setPreDay() {
@@ -178,6 +229,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         dateMonth: Int,
         date: Int
     ) {
+        val databaseReference = database.reference
         val schedule = Schedule(
             alarm,
             endTime,
@@ -189,30 +241,54 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             dateMonth,
             date
         )
-        databaseReference.child("Users").child("UserId").child("tag").child(scheduleName)
-            .setValue(schedule)
+        databaseReference.child("Users").child(UserId).child(tag).child(scheduleName).setValue(schedule)
     }
 
     fun setScheduleOnCalendar(dataSnapshot: DataSnapshot){
+        val dateArray = arrayOf(
+            daycalendarview.dateMon,
+            daycalendarview.dateTue, daycalendarview.dateWen,
+            daycalendarview.dateThur, daycalendarview.dateFri,
+            daycalendarview.dateSat, daycalendarview.dateSun
+        )
+
         val startTime = dataSnapshot.child("startTime").value
         val endTime = dataSnapshot.child("endTime").value
         val scheduleName= dataSnapshot.child("scheduleInfo").value
+        val date= dataSnapshot.child("date").value
+        val dateMonth= dataSnapshot.child("dateMonth").value
+        val dateYear= dataSnapshot.child("dateYear").value
         var count = startTime.toString().toInt()
+        /*
         var idFromTime = resources.getIdentifier("thur"+startTime.toString(),"id", context.packageName)
         var view = findViewById<TextView>(idFromTime)
-        cal.set(dataSnapshot.child("dateYear").value.toString().toInt(), dataSnapshot.child("dateMonth").value.toString().toInt(),dataSnapshot.child("date").value.toString().toInt())
+         */
+
+        cal.set(
+            dataSnapshot.child("dateYear").value.toString().toInt(),
+            dataSnapshot.child("dateMonth").value.toString().toInt() - 1,
+            dataSnapshot.child("date").value.toString().toInt() - 1
+        )
+
         //var dOW = dateToDOW()
-        view.text= scheduleName.toString()
-        while(count < endTime.toString().toInt())
-        {
-            idFromTime = resources.getIdentifier("day"+count,"id", context.packageName)
-            view = findViewById<TextView>(idFromTime)
-            view.setBackgroundColor(Color.CYAN)
-            if(count%100==0)
-                count+=30
-            else
-                count+=70
+
+        var idFromTime = resources.getIdentifier("day" + count, "id", context.packageName)
+        var view = findViewById<TextView>(idFromTime)
+        if (dateArray[cal.get(Calendar.DAY_OF_WEEK) - 1].text == (cal.get(Calendar.DATE) + 1).toString()) {
+            view.text = scheduleName.toString()
+            while (count < endTime.toString().toInt()) {
+                idFromTime = resources.getIdentifier("day" + count, "id", context.packageName)
+                view = findViewById<TextView>(idFromTime)
+                view.setBackgroundColor(Color.CYAN)
+                changedCell.add(view)
+                if (count % 100 == 0)
+                    count += 30
+                else
+                    count += 70
+            }
         }
+
+        cal.set(currentYear,currentMonth,currentDate)
     }
 
     /*
@@ -236,5 +312,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             return " "
     }
      */
+
+
 }
 
