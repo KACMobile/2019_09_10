@@ -71,6 +71,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         userDB.addValueEventListener( object: ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 saveDataSnap = dataSnapshot
+                Log.d("a","여기 언제 들어온겨?")
                 for(snapShot in dataSnapshot.children){
                     for(deeperSnapShot in snapShot.children){
                         setScheduleOnCalendar(deeperSnapShot)
@@ -82,18 +83,18 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
         })
-        insertSchedule(
-            UserId, "할 일", "sample2", "false", "400", "200", "Mob",
+        /*insertSchedule(
+            UserId, "할 일", "1", "false", "400", "200", "Mob",
             false, false, 2019, 11, 3
         )
         insertSchedule(
-            UserId, "할 일", "sample", "false", "400", "100", "test",
+            UserId, "할 일", "2", "false", "400", "100", "test",
             false, false, 2019, 11, 5
         )
         insertSchedule(
-            UserId, "할 일", "sample3", "false", "400", "100", "test",
+            UserId, "할 일", "3", "false", "400", "100", "test",
             false, false, 2019, 11, 13
-        )
+        )*/
 
 
     }
@@ -205,6 +206,11 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     /////////////////////////
     //스케줄추가(임시)
+    public fun setDataSnapShot(dataSnapshot: DataSnapshot){
+        saveDataSnap = dataSnapshot
+        setScheduleOnCalendar(saveDataSnap)
+    }
+    /*
     fun insertSchedule(
         userName: String,
         tag: String,
@@ -235,8 +241,10 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
 
     }
+    */
 
-    fun setScheduleOnCalendar(dataSnapshot: DataSnapshot) {
+
+    public fun setScheduleOnCalendar(dataSnapshot: DataSnapshot) {
         val dateArray = arrayOf(
             weekcalendarview.dateMon,
             weekcalendarview.dateTue, weekcalendarview.dateWen,
@@ -245,7 +253,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         )
         val startTime = dataSnapshot.child("startTime").value
         val endTime = dataSnapshot.child("endTime").value
-        val scheduleName = dataSnapshot.child("scheduleInfo").value
+        val scheduleName = dataSnapshot.key
         var count = startTime.toString().toInt()
         /*val yearData = dataSnapshot.child("dateYear").value.toString().toInt()
         val monthData = dataSnapshot.child("dateMonth").value.toString().toInt() - 1
