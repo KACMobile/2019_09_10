@@ -115,6 +115,20 @@ class MainActivity : AppCompatActivity() {
             userID, "할 일", "3", false, "400", "100", "test",
             false, false, 2019, 11, 13
         )
+        insertSchedule(
+            userID, "시간표", "컴퓨터 구조", false, "1200", "1000",
+            "과학관 110",false, false, 2019, 11, 4
+        )
+
+        insertSchedule(
+            userID, "시간표", "모바일 SW", false, "1300", "900",
+            "전자관 420", false, false, 2019, 11, 5
+        )
+
+        insertSchedule(
+            userID, "할 일","코딩", false, "1300", "1100",
+            "전자관 420", false, false, 2019, 11, 5
+        )
 
 
         /*if(::saveDataSnap.isInitialized) {
