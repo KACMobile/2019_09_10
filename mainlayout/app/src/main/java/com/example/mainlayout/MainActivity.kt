@@ -75,6 +75,32 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
+            insertSchedule(
+                userID, "할 일", "1", false, "400", "200", "Mob",
+                false, false, 2019, 11, 3
+            )
+            insertSchedule(
+                userID, "할 일", "2", false, "400", "100", "test",
+                false, false, 2019, 11, 5
+            )
+            insertSchedule(
+                userID, "할 일", "3", false, "400", "100", "test",
+                false, false, 2019, 11, 13
+            )
+            insertSchedule(
+                userID, "시간표", "컴퓨터 구조", false, "1200", "1000",
+                "과학관 110",false, false, 2019, 11, 4
+            )
+
+            insertSchedule(
+                userID, "시간표", "모바일 SW", false, "1300", "900",
+                "전자관 420", false, false, 2019, 11, 5
+            )
+
+            insertSchedule(
+                userID, "할 일","코딩", false, "1300", "1100",
+                "전자관 420", false, false, 2019, 11, 5
+            )
         }
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
@@ -102,7 +128,7 @@ class MainActivity : AppCompatActivity() {
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
         })
-
+/*
         insertSchedule(
             userID, "할 일", "1", false, "400", "200", "Mob",
             false, false, 2019, 11, 3
@@ -115,7 +141,21 @@ class MainActivity : AppCompatActivity() {
             userID, "할 일", "3", false, "400", "100", "test",
             false, false, 2019, 11, 13
         )
+        insertSchedule(
+            userID, "시간표", "컴퓨터 구조", false, "1200", "1000",
+            "과학관 110",false, false, 2019, 11, 4
+        )
 
+        insertSchedule(
+            userID, "시간표", "모바일 SW", false, "1300", "900",
+            "전자관 420", false, false, 2019, 11, 5
+        )
+
+        insertSchedule(
+            userID, "할 일","코딩", false, "1300", "1100",
+            "전자관 420", false, false, 2019, 11, 5
+        )
+*/
 
         /*if(::saveDataSnap.isInitialized) {
 
