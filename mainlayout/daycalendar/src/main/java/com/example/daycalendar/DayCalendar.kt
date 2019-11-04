@@ -78,17 +78,13 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             }
         })
 
+        insertSchedule(
+            UserId, "할 일", "컴퓨터 구조", "false", "1200", "1000", "과학관 110",
+            false, false, 2019, 11, 4
+        )
 
         insertSchedule(
-            UserId, "할 일", "서양철학의 이해", "false", "1500", "1800", "과학관 115",
-            false, false, 2019, 11, 4
-        )
-        insertSchedule(
-            UserId, "할 일", "컴퓨터 구조", "false", "1030", "1200", "과학관 110",
-            false, false, 2019, 11, 4
-        )
-        insertSchedule(
-            UserId, "할 일", "모바일 SW", "false", "900", "1300", "전자관 420",
+            UserId, "할 일", "모바일 SW", "false", "1300", "900", "전자관 420",
             false, false, 2019, 11, 5
         )
 
@@ -164,11 +160,12 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         }
 
         for(i in changedCell){
-            i.text= null
+            i.text = null
             i.setBackgroundColor(Color.WHITE)
         }
 
         changedCell.clear()
+
         if(::saveDataSnap.isInitialized) {
             for (snapShot in saveDataSnap.children) {
                 for (deeperSnapShot in snapShot.children) {
@@ -176,7 +173,6 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 }
             }
         }
-
 
     }
 
@@ -248,13 +244,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
     }
 
     fun setScheduleOnCalendar(dataSnapshot: DataSnapshot){
-        val dateArray = arrayOf(
-            daycalendarview.dateMon,
-            daycalendarview.dateTue, daycalendarview.dateWen,
-            daycalendarview.dateThur, daycalendarview.dateFri,
-            daycalendarview.dateSat, daycalendarview.dateSun
-        )
-
+        val scheduleName = dataSnapshot.key
         val startTime = dataSnapshot.child("startTime").value
         val endTime = dataSnapshot.child("endTime").value
         val scheduleInfo= dataSnapshot.child("scheduleInfo").value
@@ -271,8 +261,8 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
         var idFromTime = resources.getIdentifier("day" + count, "id", context.packageName)
         var view = findViewById<TextView>(idFromTime)
-        if(currentDate.toString() == date.toString() && (currentMonth + 1).toString() == dateMonth.toString() && currentYear.toString() == dateYear.toString()) {
-            view.text = scheduleInfo.toString()
+        if (currentDate.toString() == date.toString() && (currentMonth + 1).toString() == dateMonth.toString() && currentYear.toString() == dateYear.toString()) {
+            view.text = scheduleName.toString() + "  " + scheduleInfo.toString()
             while (count < endTime.toString().toInt()) {
                 idFromTime = resources.getIdentifier("day" + count, "id", context.packageName)
                 view = findViewById<TextView>(idFromTime)
