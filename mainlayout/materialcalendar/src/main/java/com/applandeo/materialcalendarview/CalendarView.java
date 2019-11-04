@@ -544,7 +544,7 @@ public class CalendarView extends LinearLayout {
     public void insertEvents(int year, int month, int date){
         Calendar cal = Calendar.getInstance();
         cal.set(year,month-1,date);
-        events.add(new EventDay(cal,R.drawable.ic_adb));
+        events.add(new EventDay(cal,R.drawable.sample_three_icons));
         setEvents(events);
 
 
