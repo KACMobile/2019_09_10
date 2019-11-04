@@ -125,11 +125,6 @@ class MainActivity : AppCompatActivity() {
             fragment.arguments = bundle
         }*/
 
-
-
-
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

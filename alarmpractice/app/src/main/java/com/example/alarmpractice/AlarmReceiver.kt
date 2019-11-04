@@ -10,7 +10,5 @@ public class AlarmReceiver: BroadcastReceiver(){
         val mServiceintent = Intent(context, AlarmSoundService::class.java)
         Toast.makeText(context,"알람 리시버", Toast.LENGTH_SHORT).show()
         context.startService(mServiceintent)
-
-
     }
 }
