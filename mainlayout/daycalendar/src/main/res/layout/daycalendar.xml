@@ -312,7 +312,7 @@
 
                                         android:background="@android:color/white"
                                         android:padding="10dp"
-                                        android:text=" " />
+                                        android:text=" "/>
 
                                 </TableRow>
 
