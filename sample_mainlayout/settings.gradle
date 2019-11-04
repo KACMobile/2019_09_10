@@ -1,2 +1,0 @@
-include ':app', ':materialcalendar', 'weekcalendar', 'daycalendar'
-rootProject.name='MainLayout'
