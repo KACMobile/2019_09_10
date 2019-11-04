@@ -33,14 +33,11 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-
-
-
     }
     fun setAlarm(){
         var cal = Calendar.getInstance()
-        cal.set(Calendar.HOUR_OF_DAY, 14)
-        cal.set(Calendar.MINUTE, 16)
+        cal.set(Calendar.HOUR_OF_DAY, 11)
+        cal.set(Calendar.MINUTE, 9)
         cal.set(Calendar.SECOND, 0)
         Log.d("aa", cal.get(Calendar.YEAR).toString() + "년" + cal.get(Calendar.MONTH).toString() + "월" + cal.get(Calendar.DATE).toString() + "일" + cal.get(Calendar.HOUR_OF_DAY).toString() +"시"+ cal.get(Calendar.MINUTE).toString() + "분" + cal.get(Calendar.SECOND).toString() + "초")
 

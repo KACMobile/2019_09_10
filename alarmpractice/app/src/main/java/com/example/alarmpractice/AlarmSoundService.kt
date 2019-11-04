@@ -23,7 +23,7 @@ class AlarmSoundService : Service() {
     }
     fun createNotice(){
         val builder = NotificationCompat.Builder(this, "default")
-        builder.setSmallIcon(R.drawable.ic_arrow_left)
+        //builder.setSmallIcon(R.drawable.ic_arrow_left)
         builder.setContentTitle("알람")
         builder.setContentText("알람시작")
         builder.setColor(Color.RED)
