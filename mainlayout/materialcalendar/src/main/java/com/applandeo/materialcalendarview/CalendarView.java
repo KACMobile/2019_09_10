@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import androidx.annotation.ColorRes;
+import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -22,12 +24,21 @@ import com.applandeo.materialcalendarview.utils.AppearanceUtils;
 import com.applandeo.materialcalendarview.utils.CalendarProperties;
 import com.applandeo.materialcalendarview.utils.DateUtils;
 import com.applandeo.materialcalendarview.utils.SelectedDay;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import static com.applandeo.materialcalendarview.utils.CalendarProperties.FIRST_VISIBLE_PAGE;
+
+
 
 /**
  * This class represents a view, displays to user as calendar. It allows to work in date picker
@@ -66,6 +77,13 @@ public class CalendarView extends LinearLayout {
     private TextView mCurrentMonthLabel;
     private int mCurrentPage;
     private CalendarViewPager mViewPager;
+
+    private String userID = "User01";
+    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    private DataSnapshot saveDataSnapShot;
+    List<EventDay> events = new ArrayList<>();
+
+
 
     private CalendarProperties mCalendarProperties;
 
@@ -263,12 +281,32 @@ public class CalendarView extends LinearLayout {
     }
 
     private void initCalendar() {
+        DatabaseReference userDB = databaseReference.child("Users/" + userID);
+        userDB.addValueEventListener(new ValueEventListener() {
+                                         @Override
+                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            saveDataSnapShot = dataSnapshot;
+                                            setScheduleEvent((saveDataSnapShot));
+                                         }
+
+                                         @Override
+                                         public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                         }
+                                     }
+
+        );
         mCalendarPageAdapter = new CalendarPageAdapter(mContext, mCalendarProperties);
 
         mViewPager.setAdapter(mCalendarPageAdapter);
         mViewPager.addOnPageChangeListener(onPageChangeListener);
 
+
         setUpCalendarPosition(Calendar.getInstance());
+        if (saveDataSnapShot != null){
+            setScheduleEvent(saveDataSnapShot);
+
+        }
     }
 
     private void setUpCalendarPosition(Calendar calendar) {
@@ -490,6 +528,25 @@ public class CalendarView extends LinearLayout {
     }
     public void setCurrentCal(Calendar currentCal){
         DateUtils.setCalendar(currentCal);
+
+    }
+
+    public void setScheduleEvent(DataSnapshot dataSnapshot){
+        for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+            for(DataSnapshot deeperSnapShot : snapshot.getChildren()){
+                insertEvents(Integer.parseInt(deeperSnapShot.child("dateYear").getValue().toString()), Integer.parseInt(deeperSnapShot.child("dateMonth").getValue().toString()), Integer.parseInt(deeperSnapShot.child("date").getValue().toString()));
+
+            }
+
+        }
+
+    }
+    public void insertEvents(int year, int month, int date){
+        Calendar cal = Calendar.getInstance();
+        cal.set(year,month-1,date);
+        events.add(new EventDay(cal,R.drawable.ic_adb));
+        setEvents(events);
+
 
     }
 }

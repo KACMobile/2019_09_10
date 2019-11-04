@@ -71,7 +71,6 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         userDB.addValueEventListener( object: ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 saveDataSnap = dataSnapshot
-                Log.d("a","여기 언제 들어온겨?")
                 for(snapShot in dataSnapshot.children){
                     for(deeperSnapShot in snapShot.children){
                         setScheduleOnCalendar(deeperSnapShot)
@@ -289,7 +288,6 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     fun dateToDOW(): String {
         val DOW: Int = cal.get(Calendar.DAY_OF_WEEK)
-        Log.d("abcdef","This is" + DOW.toString())
         if (DOW == 7)
             return "sun"
         else if (DOW == 1)
