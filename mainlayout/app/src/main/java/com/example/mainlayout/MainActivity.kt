@@ -46,20 +46,24 @@ import com.google.firebase.database.ChildEventListener
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.view.MenuItem
+import androidx.fragment.app.Fragment
+import com.example.mainlayout.ui.month.MonthFragment
+import com.example.mainlayout.ui.week.WeekFragment
+import com.example.weekcalendar.WeekCalendar
+import java.io.Serializable
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-   /* private var calendarInfo: CalendarInfo = CalendarInfo()
 
-    private val firebaseDatabase = FirebaseDatabase.getInstance()
-
-    private val databaseReference = firebaseDatabase.reference*/
+    private val userID:String = "User01"
 
     private val firebaseDatabase = FirebaseDatabase.getInstance()
 
     private val databaseReference = firebaseDatabase.reference
+
+    lateinit var saveDataSnap: DataSnapshot
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,73 +90,48 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-       /* insertSchedule("User01","할 일", "MobileProject", "false", "1600", "1530", "김철기 교수님 skype",
-            false, false, 2019, 10,17)
-
-
-        databaseReference.addChildEventListener(object : ChildEventListener {
-            override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
-                val sample = dataSnapshot.getValue(Schedule::class.java)?.scheduleInfo
-
+        val userDB = databaseReference.child("Users/" + userID)
+        userDB.addValueEventListener( object: ValueEventListener{
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                saveDataSnap = dataSnapshot
+                for(snapShot in dataSnapshot.children){
+                    for(deeperSnapShot in snapShot.children){
+                    }
+                }
             }
-
-            override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
-
+            override fun onCancelled(dataSnapshot: DatabaseError) {
             }
+        })
 
-            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-
-            }
-
-            override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {
-
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-
-            }
-        })*/
-        /*val database = FirebaseDatabase.getInstance()
-        val endTime_String = database.getReference("Users/UserID/Tag/Schedule/endTime_String")
-        val startTime_String = database.getReference("Users/UserID/Tag/Schedule/startTime_String")
-        val date_String = database.getReference("Users/UserID/Tag/Schedule/date_String")
-        val month_String = database.getReference("Users/UserID/Tag/Schedule/month_String")
-        val year_String = database.getReference("Users/UserID/Tag/Schedule/year_String")
-        endTime_String.setValue("1530")
-        startTime_String.setValue("1600")
-        date_String.setValue("17")
-        month_String.setValue("10")
-        year_String.setValue("2019")
+        insertSchedule(
+            userID, "할 일", "1", false, "400", "200", "Mob",
+            false, false, 2019, 11, 3
+        )
+        insertSchedule(
+            userID, "할 일", "2", false, "400", "100", "test",
+            false, false, 2019, 11, 5
+        )
+        insertSchedule(
+            userID, "할 일", "3", false, "400", "100", "test",
+            false, false, 2019, 11, 13
+        )
 
 
-        FirebaseDatabase.getInstance().reference.addChildEventListener(object : ChildEventListener {
-            override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
-                Log.d("MainActivity", "ChildEventListener - onChildAdded : " + dataSnapshot.value!!)
-            }
+        /*if(::saveDataSnap.isInitialized) {
 
-            override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
-                Log.d("MainActivity", "ChildEventListener - onChildChanged : " + s!!)
-            }
+            val fragment = WeekFragment()
+            var bundle = Bundle()
+            bundle.putSerializable("DataSnapShot", saveDataSnap as Serializable)
+            fragment.arguments = bundle
+        }*/
 
-            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-                Log.d("MainActivity", "ChildEventListener - onChildRemoved : " + dataSnapshot.key!!)
-            }
 
-            override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {
-                Log.d("MainActivity", "ChildEventListener - onChildMoved" + s!!)
-            }
 
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.d("MainActivity", "ChildEventListener - onCancelled" + databaseError.message)
-            }
-        })*/
+
 
 
     }
-    /*
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-    }
-*/
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
@@ -164,28 +143,52 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-  /*  fun insertSchedule(userName:String, tag: String,scheduleName: String, alarm: String, endTime: String,
-                       startTime:String, scheduleInfo:String?, shareAble:Boolean?,shareEditAble:Boolean?,dateYear:Int, dateMonth:Int, date:Int){
-        val schedule = Schedule(alarm,endTime,startTime, scheduleInfo, shareAble, shareEditAble, dateYear, dateMonth, date)
-
-        databaseReference.child("Users").child(userName).child(tag).child(scheduleName).setValue(schedule)
-
-    }
 
     @IgnoreExtraProperties
 
     data class Schedule(
-        var alarm: String? = "",
-        var endTime: String?="",
-        var startTime: String?="",
-        var scheduleInfo: String?="",
+        var alarm: Boolean? = false,
+        var endTime: String? = "",
+        var startTime: String? = "",
+        var scheduleInfo: String? = "",
         var shareAble: Boolean? = true,
         var shareEditAble: Boolean? = false,
         var dateYear: Int? = 0,
         var dateMonth: Int? = 0,
         var date: Int? = 0
 
-    )*/
+    )
+
+    fun insertSchedule(
+        userName: String,
+        tag: String,
+        scheduleName: String,
+        alarm: Boolean,
+        endTime: String,
+        startTime: String,
+        scheduleInfo: String?,
+        shareAble: Boolean?,
+        shareEditAble: Boolean?,
+        dateYear: Int,
+        dateMonth: Int,
+        date: Int
+    ) {
+        val databaseReference = firebaseDatabase.reference
+        val schedule = Schedule(
+            alarm,
+            endTime,
+            startTime,
+            scheduleInfo,
+            shareAble,
+            shareEditAble,
+            dateYear,
+            dateMonth,
+            date
+        )
+        databaseReference.child("Users").child(userName).child(tag).child(scheduleName).setValue(schedule)
+
+
+    }
 
 
 
