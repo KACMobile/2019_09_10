@@ -31,7 +31,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
     val database = FirebaseDatabase.getInstance()
     val databaseReference = database.reference
 
-    val UserId:String= "User_daytest"
+    val UserName:String= "User_daytest"
 
     val lastDayOfMonth = arrayOf(31,28,31,30,31,30,31,31,30,31,30,31)
     val leapYearLastDayOfMonth = arrayOf(31,29,31,30,31,30,31,31,30,31,30,31)
@@ -62,7 +62,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             }
         } )
 
-        val userDB = databaseReference.child("Users/" + UserId)
+        val userDB = databaseReference.child("Users/" + UserName)
         userDB.addValueEventListener( object: ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 saveDataSnap = dataSnapshot
@@ -79,12 +79,12 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         })
 
         insertSchedule(
-            UserId, "할 일", "컴퓨터 구조", "false", "1200", "1000", "과학관 110",
+            UserName, "할 일", "컴퓨터 구조", "false", "1200", "1000", "과학관 110",
             false, false, 2019, 11, 4
         )
 
         insertSchedule(
-            UserId, "할 일", "모바일 SW", "false", "1300", "900", "전자관 420",
+            UserName, "할 일", "모바일 SW", "false", "1300", "900", "전자관 420",
             false, false, 2019, 11, 5
         )
 
@@ -240,7 +240,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             dateMonth,
             date
         )
-        databaseReference.child("Users").child(UserId).child(tag).child(scheduleName).setValue(schedule)
+        databaseReference.child("Users").child(UserName).child(tag).child(scheduleName).setValue(schedule)
     }
 
     fun setScheduleOnCalendar(dataSnapshot: DataSnapshot){
