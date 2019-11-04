@@ -31,7 +31,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
     val database = FirebaseDatabase.getInstance()
     val databaseReference = database.reference
 
-    val UserName:String= "User_daytest"
+    val UserName:String= "User01"
 
     val lastDayOfMonth = arrayOf(31,28,31,30,31,30,31,31,30,31,30,31)
     val leapYearLastDayOfMonth = arrayOf(31,29,31,30,31,30,31,31,30,31,30,31)
@@ -79,13 +79,18 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         })
 
         insertSchedule(
-            UserName, "할 일", "컴퓨터 구조", "false", "1200", "1000", "과학관 110",
-            false, false, 2019, 11, 4
+            UserName, "시간표", "컴퓨터 구조", "false", "1200", "1000",
+            "과학관 110",false, false, 2019, 11, 4
         )
 
         insertSchedule(
-            UserName, "할 일", "모바일 SW", "false", "1300", "900", "전자관 420",
-            false, false, 2019, 11, 5
+            UserName, "시간표", "모바일 SW", "false", "1300", "900",
+            "전자관 420", false, false, 2019, 11, 5
+        )
+
+        insertSchedule(
+            UserName, "할 일","코딩", "false", "1300", "1100",
+            "전자관 420", false, false, 2019, 11, 5
         )
 
 
@@ -245,13 +250,14 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
     fun setScheduleOnCalendar(dataSnapshot: DataSnapshot){
         val scheduleName = dataSnapshot.key
-        val startTime = dataSnapshot.child("startTime").value
-        val endTime = dataSnapshot.child("endTime").value
+        val startTime = dataSnapshot.child("startTime").value.toString()
+        val endTime = dataSnapshot.child("endTime").value.toString()
         val scheduleInfo= dataSnapshot.child("scheduleInfo").value
         val date = dataSnapshot.child("date").value
         val dateMonth = dataSnapshot.child("dateMonth").value
         val dateYear = dataSnapshot.child("dateYear").value
         var count = startTime.toString().toInt()
+        val schedulePeriod = endTime.toInt()-startTime.toInt()
 
         cal.set(
             dataSnapshot.child("dateYear").value.toString().toInt(),
@@ -262,17 +268,24 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         var idFromTime = resources.getIdentifier("day" + count, "id", context.packageName)
         var view = findViewById<TextView>(idFromTime)
         if (currentDate.toString() == date.toString() && (currentMonth + 1).toString() == dateMonth.toString() && currentYear.toString() == dateYear.toString()) {
-            view.text = scheduleName.toString() + "  " + scheduleInfo.toString()
-            while (count < endTime.toString().toInt()) {
-                idFromTime = resources.getIdentifier("day" + count, "id", context.packageName)
-                view = findViewById<TextView>(idFromTime)
-                view.setBackgroundColor(Color.CYAN)
-                changedCell.add(view)
-                if (count % 100 == 0)
-                    count += 30
-                else
-                    count += 70
+            if(schedulePeriod>=30){
+                view.text = scheduleName.toString()
+                while (count < endTime.toInt()) {
+                    idFromTime = resources.getIdentifier("day" + count, "id", context.packageName)
+                    view = findViewById<TextView>(idFromTime)
+                    view.text
+                    view.setBackgroundColor(Color.CYAN)
+                    changedCell.add(view)
+                    if (count % 100 == 0)
+                        count += 30
+                    else
+                        count += 70
+                }
             }
+            else{
+                view.text = scheduleName.toString() + scheduleInfo.toString()
+            }
+
         }
 
         cal.set(currentYear,currentMonth,currentDate)
