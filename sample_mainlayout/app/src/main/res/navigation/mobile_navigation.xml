@@ -21,10 +21,4 @@
         android:name="com.example.mainlayout.ui.month.MonthFragment"
         android:label="10월"
         tools:layout="@layout/month_calender" />
-
-    <fragment
-        android:id="@+id/makeSchedule"
-        android:name="com.example.mainlayout.ui.MakeSchedule"
-        android:label="make_schedule_fragment"
-        tools:layout="@layout/make_schedule_fragment" />
 </navigation>
