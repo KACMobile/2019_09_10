@@ -3,6 +3,7 @@ package com.example.daycalendar
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,19 +31,18 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
     val database = FirebaseDatabase.getInstance()
     val databaseReference = database.reference
 
+    val UserName:String= "User01"
+
     val lastDayOfMonth = arrayOf(31,28,31,30,31,30,31,31,30,31,30,31)
     val leapYearLastDayOfMonth = arrayOf(31,29,31,30,31,30,31,31,30,31,30,31)
-    val todayMonth = cal.get(Calendar.MONTH)
-    var todayDOW = cal.get(Calendar.DAY_OF_WEEK)
-    val todayDate = cal.get(Calendar.DATE)
-    val thisYear = cal.get(Calendar.YEAR)
     var currentYear = cal.get(Calendar.YEAR)
     var currentMonth = cal.get(Calendar.MONTH)
     var currentWOM = cal.get(Calendar.WEEK_OF_MONTH)
     var currentDate = cal.get(Calendar.DATE)
     var currentDOW = cal.get(Calendar.DAY_OF_WEEK)
 
-    var scheduletext: String? = " "
+    var changedCell= arrayListOf<TextView>()
+    lateinit var saveDataSnap: DataSnapshot //DataSnapshot을 받으면 set함
 
     init {
         LayoutInflater.from(context).inflate(R.layout.daycalendar,this,true)
@@ -62,6 +62,38 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             }
         } )
 
+        val userDB = databaseReference.child("Users/" + UserName)
+        userDB.addValueEventListener( object: ValueEventListener{
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                saveDataSnap = dataSnapshot
+                for(snapShot in dataSnapshot.children){
+                    for(deeperSnapShot in snapShot.children){
+                        setScheduleOnCalendar(deeperSnapShot)
+                    }
+                }
+
+
+            }
+            override fun onCancelled(dataSnapshot: DatabaseError) {
+            }
+        })
+
+        insertSchedule(
+            UserName, "시간표", "컴퓨터 구조", "false", "1200", "1000",
+            "과학관 110",false, false, 2019, 11, 4
+        )
+
+        insertSchedule(
+            UserName, "시간표", "모바일 SW", "false", "1300", "900",
+            "전자관 420", false, false, 2019, 11, 5
+        )
+
+        insertSchedule(
+            UserName, "할 일","코딩", "false", "1300", "1100",
+            "전자관 420", false, false, 2019, 11, 5
+        )
+
+
         this.dayTableScroll.setOnTouchListener(object : OnSwipeTouchListener(context) {
             override fun onSwipeLeft() {
                 super.onSwipeLeft()
@@ -75,49 +107,27 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 calendardefaultsetting()
             }
         } )
-        /*
-        databaseReference.addChildEventListener(object : ChildEventListener {
-            override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
-                val dataSnapChild = dataSnapshot.child("UserId/tag/MobileProject")//그냥 경로로 임시지정 추후 수정
-                setScheduleOnCalendar(dataSnapChild)
-
-            }
-
-            override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
-
-            }
-
-            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-
-            }
-
-            override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {
-
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-
-            }
-        })
-
-         */
     }
-
-
 
     fun calendardefaultsetting() {
         var currentLastDayOfMonth = cal.getActualMaximum(Calendar.DATE)
         var currentTime = cal.get(Calendar.HOUR_OF_DAY)
-        val dateArray = arrayOf(daycalendarview.dateSun,daycalendarview.dateMon,
+
+        val dateArray = arrayOf(
+            daycalendarview.dateSun,daycalendarview.dateMon,
             daycalendarview.dateTue, daycalendarview.dateWen,
             daycalendarview.dateThur, daycalendarview.dateFri,
             daycalendarview.dateSat)
-        val dayText = arrayOf(daycalendarview.textSun,daycalendarview.textMon,
+
+        val dayText = arrayOf(
+            daycalendarview.textSun,daycalendarview.textMon,
             daycalendarview.textTue, daycalendarview.textWen,
             daycalendarview.textThur, daycalendarview.textFri,
             daycalendarview.textSat
         )
-        val timeRow = arrayOf(daycalendarview.time0, daycalendarview.time1, daycalendarview.time2,
+
+        val timeRow = arrayOf(
+            daycalendarview.time0, daycalendarview.time1, daycalendarview.time2,
             daycalendarview.time3, daycalendarview.time4, daycalendarview.time5,
             daycalendarview.time6, daycalendarview.time7, daycalendarview.time8,
             daycalendarview.time9, daycalendarview.time10, daycalendarview.time11,
@@ -153,6 +163,22 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             else
                 dateArray[i-1].text =  date.toString()
         }
+
+        for(i in changedCell){
+            i.text = null
+            i.setBackgroundColor(Color.WHITE)
+        }
+
+        changedCell.clear()
+
+        if(::saveDataSnap.isInitialized) {
+            for (snapShot in saveDataSnap.children) {
+                for (deeperSnapShot in snapShot.children) {
+                    setScheduleOnCalendar(deeperSnapShot)
+                }
+            }
+        }
+
     }
 
     fun setPreDay() {
@@ -179,7 +205,6 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         currentDate = date
     }
 
-    /*
     @IgnoreExtraProperties
 
     data class Schedule(
@@ -192,61 +217,79 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         var dateYear: Int? = 0,
         var dateMonth: Int? = 0,
         var date: Int? = 0
-
     )
 
-    fun insertSchedule(userName:String, tag: String,scheduleName: String, alarm: String, endTime: String,
-                       startTime:String, scheduleInfo:String?, shareAble:Boolean?,shareEditAble:Boolean?,dateYear:Int, dateMonth:Int, date:Int){
-        val schedule = Schedule(alarm,endTime,startTime, scheduleInfo, shareAble, shareEditAble, dateYear, dateMonth, date)
-        databaseReference.child("Users").child("UserId").child("tag").child(scheduleName).setValue(schedule)
-
-
+    fun insertSchedule(
+        userName: String,
+        tag: String,
+        scheduleName: String,
+        alarm: String,
+        endTime: String,
+        startTime: String,
+        scheduleInfo: String?,
+        shareAble: Boolean?,
+        shareEditAble: Boolean?,
+        dateYear: Int,
+        dateMonth: Int,
+        date: Int
+    ) {
+        val databaseReference = database.reference
+        val schedule = Schedule(
+            alarm,
+            endTime,
+            startTime,
+            scheduleInfo,
+            shareAble,
+            shareEditAble,
+            dateYear,
+            dateMonth,
+            date
+        )
+        databaseReference.child("Users").child(UserName).child(tag).child(scheduleName).setValue(schedule)
     }
 
     fun setScheduleOnCalendar(dataSnapshot: DataSnapshot){
-        val startTime = dataSnapshot.child("startTime").value
-        val endTime = dataSnapshot.child("endTime").value
-        val scheduleName= dataSnapshot.child("scheduleInfo").value
+        val scheduleName = dataSnapshot.key
+        val startTime = dataSnapshot.child("startTime").value.toString()
+        val endTime = dataSnapshot.child("endTime").value.toString()
+        val scheduleInfo= dataSnapshot.child("scheduleInfo").value
+        val date = dataSnapshot.child("date").value
+        val dateMonth = dataSnapshot.child("dateMonth").value
+        val dateYear = dataSnapshot.child("dateYear").value
         var count = startTime.toString().toInt()
-        var idFromTime = resources.getIdentifier("thur"+startTime.toString(),"id", context.packageName)
+        val schedulePeriod = endTime.toInt()-startTime.toInt()
+
+        cal.set(
+            dataSnapshot.child("dateYear").value.toString().toInt(),
+            dataSnapshot.child("dateMonth").value.toString().toInt() - 1,
+            dataSnapshot.child("date").value.toString().toInt() - 1
+        )
+
+        var idFromTime = resources.getIdentifier("day" + count, "id", context.packageName)
         var view = findViewById<TextView>(idFromTime)
-        cal.set(dataSnapshot.child("dateYear").value.toString().toInt(), dataSnapshot.child("dateMonth").value.toString().toInt(),dataSnapshot.child("date").value.toString().toInt())
-        var dOW = dateToDOW()
-        view.text= scheduleName.toString()
-        while(count < endTime.toString().toInt())
-        {
-            idFromTime = resources.getIdentifier(dOW+count,"id", context.packageName)
-            view = findViewById<TextView>(idFromTime)
-            view.setBackgroundColor(Color.CYAN)
-            if(count%100==0)
-                count+=30
-            else
-                count+=70
+        if (currentDate.toString() == date.toString() && (currentMonth + 1).toString() == dateMonth.toString() && currentYear.toString() == dateYear.toString()) {
+            if(schedulePeriod>=30){
+                view.text = scheduleName.toString()
+                while (count < endTime.toInt()) {
+                    idFromTime = resources.getIdentifier("day" + count, "id", context.packageName)
+                    view = findViewById<TextView>(idFromTime)
+                    view.text
+                    view.setBackgroundColor(Color.CYAN)
+                    changedCell.add(view)
+                    if (count % 100 == 0)
+                        count += 30
+                    else
+                        count += 70
+                }
+            }
+            else{
+                view.text = scheduleName.toString() + scheduleInfo.toString()
+            }
 
         }
+
+        cal.set(currentYear,currentMonth,currentDate)
     }
 
-    fun dateToDOW():String{
-        val DOW: Int = cal.get(Calendar.DAY_OF_WEEK)
-        if(DOW==0)
-            return "sun"
-        else if(DOW==1)
-            return "mon"
-        else if(DOW==2)
-            return "tue"
-        else if(DOW==3)
-            return "wen"
-        else if(DOW==4)
-            return "thur"
-        else if(DOW==5)
-            return "fri"
-        else if(DOW==6)
-            return "sat"
-        else
-            return " "
-    }
-
-
-     */
 }
 
