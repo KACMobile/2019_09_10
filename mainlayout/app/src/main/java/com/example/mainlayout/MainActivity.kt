@@ -16,42 +16,13 @@ import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import com.applandeo.materialcalendarview.utils.*
 import com.applandeo.materialcalendarview.CalendarView
-import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.month_calender.*
 import kotlinx.android.synthetic.main.week_calender.*
 
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import androidx.fragment.app.FragmentActivity
-
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.ValueEventListener
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import com.google.firebase.database.DatabaseReference
-
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import com.google.firebase.database.*
-
-import com.google.firebase.database.ChildEventListener
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.view.MenuItem
-import androidx.fragment.app.Fragment
-import com.example.mainlayout.ui.month.MonthFragment
-import com.example.mainlayout.ui.week.WeekFragment
-import com.example.weekcalendar.WeekCalendar
-import java.io.Serializable
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -64,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private val databaseReference = firebaseDatabase.reference
 
     lateinit var saveDataSnap: DataSnapshot
+    var dataArray = arrayListOf<Schedule>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,8 +45,6 @@ class MainActivity : AppCompatActivity() {
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
             insertSchedule(
                 userID, "할 일", "1", false, "400", "200", "Mob",
                 false, false, 2019, 11, 3
@@ -120,51 +90,10 @@ class MainActivity : AppCompatActivity() {
         userDB.addValueEventListener( object: ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 saveDataSnap = dataSnapshot
-                for(snapShot in dataSnapshot.children){
-                    for(deeperSnapShot in snapShot.children){
-                    }
-                }
             }
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
         })
-/*
-        insertSchedule(
-            userID, "할 일", "1", false, "400", "200", "Mob",
-            false, false, 2019, 11, 3
-        )
-        insertSchedule(
-            userID, "할 일", "2", false, "400", "100", "test",
-            false, false, 2019, 11, 5
-        )
-        insertSchedule(
-            userID, "할 일", "3", false, "400", "100", "test",
-            false, false, 2019, 11, 13
-        )
-        insertSchedule(
-            userID, "시간표", "컴퓨터 구조", false, "1200", "1000",
-            "과학관 110",false, false, 2019, 11, 4
-        )
-
-        insertSchedule(
-            userID, "시간표", "모바일 SW", false, "1300", "900",
-            "전자관 420", false, false, 2019, 11, 5
-        )
-
-        insertSchedule(
-            userID, "할 일","코딩", false, "1300", "1100",
-            "전자관 420", false, false, 2019, 11, 5
-        )
-*/
-
-        /*if(::saveDataSnap.isInitialized) {
-
-            val fragment = WeekFragment()
-            var bundle = Bundle()
-            bundle.putSerializable("DataSnapShot", saveDataSnap as Serializable)
-            fragment.arguments = bundle
-        }*/
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -178,21 +107,22 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-
     @IgnoreExtraProperties
 
-    data class Schedule(
-        var alarm: Boolean? = false,
-        var endTime: String? = "",
-        var startTime: String? = "",
+    public data class Schedule(
+        var scheduleName:String = "",
         var scheduleInfo: String? = "",
+        var dateYear: Int = 0,
+        var dateMonth: Int = 0,
+        var date: Int = 0,
+        var startTime: String? = "",
+        var endTime: String? = "",
+        var alarm: Boolean? = false,
         var shareAble: Boolean? = true,
-        var shareEditAble: Boolean? = false,
-        var dateYear: Int? = 0,
-        var dateMonth: Int? = 0,
-        var date: Int? = 0
-
+        var shareEditAble: Boolean? = false
     )
+
+
 
     fun insertSchedule(
         userName: String,
@@ -210,17 +140,20 @@ class MainActivity : AppCompatActivity() {
     ) {
         val databaseReference = firebaseDatabase.reference
         val schedule = Schedule(
-            alarm,
-            endTime,
-            startTime,
+            scheduleName,
             scheduleInfo,
-            shareAble,
-            shareEditAble,
             dateYear,
             dateMonth,
-            date
+            date,
+            startTime,
+            endTime,
+            alarm,
+            shareAble,
+            shareEditAble
         )
-        databaseReference.child("Users").child(userName).child(tag).child(scheduleName).setValue(schedule)
+        dataArray.add(schedule)
+        var a: String = schedule.scheduleName
+        databaseReference.child("Users").child(userName).child(tag).child(dateMonth.toString()).setValue(dataArray)
 
 
     }

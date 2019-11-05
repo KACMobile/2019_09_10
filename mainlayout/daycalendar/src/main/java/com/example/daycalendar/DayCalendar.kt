@@ -5,21 +5,12 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.view.size
-import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.daycalendar.*
 import kotlinx.android.synthetic.main.daycalendar.view.*
 import com.google.firebase.database.*
 
-import org.w3c.dom.Attr
-import java.sql.Types.NULL
+
 import java.util.*
 import kotlin.math.abs
 
@@ -67,32 +58,15 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 saveDataSnap = dataSnapshot
                 for(snapShot in dataSnapshot.children){
-                    for(deeperSnapShot in snapShot.children){
-                        setScheduleOnCalendar(deeperSnapShot)
+                    for(deeperSnapShot in snapShot.child((currentMonth+1).toString()).children){
+                        setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
+
                     }
                 }
             }
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
         })
-
-        /*
-        insertSchedule(
-            userID, "시간표", "컴퓨터 구조", "false", "1200", "1000",
-            "과학관 110",false, false, 2019, 11, 4
-        )
-
-        insertSchedule(
-            userID, "시간표", "모바일 SW", "false", "1300", "900",
-            "전자관 420", false, false, 2019, 11, 5
-        )
-
-        insertSchedule(
-            userID, "할 일","코딩", "false", "1430", "1400",
-            "전자관 420", false, false, 2019, 11, 5
-        )
-
-         */
 
 
         this.dayTableScroll.setOnTouchListener(object : OnSwipeTouchListener(context) {
@@ -174,8 +148,8 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
         if(::saveDataSnap.isInitialized) {
             for (snapShot in saveDataSnap.children) {
-                for (deeperSnapShot in snapShot.children) {
-                    setScheduleOnCalendar(deeperSnapShot)
+                for (deeperSnapShot in snapShot.child((currentMonth+1).toString()).children) {
+                    setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
                 }
             }
         }
@@ -206,19 +180,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         currentDate = date
     }
 
-    @IgnoreExtraProperties
 
-    data class Schedule(
-        var alarm: String? = "",
-        var endTime: String?="",
-        var startTime: String?="",
-        var scheduleInfo: String?="",
-        var shareAble: Boolean? = true,
-        var shareEditAble: Boolean? = false,
-        var dateYear: Int? = 0,
-        var dateMonth: Int? = 0,
-        var date: Int? = 0
-    )
     /*
     fun insertSchedule(
         userName: String,
@@ -251,23 +213,18 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
      */
 
-    fun setScheduleOnCalendar(dataSnapshot: DataSnapshot){
-        val scheduleName = dataSnapshot.key.toString()
-        val startTime = dataSnapshot.child("startTime").value.toString()
-        val endTime = dataSnapshot.child("endTime").value.toString()
-        val scheduleInfo= dataSnapshot.child("scheduleInfo").value.toString()
-        val date = dataSnapshot.child("date").value
-        val dateMonth = dataSnapshot.child("dateMonth").value
-        val dateYear = dataSnapshot.child("dateYear").value
-        var count = startTime.toInt()
-        val schedulePeriod = endTime.toInt()-startTime.toInt()
+    fun setScheduleOnCalendar(schedule: HashMap<String, Any>){
+        val scheduleName = schedule.get("scheduleName").toString()
+        val scheduleInfo= schedule.get("scheduleInfo").toString()
+        val startTime = schedule.get("startTime").toString()
+        val endTime = schedule.get("endTime").toString()
+        val dateYear = schedule.get("dateYear").toString().toInt()
+        val dateMonth = schedule.get("dateMonth").toString().toInt()
+        val date = schedule.get("date").toString().toInt()
 
-        cal.set(
-            dataSnapshot.child("dateYear").value.toString().toInt(),
-            dataSnapshot.child("dateMonth").value.toString().toInt() - 1,
-            dataSnapshot.child("date").value.toString().toInt() - 1
-        )
 
+        var count = startTime!!.toInt()
+        val schedulePeriod = endTime!!.toInt()-startTime.toInt()
         var idFromTime = resources.getIdentifier("day" + count, "id", context.packageName)
         var view = findViewById<TextView>(idFromTime)
         if (currentDate.toString() == date.toString() && (currentMonth + 1).toString() == dateMonth.toString() && currentYear.toString() == dateYear.toString()) {

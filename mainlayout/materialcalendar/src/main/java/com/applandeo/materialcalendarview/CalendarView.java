@@ -34,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.applandeo.materialcalendarview.utils.CalendarProperties.FIRST_VISIBLE_PAGE;
@@ -531,10 +532,13 @@ public class CalendarView extends LinearLayout {
 
     }
 
-    public void setScheduleEvent(DataSnapshot dataSnapshot){
-        for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+    public void setScheduleEvent(DataSnapshot dataSnapShot){
+        for(DataSnapshot snapshot : dataSnapShot.getChildren()){
             for(DataSnapshot deeperSnapShot : snapshot.getChildren()){
-                insertEvents(Integer.parseInt(deeperSnapShot.child("dateYear").getValue().toString()), Integer.parseInt(deeperSnapShot.child("dateMonth").getValue().toString()), Integer.parseInt(deeperSnapShot.child("date").getValue().toString()));
+                for(DataSnapshot deepestSnapShot : deeperSnapShot.getChildren()) {
+                    Log.d("aa","여기는 메터리얼" +deepestSnapShot.toString());
+                    insertEvents(Integer.parseInt(deepestSnapShot.child("dateYear").getValue().toString()), Integer.parseInt(deepestSnapShot.child("dateMonth").getValue().toString()), Integer.parseInt(deepestSnapShot.child("date").getValue().toString()));
+                }
 
             }
 

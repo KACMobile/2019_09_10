@@ -21,6 +21,7 @@ import org.w3c.dom.Text
 import java.time.Month
 import java.time.Year
 import java.util.*
+import kotlin.collections.HashMap
 import kotlin.math.abs
 
 
@@ -31,6 +32,8 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
     val databaseReference = database.reference
 
     val UserId: String = "User01"
+
+
 
     val lastDayOfMonth = arrayOf(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
     val leapYearLastDayOfMonth = arrayOf(31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
@@ -72,8 +75,9 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 saveDataSnap = dataSnapshot
                 for(snapShot in dataSnapshot.children){
-                    for(deeperSnapShot in snapShot.children){
-                        setScheduleOnCalendar(deeperSnapShot)
+                    for(deeperSnapShot in snapShot.child((currentMonth+1).toString()).children){
+                        setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
+
                     }
                 }
 
@@ -82,18 +86,6 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
         })
-        /*insertSchedule(
-            UserId, "할 일", "1", "false", "400", "200", "Mob",
-            false, false, 2019, 11, 3
-        )
-        insertSchedule(
-            UserId, "할 일", "2", "false", "400", "100", "test",
-            false, false, 2019, 11, 5
-        )
-        insertSchedule(
-            UserId, "할 일", "3", "false", "400", "100", "test",
-            false, false, 2019, 11, 13
-        )*/
 
 
     }
@@ -158,8 +150,8 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         changedCell.clear()
         if(::saveDataSnap.isInitialized) {
             for (snapShot in saveDataSnap.children) {
-                for (deeperSnapShot in snapShot.children) {
-                    setScheduleOnCalendar(deeperSnapShot)
+                for (deeperSnapShot in snapShot.child((currentMonth+1).toString()).children) {
+                    setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
                 }
             }
         }
@@ -188,27 +180,9 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         currentDate = date
     }
 
-    @IgnoreExtraProperties
-
-    data class Schedule(
-        var alarm: String? = "",
-        var endTime: String? = "",
-        var startTime: String? = "",
-        var scheduleInfo: String? = "",
-        var shareAble: Boolean? = true,
-        var shareEditAble: Boolean? = false,
-        var dateYear: Int? = 0,
-        var dateMonth: Int? = 0,
-        var date: Int? = 0
-
-    )
 
     /////////////////////////
     //스케줄추가(임시)
-    public fun setDataSnapShot(dataSnapshot: DataSnapshot){
-        saveDataSnap = dataSnapshot
-        setScheduleOnCalendar(saveDataSnap)
-    }
     /*
     fun insertSchedule(
         userName: String,
@@ -243,31 +217,31 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
     */
 
 
-    public fun setScheduleOnCalendar(dataSnapshot: DataSnapshot) {
+    public fun setScheduleOnCalendar(schedule: HashMap<String,Any>) {
         val dateArray = arrayOf(
             weekcalendarview.dateMon,
             weekcalendarview.dateTue, weekcalendarview.dateWen,
             weekcalendarview.dateThur, weekcalendarview.dateFri,
             weekcalendarview.dateSat, weekcalendarview.dateSun
         )
-        val startTime = dataSnapshot.child("startTime").value
-        val endTime = dataSnapshot.child("endTime").value
-        val scheduleName = dataSnapshot.key
+        val scheduleName = schedule.get("scheduleName").toString()
+        val startTime = schedule.get("startTime").toString().toInt()
+        val endTime = schedule.get("endTime").toString().toInt()
+        val dateYear = schedule.get("dateYear").toString().toInt()
+        val dateMonth = schedule.get("dateMonth").toString().toInt()
+        val date = schedule.get("date").toString().toInt()
         var count = startTime.toString().toInt()
-        /*val yearData = dataSnapshot.child("dateYear").value.toString().toInt()
-        val monthData = dataSnapshot.child("dateMonth").value.toString().toInt() - 1
-        val dateData =dataSnapshot.child("date").value.toString().toInt() - 1*/
 
         cal.set(
-            dataSnapshot.child("dateYear").value.toString().toInt(),
-            dataSnapshot.child("dateMonth").value.toString().toInt() - 1,
-            dataSnapshot.child("date").value.toString().toInt() - 1
+            dateYear,
+            dateMonth - 1,
+            date - 1
         )
         var dOW = dateToDOW()
         var idFromTime = resources.getIdentifier(dOW + count, "id", context.packageName)
         var view = findViewById<TextView>(idFromTime)
         if (dateArray[cal.get(Calendar.DAY_OF_WEEK)-1].text == (cal.get(Calendar.DATE) + 1).toString()) {
-            view.text = scheduleName.toString()
+            view.text = scheduleName
             while (count < endTime.toString().toInt()) {
                 idFromTime = resources.getIdentifier(dOW + count, "id", context.packageName)
                 view = findViewById<TextView>(idFromTime)
