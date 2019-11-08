@@ -1,5 +1,6 @@
 package com.example.mainlayout
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -45,6 +46,11 @@ class MainActivity : AppCompatActivity() {
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
+            val nextIntent = Intent(this, MakeSchedule::class.java)
+            startActivity(nextIntent)
+        }
+        /*val fab: FloatingActionButton = findViewById(R.id.fab)
+        fab.setOnClickListener { view ->
             insertSchedule(
                 userID, "할 일", "1", false, "400", "200", "Mob",
                 false, false, 2019, 11, 3
@@ -71,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                 userID, "할 일","코딩", false, "1300", "1100",
                 "전자관 420", false, false, 2019, 11, 5
             )
-        }
+        }*/
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
