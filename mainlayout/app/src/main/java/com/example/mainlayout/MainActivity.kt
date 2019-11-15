@@ -22,7 +22,13 @@ import kotlinx.android.synthetic.main.week_calender.*
 
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import com.example.mainlayout.group.GroupAdd
+import com.example.mainlayout.group.GroupList
+import com.example.mainlayout.group.GroupSetting
 import com.google.firebase.database.*
 
 class MainActivity : AppCompatActivity() {
@@ -38,6 +44,14 @@ class MainActivity : AppCompatActivity() {
     lateinit var saveDataSnap: DataSnapshot
     var dataArray = arrayListOf<Schedule>()
 
+    lateinit var fabOpen : Animation
+    lateinit var fabClose : Animation
+    lateinit var rotateBackward : Animation
+    lateinit var rotateForward : Animation
+
+    var isGroupFragment : Boolean = false
+    var isOpen : Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -45,6 +59,76 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
+        val groupFab: FloatingActionButton = findViewById(R.id.groupfab)
+        val groupFab1: FloatingActionButton = findViewById(R.id.groupfab1)
+        val groupFab2: FloatingActionButton = findViewById(R.id.groupfab2)
+        val groupFab3: FloatingActionButton = findViewById(R.id.groupfab3)
+
+        fabOpen = AnimationUtils.loadAnimation(this, R.anim.fab_open)
+        fabClose = AnimationUtils.loadAnimation(this, R.anim.fab_close)
+        rotateForward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward)
+        rotateBackward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward)
+
+        fun whichFab()
+        {
+            if (isGroupFragment)
+            {
+                fab.show()
+                groupFab.hide()
+            }
+            else //groupFab = false
+            {
+                fab.hide()
+                groupFab.show()
+            }
+        }
+        fun animateFab()
+        {
+            if (isOpen)
+            {
+                groupFab.startAnimation(rotateForward)
+                groupFab1.startAnimation(fabClose)
+                groupFab2.startAnimation(fabClose)
+                groupFab3.startAnimation(fabClose)
+                groupFab1.hide()
+                groupFab2.hide()
+                groupFab3.hide()
+                isOpen = false
+            }
+            else
+            {
+                groupFab.startAnimation(rotateBackward)
+                groupFab1.startAnimation(fabOpen)
+                groupFab2.startAnimation(fabOpen)
+                groupFab3.startAnimation(fabOpen)
+                groupFab1.show()
+                groupFab2.show()
+                groupFab3.show()
+                isOpen = true
+            }
+        }
+
+        whichFab()
+
+        //var fragment : Fragment? = supportFragmentManager.findFragmentById(R.id.group_fragment)
+
+        groupFab.setOnClickListener{view ->
+            animateFab()
+        }
+
+        groupFab1.setOnClickListener{view ->
+            val Intent = Intent( this, GroupList::class.java)
+            startActivity(Intent)
+        }
+        groupFab2.setOnClickListener{view ->
+            val Intent = Intent( this, GroupAdd::class.java)
+            startActivity(Intent)
+        }
+        groupFab3.setOnClickListener{view ->
+            val Intent = Intent( this, GroupSetting::class.java)
+            startActivity(Intent)
+        }
+
         fab.setOnClickListener { view ->
             val nextIntent = Intent(this, MakeSchedule::class.java)
             startActivity(nextIntent)
@@ -86,7 +170,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.daily_calender, R.id.week_calender, R.id.month_calender
+                R.id.daily_calender, R.id.week_calender, R.id.month_calender, R.id.group_fragment
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
