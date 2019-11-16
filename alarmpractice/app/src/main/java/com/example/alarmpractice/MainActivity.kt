@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
             mPendingIntent)
 
     }
+    /*
     fun createNotice(){
         val builder = NotificationCompat.Builder(this, "default")
         builder.setSmallIcon(R.drawable.ic_arrow_left)
@@ -70,6 +71,8 @@ class MainActivity : AppCompatActivity() {
         notificationManager.notify(1,builder.build())
 
     }
+
+     */
 
 }
 

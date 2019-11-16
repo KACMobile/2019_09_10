@@ -12,8 +12,6 @@ import android.graphics.Color
 import android.os.Build
 
 class BroadCastD : BroadcastReceiver() {
-    var INTENT_ACTION :String = Intent.ACTION_BOOT_COMPLETED
-
     override fun onReceive(context: Context, intent: Intent) {
         val notificationmanager
                 = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -23,20 +21,18 @@ class BroadCastD : BroadcastReceiver() {
                 "default","기본 채널",NotificationManager.IMPORTANCE_DEFAULT))
         }
 
+        val text:String? = intent.getStringExtra("text")
+        val id = intent.getIntExtra("id", 0)
+
+
         val pendingIntent = PendingIntent.getActivity(
             context, 0, Intent(context, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val builder = Notification.Builder(context,"default")
-        builder.setSmallIcon(R.drawable.ic_btn_speak_now)
-        builder.setWhen(System.currentTimeMillis())
-        builder.setNumber(1)
-        builder.setContentTitle("알람")
-        builder.setContentText("알람시작")
-        builder.setColor(Color.RED)
-        builder.setContentIntent(pendingIntent)
-        builder.setAutoCancel(true)
+        val builder = Notification.Builder(context,"default").setSmallIcon(R.drawable.ic_btn_speak_now)
+        .setWhen(System.currentTimeMillis()).setNumber(1).setContentTitle(text).setContentText(text).setColor(Color.RED)
+        .setContentIntent(pendingIntent).setAutoCancel(true)
 
-        notificationmanager.notify(1, builder.build())
+        notificationmanager.notify(id, builder.build())
     }
 
 }

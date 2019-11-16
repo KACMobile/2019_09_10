@@ -57,13 +57,15 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-    private val userID:String = "User01"
+    private val userID:String = "User02"
 
     private val firebaseDatabase = FirebaseDatabase.getInstance()
 
     private val databaseReference = firebaseDatabase.reference
 
     lateinit var saveDataSnap: DataSnapshot
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,9 +74,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        fab.setOnClickListener { _ ->
             insertSchedule(
                 userID, "할 일", "1", false, "400", "200", "Mob",
                 false, false, 2019, 11, 3
@@ -82,6 +82,10 @@ class MainActivity : AppCompatActivity() {
             insertSchedule(
                 userID, "할 일", "2", false, "400", "100", "test",
                 false, false, 2019, 11, 5
+            )
+            insertSchedule(
+                userID, "할 일", "777", false, "400", "100", "commit",
+                false, false, 2019, 11, 6
             )
             insertSchedule(
                 userID, "할 일", "3", false, "400", "100", "test",

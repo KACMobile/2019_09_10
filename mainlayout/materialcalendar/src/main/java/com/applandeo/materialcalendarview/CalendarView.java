@@ -78,7 +78,7 @@ public class CalendarView extends LinearLayout {
     private int mCurrentPage;
     private CalendarViewPager mViewPager;
 
-    private String userID = "User01";
+    private String userID = "User02";
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private DataSnapshot saveDataSnapShot;
     List<EventDay> events = new ArrayList<>();
@@ -534,7 +534,8 @@ public class CalendarView extends LinearLayout {
     public void setScheduleEvent(DataSnapshot dataSnapshot){
         for(DataSnapshot snapshot : dataSnapshot.getChildren()){
             for(DataSnapshot deeperSnapShot : snapshot.getChildren()){
-                insertEvents(Integer.parseInt(deeperSnapShot.child("dateYear").getValue().toString()), Integer.parseInt(deeperSnapShot.child("dateMonth").getValue().toString()), Integer.parseInt(deeperSnapShot.child("date").getValue().toString()));
+                insertEvents(Integer.parseInt(deeperSnapShot.child("dateYear").getValue().toString()),
+                        Integer.parseInt(deeperSnapShot.child("dateMonth").getValue().toString()), Integer.parseInt(deeperSnapShot.child("date").getValue().toString()));
 
             }
 
