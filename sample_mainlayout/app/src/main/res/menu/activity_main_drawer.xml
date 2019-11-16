@@ -5,13 +5,13 @@
     tools:showIn="navigation_view">
 
     <item
-        android:id="@+id/daily_Calender"
+        android:id="@+id/daily_calender"
         android:title="일간" />
     <item
-        android:id="@+id/week_Calender"
+        android:id="@+id/week_calender"
         android:title="주간" />
     <item
-        android:id="@+id/month_Calender"
+        android:id="@+id/month_calender"
         android:title="월간" />
     <item android:title="내 일정">
         <menu>

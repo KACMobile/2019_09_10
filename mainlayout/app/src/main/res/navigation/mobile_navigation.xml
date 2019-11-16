@@ -8,17 +8,24 @@
     <fragment
         android:id="@+id/daily_calender"
         android:name="com.example.mainlayout.ui.daily.DailyFragment"
-        android:label="29일" />
+        android:label="일" />
 
     <fragment
         android:id="@+id/week_calender"
         android:name="com.example.mainlayout.ui.week.WeekFragment"
-        android:label="10월"
+        android:label="주간"
         tools:layout="@layout/week_calender" />
 
     <fragment
         android:id="@+id/month_calender"
         android:name="com.example.mainlayout.ui.month.MonthFragment"
-        android:label="10월"
+        android:label="월"
         tools:layout="@layout/month_calender" />
+
+    <fragment
+        android:id="@+id/group_fragment"
+        android:name="com.example.mainlayout.GroupFragment"
+        android:label="그룹"
+        tools:layout="@layout/group_fragment" />
+
 </navigation>
