@@ -223,8 +223,8 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         val date = schedule.get("date").toString().toInt()
 
 
-        var count = startTime!!.toInt()
-        val schedulePeriod = endTime!!.toInt()-startTime.toInt()
+        var count = startTime.toInt()
+        val schedulePeriod = endTime.toInt()-startTime.toInt()
         var idFromTime = resources.getIdentifier("day" + count, "id", context.packageName)
         var view = findViewById<TextView>(idFromTime)
         if (currentDate.toString() == date.toString() && (currentMonth + 1).toString() == dateMonth.toString() && currentYear.toString() == dateYear.toString()) {

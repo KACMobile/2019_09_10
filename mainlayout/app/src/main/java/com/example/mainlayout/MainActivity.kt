@@ -1,6 +1,9 @@
 package com.example.mainlayout
 
+import android.app.*
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -22,6 +25,8 @@ import kotlinx.android.synthetic.main.week_calender.*
 
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.os.Build
+import android.os.PowerManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
@@ -30,6 +35,7 @@ import com.example.mainlayout.group.GroupAdd
 import com.example.mainlayout.group.GroupList
 import com.example.mainlayout.group.GroupSetting
 import com.google.firebase.database.*
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,6 +57,8 @@ class MainActivity : AppCompatActivity() {
 
     var isGroupFragment : Boolean = false
     var isOpen : Boolean = false
+
+    val NOTIFICATION_CHANNEL_ID = "10001"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -192,6 +200,14 @@ class MainActivity : AppCompatActivity() {
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
         })
+
+        if(::saveDataSnap.isInitialized) {
+            for (snapShot in saveDataSnap.children) {
+                for (deeperSnapShot in snapShot.child((Calendar.getInstance().get(Calendar.MONTH)+1).toString()).children) {
+                    setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
+                }
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -289,6 +305,71 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun setAlarmScheduleOnCalendar(schedule: HashMap<String, Any>) {
+        val scheduleName = schedule.get("scheduleName").toString()
+        val scheduleInfo = schedule.get("scheduleInfo").toString()
+        val startTime = schedule.get("startTime").toString()
+        val endTime = schedule.get("endTime").toString()
+        val dateYear = schedule.get("dateYear").toString().toInt()
+        val dateMonth = schedule.get("dateMonth").toString().toInt()
+        val date = schedule.get("date").toString().toInt()
 
+        Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTime, endTime)
+    }
+
+    fun Alarm(scheduleName: String, scheduleInfo: String?, dateYear: Int, dateMonth: Int, date: Int, startTime: String, endTime: String) {
+        val calendar = Calendar.getInstance()
+        val notificationmanager
+                = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notyintent = Intent(this, BroadCastD::class.java) //BroadCastD 클래스로 보낼 intent
+        notyintent.putExtra("notificationId", dateYear + dateMonth + date + startTime.toInt() + endTime.toInt())
+        notyintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0, notyintent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val builder = Notification.Builder(this,NOTIFICATION_CHANNEL_ID)
+            .setSmallIcon(android.R.drawable.ic_btn_speak_now)
+            .setWhen(System.currentTimeMillis())
+            .setNumber(1)
+            .setContentTitle(scheduleName)
+            .setContentText(scheduleInfo)
+            .setColor(Color.RED)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+
+        if (Build.VERSION.SDK_INT >= 26){
+            val channelName :CharSequence = "noty_channel"
+            //val description :String = "upper oreo"
+            val importance :Int = NotificationManager.IMPORTANCE_HIGH
+
+            val channel: NotificationChannel = NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName , importance)
+            //channel.setDescription(description)
+
+            notificationmanager.createNotificationChannel(channel)
+        }
+
+        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+        val wakeLock = powerManager.newWakeLock(
+            PowerManager.FULL_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP or PowerManager.ON_AFTER_RELEASE,
+            "My:Tag") // 스마트폰 화면이 꺼져있으면 화면 켜고 알림 울리기위해서 (FULL_WAKE_LOCK)
+        wakeLock.acquire(5000)
+
+        notificationmanager.notify(dateYear + dateMonth + date + startTime.toInt() + endTime.toInt(), builder.build())
+
+        val sender = PendingIntent.getBroadcast(
+            this, // context 정보
+            dateYear + dateMonth + date + startTime.toInt() + endTime.toInt(), // 여러개의 알람을 등록하기 위한 primary id 값 세팅
+            intent, // 정보가 담긴 intent
+            PendingIntent.FLAG_UPDATE_CURRENT)
+
+        if (startTime.length > 3)
+            calendar.set(dateYear, dateMonth, date, startTime.slice(IntRange(0,1)).toInt(),startTime.slice(IntRange(2,3)).toInt())
+        else
+            calendar.set(dateYear, dateMonth, date, startTime.slice(IntRange(0,0)).toInt(),startTime.slice(IntRange(1,2)).toInt())
+
+        val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        am.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, sender)
+    }
 
 }
