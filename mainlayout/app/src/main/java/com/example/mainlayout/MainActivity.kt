@@ -192,15 +192,21 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        val userDB = databaseReference.child("Users/" + userID)
+        val userDB = databaseReference.child("Users/" + userID + "/Schedule")
         userDB.addValueEventListener( object: ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 saveDataSnap = dataSnapshot
+                for(snapShot in dataSnapshot.children){
+                    for(deeperSnapShot in snapShot.child((CalendarInfo.currentMonth +1).toString()).children){
+                        setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
+
+                    }
+                }
             }
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
         })
-
+        /*
         if(::saveDataSnap.isInitialized) {
             for (snapShot in saveDataSnap.children) {
                 for (deeperSnapShot in snapShot.child((Calendar.getInstance().get(Calendar.MONTH)+1).toString()).children) {
@@ -208,6 +214,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+         */
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -314,7 +322,11 @@ class MainActivity : AppCompatActivity() {
         val dateMonth = schedule.get("dateMonth").toString().toInt()
         val date = schedule.get("date").toString().toInt()
 
-        Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTime, endTime)
+        val alarmAble = schedule.get("alarm")
+
+        if(alarmAble==true && CalendarInfo.currentYear ==dateYear && (CalendarInfo.currentMonth +1)==dateMonth && CalendarInfo.currentDate ==date) {
+            Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTime, endTime)
+        }
     }
 
     fun Alarm(scheduleName: String, scheduleInfo: String?, dateYear: Int, dateMonth: Int, date: Int, startTime: String, endTime: String) {
