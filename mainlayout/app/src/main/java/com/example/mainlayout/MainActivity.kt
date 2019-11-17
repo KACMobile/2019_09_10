@@ -1,9 +1,6 @@
 package com.example.mainlayout
 
-import android.app.*
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -25,8 +22,6 @@ import kotlinx.android.synthetic.main.week_calender.*
 
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.os.Build
-import android.os.PowerManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
@@ -35,7 +30,6 @@ import com.example.mainlayout.group.GroupAdd
 import com.example.mainlayout.group.GroupList
 import com.example.mainlayout.group.GroupSetting
 import com.google.firebase.database.*
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -58,8 +52,6 @@ class MainActivity : AppCompatActivity() {
     var isGroupFragment : Boolean = false
     var isOpen : Boolean = false
 
-    val NOTIFICATION_CHANNEL_ID = "10001"
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -67,76 +59,81 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { _ ->
-            val groupFab: FloatingActionButton = findViewById(R.id.groupfab)
-            val groupFab1: FloatingActionButton = findViewById(R.id.groupfab1)
-            val groupFab2: FloatingActionButton = findViewById(R.id.groupfab2)
-            val groupFab3: FloatingActionButton = findViewById(R.id.groupfab3)
+        val groupFab: FloatingActionButton = findViewById(R.id.groupfab)
+        val groupFab1: FloatingActionButton = findViewById(R.id.groupfab1)
+        val groupFab2: FloatingActionButton = findViewById(R.id.groupfab2)
+        val groupFab3: FloatingActionButton = findViewById(R.id.groupfab3)
 
-            fabOpen = AnimationUtils.loadAnimation(this, R.anim.fab_open)
-            fabClose = AnimationUtils.loadAnimation(this, R.anim.fab_close)
-            rotateForward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward)
-            rotateBackward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward)
+        fabOpen = AnimationUtils.loadAnimation(this, R.anim.fab_open)
+        fabClose = AnimationUtils.loadAnimation(this, R.anim.fab_close)
+        rotateForward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward)
+        rotateBackward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward)
 
-            fun whichFab() {
-                if (isGroupFragment) {
-                    fab.show()
-                    groupFab.hide()
-                } else //groupFab = false
-                {
-                    fab.hide()
-                    groupFab.show()
-                }
+        fun whichFab()
+        {
+            if (isGroupFragment)
+            {
+                fab.show()
+                groupFab.hide()
             }
-
-            fun animateFab() {
-                if (isOpen) {
-                    groupFab.startAnimation(rotateForward)
-                    groupFab1.startAnimation(fabClose)
-                    groupFab2.startAnimation(fabClose)
-                    groupFab3.startAnimation(fabClose)
-                    groupFab1.hide()
-                    groupFab2.hide()
-                    groupFab3.hide()
-                    isOpen = false
-                } else {
-                    groupFab.startAnimation(rotateBackward)
-                    groupFab1.startAnimation(fabOpen)
-                    groupFab2.startAnimation(fabOpen)
-                    groupFab3.startAnimation(fabOpen)
-                    groupFab1.show()
-                    groupFab2.show()
-                    groupFab3.show()
-                    isOpen = true
-                }
+            else //groupFab = false
+            {
+                fab.hide()
+                groupFab.show()
             }
-
-            whichFab()
-
-            //var fragment : Fragment? = supportFragmentManager.findFragmentById(R.id.group_fragment)
-
-            groupFab.setOnClickListener { view ->
-                animateFab()
+        }
+        fun animateFab()
+        {
+            if (isOpen)
+            {
+                groupFab.startAnimation(rotateForward)
+                groupFab1.startAnimation(fabClose)
+                groupFab2.startAnimation(fabClose)
+                groupFab3.startAnimation(fabClose)
+                groupFab1.hide()
+                groupFab2.hide()
+                groupFab3.hide()
+                isOpen = false
             }
+            else
+            {
+                groupFab.startAnimation(rotateBackward)
+                groupFab1.startAnimation(fabOpen)
+                groupFab2.startAnimation(fabOpen)
+                groupFab3.startAnimation(fabOpen)
+                groupFab1.show()
+                groupFab2.show()
+                groupFab3.show()
+                isOpen = true
+            }
+        }
 
-            groupFab1.setOnClickListener { view ->
-                val Intent = Intent(this, GroupList::class.java)
-                startActivity(Intent)
-            }
-            groupFab2.setOnClickListener { view ->
-                val Intent = Intent(this, GroupAdd::class.java)
-                startActivity(Intent)
-            }
-            groupFab3.setOnClickListener { view ->
-                val Intent = Intent(this, GroupSetting::class.java)
-                startActivity(Intent)
-            }
+        whichFab()
 
-            fab.setOnClickListener { view ->
-                val nextIntent = Intent(this, MakeSchedule::class.java)
-                startActivity(nextIntent)
-            }
-            /*val fab: FloatingActionButton = findViewById(R.id.fab)
+        //var fragment : Fragment? = supportFragmentManager.findFragmentById(R.id.group_fragment)
+
+        groupFab.setOnClickListener{view ->
+            animateFab()
+        }
+
+        groupFab1.setOnClickListener{view ->
+            val Intent = Intent( this, GroupList::class.java)
+            startActivity(Intent)
+        }
+        groupFab2.setOnClickListener{view ->
+            val Intent = Intent( this, GroupAdd::class.java)
+            startActivity(Intent)
+        }
+        groupFab3.setOnClickListener{view ->
+            val Intent = Intent( this, GroupSetting::class.java)
+            startActivity(Intent)
+        }
+
+        fab.setOnClickListener { view ->
+            val nextIntent = Intent(this, MakeSchedule::class.java)
+            startActivity(nextIntent)
+        }
+        /*val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
             insertSchedule(
                 userID, "할 일", "1", false, "400", "200", "Mob",
@@ -145,10 +142,6 @@ class MainActivity : AppCompatActivity() {
             insertSchedule(
                 userID, "할 일", "2", false, "400", "100", "test",
                 false, false, 2019, 11, 5
-            )
-            insertSchedule(
-                userID, "할 일", "777", false, "400", "100", "commit",
-                false, false, 2019, 11, 6
             )
             insertSchedule(
                 userID, "할 일", "3", false, "400", "100", "test",
@@ -170,170 +163,91 @@ class MainActivity : AppCompatActivity() {
             )
         }*/
 
-            val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-            val navView: NavigationView = findViewById(R.id.nav_view)
-            val navController = findNavController(R.id.nav_host_fragment)
-            // Passing each menu ID as a set of Ids because each
-            // menu should be considered as top level destinations.
-            appBarConfiguration = AppBarConfiguration(
-                setOf(
-                    R.id.daily_calender,
-                    R.id.week_calender,
-                    R.id.month_calender,
-                    R.id.group_fragment
-                ), drawerLayout
-            )
-            setupActionBarWithNavController(navController, appBarConfiguration)
-            navView.setupWithNavController(navController)
-
-            val userDB = databaseReference.child("Users/" + userID)
-            userDB.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    saveDataSnap = dataSnapshot
-                }
-
-                override fun onCancelled(dataSnapshot: DatabaseError) {
-                }
-            })
-
-            if(::saveDataSnap.isInitialized) {
-                for (snapShot in saveDataSnap.children) {
-                    for (deeperSnapShot in snapShot.child((Calendar.getInstance().get(Calendar.MONTH)+1).toString()).children) {
-                        setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
-                    }
-                }
-            }
-        }
-    }
-
-        override fun onCreateOptionsMenu(menu: Menu): Boolean {
-            // Inflate the menu; this adds items to the action bar if it is present.
-            menuInflater.inflate(R.menu.main, menu)
-            return true
-        }
-
-        override fun onSupportNavigateUp(): Boolean {
-            val navController = findNavController(R.id.nav_host_fragment)
-            return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-        }
-
-        @IgnoreExtraProperties
-
-        public data class Schedule(
-            var scheduleName: String = "",
-            var scheduleInfo: String? = "",
-            var dateYear: Int = 0,
-            var dateMonth: Int = 0,
-            var date: Int = 0,
-            var startTime: String? = "",
-            var endTime: String? = "",
-            var alarm: Boolean? = false,
-            var shareAble: Boolean? = true,
-            var shareEditAble: Boolean? = false
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        val navView: NavigationView = findViewById(R.id.nav_view)
+        val navController = findNavController(R.id.nav_host_fragment)
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.daily_calender, R.id.week_calender, R.id.month_calender, R.id.group_fragment
+            ), drawerLayout
         )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
 
-
-        fun insertSchedule(
-            userName: String,
-            tag: String,
-            scheduleName: String,
-            alarm: Boolean,
-            endTime: String,
-            startTime: String,
-            scheduleInfo: String?,
-            shareAble: Boolean?,
-            shareEditAble: Boolean?,
-            dateYear: Int,
-            dateMonth: Int,
-            date: Int
-        ) {
-            val databaseReference = firebaseDatabase.reference
-            val schedule = Schedule(
-                scheduleName,
-                scheduleInfo,
-                dateYear,
-                dateMonth,
-                date,
-                startTime,
-                endTime,
-                alarm,
-                shareAble,
-                shareEditAble
-            )
-            dataArray.add(schedule)
-            var a: String = schedule.scheduleName
-            databaseReference.child("Users").child(userName).child(tag).child(dateMonth.toString())
-                .setValue(dataArray)
-
-
-        }
-
-    fun setAlarmScheduleOnCalendar(schedule: HashMap<String, Any>) {
-        val scheduleName = schedule.get("scheduleName").toString()
-        val scheduleInfo = schedule.get("scheduleInfo").toString()
-        val startTime = schedule.get("startTime").toString()
-        val endTime = schedule.get("endTime").toString()
-        val dateYear = schedule.get("dateYear").toString().toInt()
-        val dateMonth = schedule.get("dateMonth").toString().toInt()
-        val date = schedule.get("date").toString().toInt()
-
-        Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTime, endTime)
+        val userDB = databaseReference.child("Users/" + userID)
+        userDB.addValueEventListener( object: ValueEventListener{
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                saveDataSnap = dataSnapshot
+            }
+            override fun onCancelled(dataSnapshot: DatabaseError) {
+            }
+        })
     }
 
-    fun Alarm(scheduleName: String, scheduleInfo: String?, dateYear: Int, dateMonth: Int, date: Int, startTime: String, endTime: String) {
-        val calendar = Calendar.getInstance()
-        val notificationmanager
-                = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val notyintent = Intent(this, BroadCastD::class.java) //BroadCastD 클래스로 보낼 intent
-        notyintent.putExtra("notificationId", dateYear + dateMonth + date + startTime.toInt() + endTime.toInt())
-        notyintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-
-        val pendingIntent = PendingIntent.getActivity(
-            this, 0, notyintent, PendingIntent.FLAG_UPDATE_CURRENT)
-
-        val builder = Notification.Builder(this,NOTIFICATION_CHANNEL_ID)
-            .setSmallIcon(android.R.drawable.ic_btn_speak_now)
-            .setWhen(System.currentTimeMillis())
-            .setNumber(1)
-            .setContentTitle(scheduleName)
-            .setContentText(scheduleInfo)
-            .setColor(Color.RED)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-
-        if (Build.VERSION.SDK_INT >= 26){
-            val channelName :CharSequence = "noty_channel"
-            //val description :String = "upper oreo"
-            val importance :Int = NotificationManager.IMPORTANCE_HIGH
-
-            val channel: NotificationChannel = NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName , importance)
-            //channel.setDescription(description)
-
-            notificationmanager.createNotificationChannel(channel)
-        }
-
-        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
-        val wakeLock = powerManager.newWakeLock(
-            PowerManager.FULL_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP or PowerManager.ON_AFTER_RELEASE,
-            "My:Tag") // 스마트폰 화면이 꺼져있으면 화면 켜고 알림 울리기위해서 (FULL_WAKE_LOCK)
-        wakeLock.acquire(5000)
-
-        notificationmanager.notify(dateYear + dateMonth + date + startTime.toInt() + endTime.toInt(), builder.build())
-
-        val sender = PendingIntent.getBroadcast(
-            this, // context 정보
-            dateYear + dateMonth + date + startTime.toInt() + endTime.toInt(), // 여러개의 알람을 등록하기 위한 primary id 값 세팅
-            intent, // 정보가 담긴 intent
-            PendingIntent.FLAG_UPDATE_CURRENT)
-
-        if (startTime.length > 3)
-            calendar.set(dateYear, dateMonth, date, startTime.slice(IntRange(0,1)).toInt(),startTime.slice(IntRange(2,3)).toInt())
-        else
-            calendar.set(dateYear, dateMonth, date, startTime.slice(IntRange(0,0)).toInt(),startTime.slice(IntRange(1,2)).toInt())
-
-        val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        am.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, sender)
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.main, menu)
+        return true
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment)
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    @IgnoreExtraProperties
+
+    public data class Schedule(
+        var scheduleName:String = "",
+        var scheduleInfo: String? = "",
+        var dateYear: Int = 0,
+        var dateMonth: Int = 0,
+        var date: Int = 0,
+        var startTime: String? = "",
+        var endTime: String? = "",
+        var alarm: Boolean? = false,
+        var shareAble: Boolean? = true,
+        var shareEditAble: Boolean? = false
+    )
+
+
+
+    fun insertSchedule(
+        userName: String,
+        tag: String,
+        scheduleName: String,
+        alarm: Boolean,
+        endTime: String,
+        startTime: String,
+        scheduleInfo: String?,
+        shareAble: Boolean?,
+        shareEditAble: Boolean?,
+        dateYear: Int,
+        dateMonth: Int,
+        date: Int
+    ) {
+        val databaseReference = firebaseDatabase.reference
+        val schedule = Schedule(
+            scheduleName,
+            scheduleInfo,
+            dateYear,
+            dateMonth,
+            date,
+            startTime,
+            endTime,
+            alarm,
+            shareAble,
+            shareEditAble
+        )
+        dataArray.add(schedule)
+        var a: String = schedule.scheduleName
+        databaseReference.child("Users").child(userName).child(tag).child(dateMonth.toString()).setValue(dataArray)
+
+
+    }
+
 
 
 }

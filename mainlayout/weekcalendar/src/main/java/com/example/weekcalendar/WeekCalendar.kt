@@ -31,7 +31,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
     val database = FirebaseDatabase.getInstance()
     val databaseReference = database.reference
 
-    val UserId: String = "User02"
+    val UserId: String = "User01"
 
 
 
