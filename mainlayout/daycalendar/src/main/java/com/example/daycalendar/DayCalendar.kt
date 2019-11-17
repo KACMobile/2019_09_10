@@ -53,7 +53,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             }
         } )
 
-        val userDB = databaseReference.child("Users/" + userID)
+        val userDB = databaseReference.child("Users/" + userID + "/Schedule")
         userDB.addValueEventListener( object: ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 saveDataSnap = dataSnapshot
