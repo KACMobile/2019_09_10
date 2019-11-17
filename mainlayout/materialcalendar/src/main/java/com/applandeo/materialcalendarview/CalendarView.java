@@ -282,7 +282,7 @@ public class CalendarView extends LinearLayout {
     }
 
     private void initCalendar() {
-        DatabaseReference userDB = databaseReference.child("Users/" + userID);
+        DatabaseReference userDB = databaseReference.child("Users/" + userID + "/Schedule");
         userDB.addValueEventListener(new ValueEventListener() {
                                          @Override
                                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -536,7 +536,6 @@ public class CalendarView extends LinearLayout {
         for(DataSnapshot snapshot : dataSnapShot.getChildren()){
             for(DataSnapshot deeperSnapShot : snapshot.getChildren()){
                 for(DataSnapshot deepestSnapShot : deeperSnapShot.getChildren()) {
-                    Log.d("aa","여기는 메터리얼" +deepestSnapShot.toString());
                     insertEvents(Integer.parseInt(deepestSnapShot.child("dateYear").getValue().toString()), Integer.parseInt(deepestSnapShot.child("dateMonth").getValue().toString()), Integer.parseInt(deepestSnapShot.child("date").getValue().toString()));
                 }
 

@@ -133,6 +133,14 @@ class MainActivity : AppCompatActivity() {
             val nextIntent = Intent(this, MakeSchedule::class.java)
             startActivity(nextIntent)
         }
+        insertGroup(
+            "KAU", "KAU", "모바일SW", false, "1000", "1300", "대한민국 VS 일본",
+            false, false, 2019, 11, 19
+        )
+        /*insertSchedule(
+            userID, "할 일", "1", false, "400", "200", "Mob",
+            false, false, 2019, 11, 20
+        )*/
         /*val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
             insertSchedule(
@@ -243,7 +251,40 @@ class MainActivity : AppCompatActivity() {
         )
         dataArray.add(schedule)
         var a: String = schedule.scheduleName
-        databaseReference.child("Users").child(userName).child(tag).child(dateMonth.toString()).setValue(dataArray)
+        databaseReference.child("Users").child(userName).child("Schedule").child(tag).child(dateMonth.toString()).setValue(dataArray)
+
+
+    }
+    fun insertGroup(
+        userName: String,
+        tag: String,
+        scheduleName: String,
+        alarm: Boolean,
+        endTime: String,
+        startTime: String,
+        scheduleInfo: String?,
+        shareAble: Boolean?,
+        shareEditAble: Boolean?,
+        dateYear: Int,
+        dateMonth: Int,
+        date: Int
+    ) {
+        val databaseReference = firebaseDatabase.reference
+        val schedule = Schedule(
+            scheduleName,
+            scheduleInfo,
+            dateYear,
+            dateMonth,
+            date,
+            startTime,
+            endTime,
+            alarm,
+            shareAble,
+            shareEditAble
+        )
+        dataArray.add(schedule)
+        var a: String = schedule.scheduleName
+        databaseReference.child("Groups").child(userName).child(tag).child(dateMonth.toString()).setValue(dataArray)
 
 
     }

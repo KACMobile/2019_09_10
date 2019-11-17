@@ -70,7 +70,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
         })
 
-        val userDB = databaseReference.child("Users/" + UserId)
+        val userDB = databaseReference.child("Users/" + UserId + "/Schedule")
         userDB.addValueEventListener( object: ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 saveDataSnap = dataSnapshot
