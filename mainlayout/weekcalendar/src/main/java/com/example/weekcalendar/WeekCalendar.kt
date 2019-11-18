@@ -202,7 +202,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
         for(snapShot in followListSnapshot){
             val scheduleColorPreference = context.getSharedPreferences("ScheduleColorInfo", Context.MODE_PRIVATE)
-            val groupBackgroundColor = scheduleColorPreference.getInt(snapShot.key, Color.BLUE)
+            val groupBackgroundColor = scheduleColorPreference.getInt(snapShot.key, Color.RED)
             for (deeperSnapShot in snapShot.child((currentMonth + 1).toString()).children) {
                 setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>,groupBackgroundColor)
 

@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
     private val databaseReference = firebaseDatabase.reference
 
     lateinit var saveDataSnap: DataSnapshot
-    var dataArray = arrayListOf<Schedule>()
+    var dataArray = arrayListOf<Any>()
 
     lateinit var fabOpen : Animation
     lateinit var fabClose : Animation

@@ -8,17 +8,23 @@ import android.widget.Button
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.util.Log
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.database.*
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
 class MakeSchedule :AppCompatActivity(){
 
 
+    private val firebaseDatabase = FirebaseDatabase.getInstance()
 
+    private val databaseReference = firebaseDatabase.reference
+    var dataArray = arrayListOf<Any?>()
+    val userID:String = "User01"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +56,19 @@ class MakeSchedule :AppCompatActivity(){
         var endTime : Int = 0
         var scheduleInfo : String = " "
         var scheduleName : String = "무제"
+
+        val userDB = databaseReference.child("Users/" + userID + "/Schedule")
+        userDB.addValueEventListener( object: ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for(snapShot in dataSnapshot.children){
+                    for(deeperSnapShot in snapShot.child((CalendarInfo.currentMonth +1).toString()).children){
+                        dataArray.add(deeperSnapShot.value)//DB값을 다시 Array에 저장
+                    }
+                }
+            }
+            override fun onCancelled(dataSnapshot: DatabaseError) {
+            }
+        })
 
         editDateStart.setOnClickListener {
             val dpd = DatePickerDialog(
@@ -125,17 +144,63 @@ class MakeSchedule :AppCompatActivity(){
             scheduleName = nameText.text.toString()
             scheduleInfo = infoText.text.toString()
 
-            /*insertSchedule(
-                userID, "할 일", scheduleName, alarm, endTime, startTime, scheduleInfo,
-                isitShare, isitShareEdit, dateYear, dateMonth, dateDay
-            )*/
+            insertSchedule(
+                userID, "할 일", scheduleName, alarm, startTime.toString(), endTime.toString(), scheduleInfo,
+                isitShare, isitShareEdit, dateYear, dateMonth+1, dateDay
+            )
 
 
 
-            val intent = Intent(this, MainActivity::class.java)
-
-            startActivity(intent)
+            finish()
         }
+
+
+    }
+    @IgnoreExtraProperties
+    //일정 데이터 저장 클래스
+    public data class Schedule(
+        var scheduleName:String = "",
+        var scheduleInfo: String? = "",
+        var dateYear: Int = 0,
+        var dateMonth: Int = 0,
+        var date: Int = 0,
+        var startTime: String? = "",
+        var endTime: String? = "",
+        var alarm: Boolean? = false,
+        var shareAble: Boolean? = true,
+        var shareEditAble: Boolean? = false
+    )
+    fun insertSchedule(
+        userName: String,
+        tag: String,
+        scheduleName: String,
+        alarm: Boolean,
+        startTime: String,
+        endTime: String,
+        scheduleInfo: String?,
+        shareAble: Boolean?,
+        shareEditAble: Boolean?,
+        dateYear: Int,
+        dateMonth: Int,
+        date: Int
+    ) {
+        val schedule = Schedule(
+            scheduleName,
+            scheduleInfo,
+            dateYear,
+            dateMonth,
+            date,
+            startTime,
+            endTime,
+            alarm,
+            shareAble,
+            shareEditAble
+        )
+        dataArray.add(schedule)
+
+        var dataHashMap = HashMap<String,Any>()
+        dataHashMap["/Users/"+userName +"/Schedule/"+tag+"/" + dateMonth.toString()] = dataArray
+        databaseReference.updateChildren(dataHashMap)
 
 
     }
