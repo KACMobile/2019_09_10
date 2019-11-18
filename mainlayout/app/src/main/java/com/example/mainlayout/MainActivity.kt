@@ -27,8 +27,10 @@ import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Build
 import android.os.PowerManager
+import android.view.MenuItem
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Switch
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.example.mainlayout.group.GroupAdd
@@ -55,10 +57,17 @@ class MainActivity : AppCompatActivity() {
     lateinit var rotateBackward : Animation
     lateinit var rotateForward : Animation
 
-    var isGroupFragment : Boolean = false
+    var isGroupFragment : Boolean = true
     var isOpen : Boolean = false
 
     val NOTIFICATION_CHANNEL_ID = "10001"
+
+    lateinit var fab : FloatingActionButton
+    lateinit var groupFab : FloatingActionButton
+
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,30 +75,25 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        val groupFab: FloatingActionButton = findViewById(R.id.groupfab)
+
+        fab = findViewById(R.id.fab)
+        groupFab = findViewById(R.id.groupfab)
         val groupFab1: FloatingActionButton = findViewById(R.id.groupfab1)
         val groupFab2: FloatingActionButton = findViewById(R.id.groupfab2)
         val groupFab3: FloatingActionButton = findViewById(R.id.groupfab3)
+        whichFab(isGroupFragment)
+
 
         fabOpen = AnimationUtils.loadAnimation(this, R.anim.fab_open)
         fabClose = AnimationUtils.loadAnimation(this, R.anim.fab_close)
         rotateForward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward)
         rotateBackward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward)
+        //val userFollow = databaseReference.child("Users/" + userID + "/Follow")
+        databaseReference.child("Users").child(userID).child("Follow").child("Groups").child("KAU").setValue(Color.RED)//DB에 임시추가
 
-        fun whichFab()
-        {
-            if (isGroupFragment)
-            {
-                fab.show()
-                groupFab.hide()
-            }
-            else //groupFab = false
-            {
-                fab.hide()
-                groupFab.show()
-            }
-        }
+
+
+
         fun animateFab()
         {
             if (isOpen)
@@ -116,20 +120,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        whichFab()
 
-        //var fragment : Fragment? = supportFragmentManager.findFragmentById(R.id.group_fragment)
+
 
         groupFab.setOnClickListener{view ->
             animateFab()
         }
 
         groupFab1.setOnClickListener{view ->
-            val Intent = Intent( this, GroupList::class.java)
+            val Intent = Intent( this, GroupAdd::class.java)
             startActivity(Intent)
         }
         groupFab2.setOnClickListener{view ->
-            val Intent = Intent( this, GroupAdd::class.java)
+            val Intent = Intent( this, GroupList::class.java)
             startActivity(Intent)
         }
         groupFab3.setOnClickListener{view ->
@@ -142,8 +145,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(nextIntent)
         }
         insertGroup(
-            "KAU", "KAU", "모바일SW", false, "1000", "1300", "대한민국 VS 일본",
+            "KAU", "KAU", "모바일SW", false, "1000", "1300", "13주",
             false, false, 2019, 11, 19
+        )
+        insertGroup(
+            "KAU", "KAU", "모바일SW", false, "1000", "1300", "14주",
+            false, false, 2019, 11, 26
         )
         /*insertSchedule(
             userID, "할 일", "1", false, "400", "200", "Mob",
@@ -215,13 +222,77 @@ class MainActivity : AppCompatActivity() {
             }
         }
          */
+
+        /*//Switch관련 저장 및 처리
+        val userFollow = databaseReference.child("Users/" + userID + "Follow")
+        val checkPreference = getSharedPreferences("CheckPreference", Context.MODE_PRIVATE)
+        val editor = checkPreference.edit()
+        val groupSwitch: Switch = findViewById(R.id.check_group)
+        val switchSample = CheckSwitch("KAU", groupSwitch,this)
+        userFollow.child("Users").child(userID).child("KAU").setValue(null)//DB에 임시추가
+        groupSwitch.setOnCheckedChangeListener { checkButton, isChecked ->
+
+            if(isChecked)
+                editor.putBoolean("KAU", true)
+            else
+                editor.putBoolean("KAU", false)
+        }
+        groupSwitch.isChecked = checkPreference.getBoolean("KAU",true)*/
+
+
+
+
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
+        menuInflater.inflate(R.menu.activity_main_drawer, menu)
         return true
     }
+
+
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        when(item?.itemId){
+            R.id.group_fragment -> {
+                isGroupFragment = true
+                whichFab(isGroupFragment)
+            }
+            R.id.daily_calender -> {
+                isGroupFragment = false
+                whichFab(isGroupFragment)
+            }
+            R.id.week_calender -> {
+                isGroupFragment = false
+                whichFab(isGroupFragment)
+            }
+            R.id.month_calender -> {
+                isGroupFragment = false
+                whichFab(isGroupFragment)
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+    fun whichFab(isGroupFragment: Boolean)
+    {
+        if (isGroupFragment)
+        {
+            fab.show()
+            groupFab.hide()
+        }
+        else //groupFragment = false
+        {
+            fab.hide()
+            groupFab.show()
+        }
+    }
+
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
@@ -229,7 +300,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     @IgnoreExtraProperties
-
+    //일정 데이터 저장 클래스
     public data class Schedule(
         var scheduleName:String = "",
         var scheduleInfo: String? = "",
@@ -250,8 +321,8 @@ class MainActivity : AppCompatActivity() {
         tag: String,
         scheduleName: String,
         alarm: Boolean,
-        endTime: String,
         startTime: String,
+        endTime: String,
         scheduleInfo: String?,
         shareAble: Boolean?,
         shareEditAble: Boolean?,
@@ -283,8 +354,8 @@ class MainActivity : AppCompatActivity() {
         tag: String,
         scheduleName: String,
         alarm: Boolean,
-        endTime: String,
         startTime: String,
+        endTime: String,
         scheduleInfo: String?,
         shareAble: Boolean?,
         shareEditAble: Boolean?,
@@ -307,7 +378,7 @@ class MainActivity : AppCompatActivity() {
         )
         dataArray.add(schedule)
         var a: String = schedule.scheduleName
-        databaseReference.child("Groups").child(userName).child(tag).child(dateMonth.toString()).setValue(dataArray)
+        databaseReference.child("Groups").child(userName).child(dateMonth.toString()).setValue(dataArray)
 
 
     }

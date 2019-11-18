@@ -34,9 +34,11 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
     var changedCell= arrayListOf<TextView>()
     lateinit var saveDataSnap: DataSnapshot //DataSnapshot을 받으면 set함
+    var followListSnapshot = arrayListOf<DataSnapshot>() //followList DataSnapshot을 받으면 add함
 
     init {
         LayoutInflater.from(context).inflate(R.layout.daycalendar,this,true)
+        val scheduleColorPreference = context.getSharedPreferences("ScheduleColorInfo", Context.MODE_PRIVATE)
         calendardefaultsetting()
 
         this.setOnTouchListener(object : OnSwipeTouchListener(context) {
@@ -59,10 +61,49 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 saveDataSnap = dataSnapshot
                 for(snapShot in dataSnapshot.children){
                     for(deeperSnapShot in snapShot.child((currentMonth+1).toString()).children){
-                        setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
+                        setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>,Color.CYAN)
 
                     }
                 }
+            }
+            override fun onCancelled(dataSnapshot: DatabaseError) {
+            }
+        })
+        //follow추가
+        val userfollow = databaseReference.child("Users/" + userID + "/Follow")
+        userfollow.addValueEventListener( object: ValueEventListener{
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (snapshot in dataSnapshot.children) {
+                    if (snapshot.key.toString() == "Groups") {
+                        for (deeperSnapshot in snapshot.children) {
+                            val groupBackgroundColor = deeperSnapshot.value.toString().toInt()
+                            val groupDB = databaseReference.child("Groups/" + deeperSnapshot.key.toString())
+                            val editor = scheduleColorPreference.edit()
+                            editor.putInt(deeperSnapshot.key.toString(), groupBackgroundColor)
+                            editor.commit()
+                            groupDB.addValueEventListener(object : ValueEventListener {
+                                override fun onDataChange(groupDataSnapshot: DataSnapshot) {
+                                    followListSnapshot.add(groupDataSnapshot)
+
+                                    for (deeperSnapShot in groupDataSnapshot.child((currentMonth + 1).toString()).children) {
+                                        setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>,groupBackgroundColor)
+
+                                    }
+
+
+                                }
+
+                                override fun onCancelled(groupDataSnapshot: DatabaseError) {
+
+                                }
+
+                            }
+                            )
+
+                        }
+                    }
+                }
+
             }
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
@@ -149,9 +190,18 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         if(::saveDataSnap.isInitialized) {
             for (snapShot in saveDataSnap.children) {
                 for (deeperSnapShot in snapShot.child((currentMonth+1).toString()).children) {
-                    setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
+                    setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>,Color.CYAN)
                 }
             }
+        }
+        for(snapShot in followListSnapshot){
+            val scheduleColorPreference = context.getSharedPreferences("ScheduleColorInfo", Context.MODE_PRIVATE)
+            val groupBackgroundColor = scheduleColorPreference.getInt(snapShot.key, Color.BLUE)
+            for (deeperSnapShot in snapShot.child((currentMonth + 1).toString()).children) {
+                setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>,groupBackgroundColor)
+
+            }
+
         }
 
     }
@@ -213,7 +263,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
      */
 
-    fun setScheduleOnCalendar(schedule: HashMap<String, Any>){
+    fun setScheduleOnCalendar(schedule: HashMap<String, Any>,color:Int){
         val scheduleName = schedule.get("scheduleName").toString()
         val scheduleInfo= schedule.get("scheduleInfo").toString()
         val startTime = schedule.get("startTime").toString()
@@ -235,7 +285,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 else if (count == startTime.toInt()) view.text = scheduleName
                 else if(count == (startTime.toInt() + 30)) view.text = scheduleInfo
                 Log.d("check","count : " + count + " startTime : " + startTime)
-                view.setBackgroundColor(Color.CYAN)
+                view.setBackgroundColor(color)
                 changedCell.add(view)
                 if (count % 100 == 0){
                     count += 30

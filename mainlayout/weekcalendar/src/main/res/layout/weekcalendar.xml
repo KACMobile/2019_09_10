@@ -2396,9 +2396,9 @@
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginRight="1dp"
                                         android:background="@android:color/white"
-                                        android:ellipsize="end"
+                                        android:ellipsize="none"
                                         android:padding="10dp"
-                                        android:singleLine="true"
+                                        android:singleLine="false"
                                         android:text=" "
                                         app:autoSizeTextType="uniform" />
 
@@ -2410,9 +2410,9 @@
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginRight="1dp"
                                         android:background="@android:color/white"
-                                        android:ellipsize="end"
+                                        android:ellipsize="none"
                                         android:padding="10dp"
-                                        android:singleLine="true"
+                                        android:singleLine="false"
                                         android:text=" "
                                         app:autoSizeTextType="uniform" />
 
@@ -2424,9 +2424,9 @@
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginRight="1dp"
                                         android:background="@android:color/white"
-                                        android:ellipsize="end"
+                                        android:ellipsize="none"
                                         android:padding="10dp"
-                                        android:singleLine="true"
+                                        android:singleLine="false"
                                         android:text=" "
                                         app:autoSizeTextType="uniform" />
 
@@ -2438,9 +2438,9 @@
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginRight="1dp"
                                         android:background="@android:color/white"
-                                        android:ellipsize="end"
+                                        android:ellipsize="none"
                                         android:padding="10dp"
-                                        android:singleLine="true"
+                                        android:singleLine="false"
                                         android:text=" "
                                         app:autoSizeTextType="uniform" />
 
@@ -2452,9 +2452,9 @@
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginRight="1dp"
                                         android:background="@android:color/white"
-                                        android:ellipsize="end"
+                                        android:ellipsize="none"
                                         android:padding="10dp"
-                                        android:singleLine="true"
+                                        android:singleLine="false"
                                         android:text=" "
                                         app:autoSizeTextType="uniform" />
 
@@ -2466,9 +2466,9 @@
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginRight="1dp"
                                         android:background="@android:color/white"
-                                        android:ellipsize="end"
+                                        android:ellipsize="none"
                                         android:padding="10dp"
-                                        android:singleLine="true"
+                                        android:singleLine="false"
                                         android:text=" "
                                         app:autoSizeTextType="uniform" />
 
@@ -2480,9 +2480,9 @@
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginRight="1dp"
                                         android:background="@android:color/white"
-                                        android:ellipsize="end"
+                                        android:ellipsize="none"
                                         android:padding="10dp"
-                                        android:singleLine="true"
+                                        android:singleLine="false"
                                         android:text=" "
                                         app:autoSizeTextType="uniform" />
 
