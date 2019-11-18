@@ -214,7 +214,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
          */
     }
 
@@ -324,17 +323,26 @@ class MainActivity : AppCompatActivity() {
 
         val alarmAble = schedule.get("alarm")
 
-        if(alarmAble==true && CalendarInfo.currentYear ==dateYear && (CalendarInfo.currentMonth +1)==dateMonth && CalendarInfo.currentDate ==date) {
-            Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTime, endTime)
+        val currentHour = CalendarInfo.calendar.get(Calendar.HOUR_OF_DAY)
+        val currentMinute = CalendarInfo.calendar.get(Calendar.MINUTE)
+
+        val startTimeHour= if (startTime.length>3) startTime.slice(IntRange(0, 1)).toInt() else startTime.slice(IntRange(0, 0)).toInt()
+        val startTimeMinute = if (startTime.length>3) startTime.slice(IntRange(2, 3)).toInt() else startTime.slice(IntRange(1, 2)).toInt()
+
+        if(alarmAble==true && CalendarInfo.currentYear ==dateYear && (CalendarInfo.currentMonth +1)==dateMonth && CalendarInfo.currentDate ==date
+            && currentHour<=startTimeHour && currentMinute<=startTimeMinute) {
+            Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
         }
     }
 
-    fun Alarm(scheduleName: String, scheduleInfo: String?, dateYear: Int, dateMonth: Int, date: Int, startTime: String, endTime: String) {
+    fun Alarm(scheduleName: String, scheduleInfo: String?, dateYear: Int, dateMonth: Int, date: Int,
+              startTimeHour: Int, startTimeMinute:Int, endTime: String) {
         val calendar = Calendar.getInstance()
         val notificationmanager
                 = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notyintent = Intent(this, BroadCastD::class.java) //BroadCastD 클래스로 보낼 intent
-        notyintent.putExtra("notificationId", dateYear + dateMonth + date + startTime.toInt() + endTime.toInt())
+        notyintent.putExtra("notificationId",
+            dateYear + dateMonth + date + startTimeHour + startTimeMinute + endTime.toInt())
         notyintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
 
         val pendingIntent = PendingIntent.getActivity(
@@ -367,21 +375,19 @@ class MainActivity : AppCompatActivity() {
             "My:Tag") // 스마트폰 화면이 꺼져있으면 화면 켜고 알림 울리기위해서 (FULL_WAKE_LOCK)
         wakeLock.acquire(5000)
 
-        notificationmanager.notify(dateYear + dateMonth + date + startTime.toInt() + endTime.toInt(), builder.build())
+        notificationmanager.notify(dateYear + dateMonth + date + startTimeHour + startTimeMinute + endTime.toInt(), builder.build())
 
         val sender = PendingIntent.getBroadcast(
             this, // context 정보
-            dateYear + dateMonth + date + startTime.toInt() + endTime.toInt(), // 여러개의 알람을 등록하기 위한 primary id 값 세팅
+            dateYear + dateMonth + date + startTimeHour + startTimeMinute + endTime.toInt(), // 여러개의 알람을 등록하기 위한 primary id 값 세팅
             intent, // 정보가 담긴 intent
             PendingIntent.FLAG_UPDATE_CURRENT)
 
-        if (startTime.length > 3)
-            calendar.set(dateYear, dateMonth, date, startTime.slice(IntRange(0,1)).toInt(),startTime.slice(IntRange(2,3)).toInt())
-        else
-            calendar.set(dateYear, dateMonth, date, startTime.slice(IntRange(0,0)).toInt(),startTime.slice(IntRange(1,2)).toInt())
+        calendar.set(dateYear, dateMonth, date, startTimeHour, startTimeMinute)
 
         val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         am.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, sender)
     }
+
 
 }

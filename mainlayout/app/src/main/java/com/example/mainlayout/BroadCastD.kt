@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 class BroadCastD : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.mainlayout.R.layout.activity_main)
+        setContentView(R.layout.activity_main)
 
         var noti_id:Int = 0
         var noti_year:Int = 2019
