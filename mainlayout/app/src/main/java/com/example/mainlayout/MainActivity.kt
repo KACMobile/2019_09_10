@@ -5,9 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -18,24 +16,12 @@ import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
-import com.applandeo.materialcalendarview.utils.*
-import com.applandeo.materialcalendarview.CalendarView
-import kotlinx.android.synthetic.main.month_calender.*
-import kotlinx.android.synthetic.main.week_calender.*
 
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Build
 import android.os.PowerManager
 import android.view.MenuItem
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Switch
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import com.example.mainlayout.group.GroupAdd
-import com.example.mainlayout.group.GroupList
-import com.example.mainlayout.group.GroupSetting
 import com.google.firebase.database.*
 import java.util.*
 
@@ -286,13 +272,13 @@ class MainActivity : AppCompatActivity() {
     {
         if (isGroupFragment)
         {
-            fab.show()
-            groupFab.hide()
+            fab.hide()
+            groupFab.show()
         }
         else //groupFragment = false
         {
-            fab.hide()
-            groupFab.show()
+            fab.show()
+            groupFab.hide()
         }
     }
 
