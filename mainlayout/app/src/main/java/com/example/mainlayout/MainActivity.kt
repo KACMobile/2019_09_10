@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Build
 import android.os.PowerManager
+import android.view.MenuItem
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
@@ -55,10 +56,17 @@ class MainActivity : AppCompatActivity() {
     lateinit var rotateBackward : Animation
     lateinit var rotateForward : Animation
 
-    var isGroupFragment : Boolean = false
+    var isGroupFragment : Boolean = true
     var isOpen : Boolean = false
 
     val NOTIFICATION_CHANNEL_ID = "10001"
+
+    lateinit var fab : FloatingActionButton
+    lateinit var groupFab : FloatingActionButton
+
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,30 +74,23 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        val groupFab: FloatingActionButton = findViewById(R.id.groupfab)
+
+        fab = findViewById(R.id.fab)
+        groupFab = findViewById(R.id.groupfab)
         val groupFab1: FloatingActionButton = findViewById(R.id.groupfab1)
         val groupFab2: FloatingActionButton = findViewById(R.id.groupfab2)
         val groupFab3: FloatingActionButton = findViewById(R.id.groupfab3)
+        whichFab(isGroupFragment)
+
 
         fabOpen = AnimationUtils.loadAnimation(this, R.anim.fab_open)
         fabClose = AnimationUtils.loadAnimation(this, R.anim.fab_close)
         rotateForward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward)
         rotateBackward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward)
 
-        fun whichFab()
-        {
-            if (isGroupFragment)
-            {
-                fab.show()
-                groupFab.hide()
-            }
-            else //groupFab = false
-            {
-                fab.hide()
-                groupFab.show()
-            }
-        }
+
+
+
         fun animateFab()
         {
             if (isOpen)
@@ -116,20 +117,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        whichFab()
 
-        //var fragment : Fragment? = supportFragmentManager.findFragmentById(R.id.group_fragment)
+
 
         groupFab.setOnClickListener{view ->
             animateFab()
         }
 
         groupFab1.setOnClickListener{view ->
-            val Intent = Intent( this, GroupList::class.java)
+            val Intent = Intent( this, GroupAdd::class.java)
             startActivity(Intent)
         }
         groupFab2.setOnClickListener{view ->
-            val Intent = Intent( this, GroupAdd::class.java)
+            val Intent = Intent( this, GroupList::class.java)
             startActivity(Intent)
         }
         groupFab3.setOnClickListener{view ->
@@ -221,8 +221,50 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
+        menuInflater.inflate(R.menu.activity_main_drawer, menu)
         return true
     }
+
+
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        when(item?.itemId){
+            R.id.group_fragment -> {
+                isGroupFragment = true
+                whichFab(isGroupFragment)
+            }
+            R.id.daily_calender -> {
+                isGroupFragment = false
+                whichFab(isGroupFragment)
+            }
+            R.id.week_calender -> {
+                isGroupFragment = false
+                whichFab(isGroupFragment)
+            }
+            R.id.month_calender -> {
+                isGroupFragment = false
+                whichFab(isGroupFragment)
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+    fun whichFab(isGroupFragment: Boolean)
+    {
+        if (isGroupFragment)
+        {
+            fab.show()
+            groupFab.hide()
+        }
+        else //groupFragment = false
+        {
+            fab.hide()
+            groupFab.show()
+        }
+    }
+
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
