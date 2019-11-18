@@ -96,7 +96,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
                     if (snapshot.key.toString() == "Groups") {
                         for (deeperSnapshot in snapshot.children) {
                             val groupBackgroundColor = deeperSnapshot.value.toString().toInt()
-                            val groupDB = databaseReference.child("Groups/" + deeperSnapshot.key.toString())
+                            val groupDB = databaseReference.child("Groups/" + deeperSnapshot.key.toString()+"/Schedule")
                             val editor = scheduleColorPreference.edit()
                             editor.putInt(deeperSnapshot.key.toString(), groupBackgroundColor)
                             editor.commit()

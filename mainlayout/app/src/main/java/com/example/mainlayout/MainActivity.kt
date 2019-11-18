@@ -144,7 +144,7 @@ class MainActivity : AppCompatActivity() {
             val nextIntent = Intent(this, MakeSchedule::class.java)
             startActivity(nextIntent)
         }
-        insertGroup(
+        /*insertGroup(
             "KAU", "KAU", "모바일SW", false, "1000", "1300", "13주",
             false, false, 2019, 11, 19
         )
@@ -152,6 +152,10 @@ class MainActivity : AppCompatActivity() {
             "KAU", "KAU", "모바일SW", false, "1000", "1300", "14주",
             false, false, 2019, 11, 26
         )
+        insertGroup(
+            "프리미어12", "프리미어12", "결승", false, "1900", "2300", "대한민국 VS 일본",
+            false, false, 2019, 11, 17
+        )*/
         /*insertSchedule(
             userID, "할 일", "1", false, "400", "200", "Mob",
             false, false, 2019, 11, 20
@@ -378,7 +382,7 @@ class MainActivity : AppCompatActivity() {
         )
         dataArray.add(schedule)
         var a: String = schedule.scheduleName
-        databaseReference.child("Groups").child(userName).child(dateMonth.toString()).setValue(dataArray)
+        databaseReference.child("Groups").child(userName).child("Schedule").child(dateMonth.toString()).setValue(dataArray)
 
 
     }
