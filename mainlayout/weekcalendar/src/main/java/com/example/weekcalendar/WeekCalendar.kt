@@ -31,7 +31,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
     val database = FirebaseDatabase.getInstance()
     val databaseReference = database.reference
 
-    val UserId: String = "User01"
+    val userID: String = "User01"
 
 
 
@@ -48,10 +48,11 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
     var currentDate = cal.get(Calendar.DATE)
     var changedCell= arrayListOf<TextView>()
     lateinit var saveDataSnap: DataSnapshot //DataSnapshot을 받으면 set함
+    var followListSnapshot = arrayListOf<DataSnapshot>() //followList DataSnapshot을 받으면 add함
 
     init {
         LayoutInflater.from(context).inflate(R.layout.weekcalendar, this, true)
-        calendardefaultsetting()
+        val scheduleColorPreference = context.getSharedPreferences("ScheduleColorInfo", Context.MODE_PRIVATE)
 
         this.weekTableScroll.setOnTouchListener(object : OnSwipeTouchListener(context) {
             override fun onSwipeLeft() {
@@ -70,13 +71,14 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
         })
 
-        val userDB = databaseReference.child("Users/" + UserId + "/Schedule")
+
+        val userDB = databaseReference.child("Users/" + userID + "/Schedule")
         userDB.addValueEventListener( object: ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 saveDataSnap = dataSnapshot
                 for(snapShot in dataSnapshot.children){
                     for(deeperSnapShot in snapShot.child((currentMonth+1).toString()).children){
-                        setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
+                        setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>,Color.CYAN)
 
                     }
                 }
@@ -86,6 +88,47 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
         })
+        //follow추가
+        val userfollow = databaseReference.child("Users/" + userID + "/Follow")
+        userfollow.addValueEventListener( object: ValueEventListener{
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (snapshot in dataSnapshot.children) {
+                    if (snapshot.key.toString() == "Groups") {
+                        for (deeperSnapshot in snapshot.children) {
+                            val groupBackgroundColor = deeperSnapshot.value.toString().toInt()
+                            val groupDB = databaseReference.child("Groups/" + deeperSnapshot.key.toString())
+                            val editor = scheduleColorPreference.edit()
+                            editor.putInt(deeperSnapshot.key.toString(), groupBackgroundColor)
+                            editor.commit()
+                            groupDB.addValueEventListener(object : ValueEventListener {
+                                override fun onDataChange(groupDataSnapshot: DataSnapshot) {
+                                    followListSnapshot.add(groupDataSnapshot)
+
+                                    for (deeperSnapShot in groupDataSnapshot.child((currentMonth + 1).toString()).children) {
+                                        setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>,groupBackgroundColor)
+
+                                    }
+
+
+                                }
+
+                                override fun onCancelled(groupDataSnapshot: DatabaseError) {
+
+                                }
+
+                            }
+                            )
+
+                        }
+                    }
+                }
+
+            }
+            override fun onCancelled(dataSnapshot: DatabaseError) {
+            }
+        })
+
+        calendardefaultsetting()
 
 
     }
@@ -148,13 +191,39 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             i.setBackgroundColor(Color.WHITE)
         }
         changedCell.clear()
+        //다음주나 전주로 이동후 돌아와도 표기
         if(::saveDataSnap.isInitialized) {
             for (snapShot in saveDataSnap.children) {
                 for (deeperSnapShot in snapShot.child((currentMonth+1).toString()).children) {
-                    setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
+                    setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>,Color.CYAN)
                 }
             }
         }
+
+        for(snapShot in followListSnapshot){
+            val scheduleColorPreference = context.getSharedPreferences("ScheduleColorInfo", Context.MODE_PRIVATE)
+            val groupBackgroundColor = scheduleColorPreference.getInt(snapShot.key, Color.BLUE)
+            for (deeperSnapShot in snapShot.child((currentMonth + 1).toString()).children) {
+                setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>,groupBackgroundColor)
+
+            }
+
+        }
+
+        /*//달력이 초기화될때마다 follow한 일정 표시
+        val groupDB = databaseReference.child("Group")
+        if(::followListSnapshot.isInitialized) {
+            for (snapShot in followListSnapshot.children) {
+                val groupSchedule = groupDB.orderByChild(snapShot.key.toString()).equalTo(snapShot.key.toString())
+                Log.d("a","This is!!" + groupSchedule.toString())
+                //setScheduleOnCalendar(groupSchedule,)
+
+            }
+        }*/
+
+    }
+
+    fun setFollowSchedule(){
 
     }
 
@@ -217,7 +286,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
     */
 
 
-    public fun setScheduleOnCalendar(schedule: HashMap<String,Any>) {
+    public fun setScheduleOnCalendar(schedule: HashMap<String,Any>, color:Int) {
         val dateArray = arrayOf(
             weekcalendarview.dateMon,
             weekcalendarview.dateTue, weekcalendarview.dateWen,
@@ -245,7 +314,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             while (count < endTime.toString().toInt()) {
                 idFromTime = resources.getIdentifier(dOW + count, "id", context.packageName)
                 view = findViewById<TextView>(idFromTime)
-                view.setBackgroundColor(Color.CYAN)
+                view.setBackgroundColor(color)
                 changedCell.add(view)
                 if (count % 100 == 0)
                     count += 30
