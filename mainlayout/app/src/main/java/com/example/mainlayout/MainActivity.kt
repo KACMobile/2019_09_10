@@ -378,7 +378,7 @@ class MainActivity : AppCompatActivity() {
         )
         dataArray.add(schedule)
         var a: String = schedule.scheduleName
-        databaseReference.child("Groups").child(userName).child(dateMonth.toString()).setValue(dataArray)
+        databaseReference.child("Groups").child(userName).child(userName).child(dateMonth.toString()).setValue(dataArray)
 
 
     }

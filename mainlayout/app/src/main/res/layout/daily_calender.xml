@@ -8,52 +8,10 @@
     <com.example.daycalendar.DayCalendar
         android:id="@+id/day_CalendarView"
         android:layout_width="450dp"
-        android:layout_height="550dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="645dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
     </com.example.daycalendar.DayCalendar>
 
-    <com.google.android.material.tabs.TabLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/day_CalendarView"
-        app:layout_constraintVertical_bias="1"
-        tools:layout_constraintHorizontal_bias="1">
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/calendar_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/calender" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/subscribe_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/subscribe" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/group_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/group" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/notification_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/notification_83717" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/settting_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/setting" />
-    </com.google.android.material.tabs.TabLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
