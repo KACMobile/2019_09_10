@@ -7,8 +7,15 @@
 
     <com.example.daycalendar.DayCalendar
         android:id="@+id/day_CalendarView"
+<<<<<<< HEAD
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+=======
+        android:layout_width="450dp"
+        android:layout_height="550dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+>>>>>>> e08e894fc63f5ca4feab45d5b78320b64dc743cf
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
