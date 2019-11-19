@@ -7,8 +7,8 @@
 
     <com.example.weekcalendar.WeekCalendar
         android:id="@+id/week_CalendarView"
-        android:layout_width="450dp"
-        android:layout_height="645dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -79,7 +79,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
         fun animateFab()
         {
             if (isOpen)
@@ -137,11 +136,11 @@ class MainActivity : AppCompatActivity() {
         insertGroup(
             "KAU", "KAU", "모바일SW", false, "1000", "1300", "14주",
             false, false, 2019, 11, 26
-        )
+        )*/
         insertGroup(
             "프리미어12", "프리미어12", "결승", false, "1900", "2300", "대한민국 VS 일본",
             false, false, 2019, 11, 17
-        )*/
+        )
         /*insertSchedule(
             userID, "할 일", "1", false, "400", "200", "Mob",
             false, false, 2019, 11, 20
@@ -272,13 +271,13 @@ class MainActivity : AppCompatActivity() {
     {
         if (isGroupFragment)
         {
-            fab.hide()
-            groupFab.show()
+            fab.show()
+            groupFab.hide()
         }
         else //groupFragment = false
         {
-            fab.show()
-            groupFab.hide()
+            fab.hide()
+            groupFab.show()
         }
     }
 
@@ -288,21 +287,6 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
-
-    @IgnoreExtraProperties
-    //일정 데이터 저장 클래스
-    public data class Schedule(
-        var scheduleName:String = "",
-        var scheduleInfo: String? = "",
-        var dateYear: Int = 0,
-        var dateMonth: Int = 0,
-        var date: Int = 0,
-        var startTime: String? = "",
-        var endTime: String? = "",
-        var alarm: Boolean? = false,
-        var shareAble: Boolean? = true,
-        var shareEditAble: Boolean? = false
-    )
 
 
 
@@ -322,6 +306,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         val databaseReference = firebaseDatabase.reference
         val schedule = Schedule(
+            userName,
             scheduleName,
             scheduleInfo,
             dateYear,
@@ -355,6 +340,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         val databaseReference = firebaseDatabase.reference
         val schedule = Schedule(
+            userName,
             scheduleName,
             scheduleInfo,
             dateYear,

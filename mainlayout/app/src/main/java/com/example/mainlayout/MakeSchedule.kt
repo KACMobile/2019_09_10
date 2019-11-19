@@ -156,20 +156,7 @@ class MakeSchedule :AppCompatActivity(){
 
 
     }
-    @IgnoreExtraProperties
-    //일정 데이터 저장 클래스
-    public data class Schedule(
-        var scheduleName:String = "",
-        var scheduleInfo: String? = "",
-        var dateYear: Int = 0,
-        var dateMonth: Int = 0,
-        var date: Int = 0,
-        var startTime: String? = "",
-        var endTime: String? = "",
-        var alarm: Boolean? = false,
-        var shareAble: Boolean? = true,
-        var shareEditAble: Boolean? = false
-    )
+
     fun insertSchedule(
         userName: String,
         tag: String,
@@ -185,6 +172,7 @@ class MakeSchedule :AppCompatActivity(){
         date: Int
     ) {
         val schedule = Schedule(
+            userName,
             scheduleName,
             scheduleInfo,
             dateYear,
