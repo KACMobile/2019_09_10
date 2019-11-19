@@ -96,7 +96,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
                     if (snapshot.key.toString() == "Groups") {
                         for (deeperSnapshot in snapshot.children) {
                             val groupBackgroundColor = deeperSnapshot.value.toString().toInt()
-                            val groupDB = databaseReference.child("Groups/" + deeperSnapshot.key.toString())
+                            val groupDB = databaseReference.child("Groups/" + deeperSnapshot.key.toString()+"/Schedule")
                             val editor = scheduleColorPreference.edit()
                             editor.putInt(deeperSnapshot.key.toString(), groupBackgroundColor)
                             editor.commit()
@@ -202,7 +202,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
         for(snapShot in followListSnapshot){
             val scheduleColorPreference = context.getSharedPreferences("ScheduleColorInfo", Context.MODE_PRIVATE)
-            val groupBackgroundColor = scheduleColorPreference.getInt(snapShot.key, Color.BLUE)
+            val groupBackgroundColor = scheduleColorPreference.getInt(snapShot.key, Color.RED)
             for (deeperSnapShot in snapShot.child((currentMonth + 1).toString()).children) {
                 setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>,groupBackgroundColor)
 

@@ -5,9 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -18,24 +16,12 @@ import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
-import com.applandeo.materialcalendarview.utils.*
-import com.applandeo.materialcalendarview.CalendarView
-import kotlinx.android.synthetic.main.month_calender.*
-import kotlinx.android.synthetic.main.week_calender.*
 
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Build
 import android.os.PowerManager
 import android.view.MenuItem
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Switch
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import com.example.mainlayout.group.GroupAdd
-import com.example.mainlayout.group.GroupList
-import com.example.mainlayout.group.GroupSetting
 import com.google.firebase.database.*
 import java.util.*
 
@@ -50,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     private val databaseReference = firebaseDatabase.reference
 
     lateinit var saveDataSnap: DataSnapshot
-    var dataArray = arrayListOf<Schedule>()
+    var dataArray = arrayListOf<Any>()
 
     lateinit var fabOpen : Animation
     lateinit var fabClose : Animation
@@ -144,7 +130,7 @@ class MainActivity : AppCompatActivity() {
             val nextIntent = Intent(this, MakeSchedule::class.java)
             startActivity(nextIntent)
         }
-        insertGroup(
+        /*insertGroup(
             "KAU", "KAU", "모바일SW", false, "1000", "1300", "13주",
             false, false, 2019, 11, 19
         )
@@ -152,6 +138,10 @@ class MainActivity : AppCompatActivity() {
             "KAU", "KAU", "모바일SW", false, "1000", "1300", "14주",
             false, false, 2019, 11, 26
         )
+        insertGroup(
+            "프리미어12", "프리미어12", "결승", false, "1900", "2300", "대한민국 VS 일본",
+            false, false, 2019, 11, 17
+        )*/
         /*insertSchedule(
             userID, "할 일", "1", false, "400", "200", "Mob",
             false, false, 2019, 11, 20
@@ -282,13 +272,13 @@ class MainActivity : AppCompatActivity() {
     {
         if (isGroupFragment)
         {
-            fab.show()
-            groupFab.hide()
+            fab.hide()
+            groupFab.show()
         }
         else //groupFragment = false
         {
-            fab.hide()
-            groupFab.show()
+            fab.show()
+            groupFab.hide()
         }
     }
 
@@ -378,7 +368,7 @@ class MainActivity : AppCompatActivity() {
         )
         dataArray.add(schedule)
         var a: String = schedule.scheduleName
-        databaseReference.child("Groups").child(userName).child(userName).child(dateMonth.toString()).setValue(dataArray)
+        databaseReference.child("Groups").child(userName).child("Schedule").child(userName).child(dateMonth.toString()).setValue(dataArray)
 
 
     }

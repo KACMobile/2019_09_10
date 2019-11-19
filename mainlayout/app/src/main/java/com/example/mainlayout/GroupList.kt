@@ -1,13 +1,12 @@
-package com.example.mainlayout.group
+package com.example.mainlayout
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mainlayout.R
 
-class GroupAdd : AppCompatActivity() {
+class GroupList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.group_add)
+        setContentView(R.layout.group_list)
     }
-
 }
