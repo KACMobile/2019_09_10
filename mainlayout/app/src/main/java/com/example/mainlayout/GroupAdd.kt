@@ -75,30 +75,34 @@ class GroupAdd : AppCompatActivity() {
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
         val inflater = menuInflater
         inflater.inflate(R.menu.add_group_menu, menu)
 
-        /*val manager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchItem = menu?.findItem(R.id.search)
-        val searchView = searchItem?.actionView as SearchView
+        //검색어 저장 변수
+        var searchData : String
 
-        searchView.setSearchableInfo(manager.getSearchableInfo(componentName))
+        val searchItem = menu.findItem(R.id.search)
+        val searchView = searchItem.actionView as SearchView
+
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
-                searchView.clearFocus()
-                searchView.setQuery("" , false)
-                searchItem.collapseActionView()
-                Toast.makeText(this@GroupAdd, "query", Toast.LENGTH_LONG).show()
+
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                return false
+
+                if (newText!!.isNotEmpty())
+                {
+                    searchData = newText
+                    Toast.makeText(this@GroupAdd, "You search $searchData", Toast.LENGTH_LONG).show()
+                }
+                return true
             }
-        })*/
+        })
 
         return true
     }

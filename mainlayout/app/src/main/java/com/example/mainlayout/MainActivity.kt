@@ -271,13 +271,13 @@ class MainActivity : AppCompatActivity() {
     {
         if (isGroupFragment)
         {
-            fab.show()
-            groupFab.hide()
+            fab.hide()
+            groupFab.show()
         }
         else //groupFragment = false
         {
-            fab.hide()
-            groupFab.show()
+            fab.show()
+            groupFab.hide()
         }
     }
 
