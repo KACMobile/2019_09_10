@@ -194,12 +194,12 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 }
             }
         }
+        var groupBackgroundColor = Color.RED
         for(snapShot in followListSnapshot){
             val scheduleColorPreference = context.getSharedPreferences("ScheduleColorInfo", Context.MODE_PRIVATE)
-            val groupBackgroundColor = scheduleColorPreference.getInt(snapShot.key, Color.RED)
             for (deeperSnapShot in snapShot.child((currentMonth + 1).toString()).children) {
+                groupBackgroundColor = scheduleColorPreference.getInt(deeperSnapShot.child("userID").value.toString(), Color.BLUE)
                 setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>,groupBackgroundColor)
-
             }
 
         }
