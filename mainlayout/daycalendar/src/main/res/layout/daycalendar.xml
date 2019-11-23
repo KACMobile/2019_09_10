@@ -23,240 +23,263 @@
         <TableRow
             android:id="@+id/headertableRow"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/nullspace"
-                android:layout_width="42dp"
-                android:layout_height="80dp"
-
-
-                android:background="@android:color/white" />
-
-            <TableLayout
-                android:id="@+id/headerinfo"
+            <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:stretchColumns="7">
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-                <TableRow
-                    android:id="@+id/weekday"
+                <TextView
+                    android:id="@+id/nullsp"
+                    android:layout_width="40dp"
+                    android:layout_height="80dp"
+                    android:background="@android:color/white"
+                    android:gravity="right" />
+
+                <TableLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
-                    <TextView
-                        android:id="@+id/textSun"
-                        android:layout_width="51dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="1dp"
-                        android:layout_marginTop="1dp"
+                    <TableLayout
+                        android:id="@+id/headerinfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:stretchColumns="8">
 
-                        android:layout_marginRight="1dp"
-                        android:layout_marginBottom="1dp"
-                        android:background="@android:color/white"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="일"
-                        android:textColor="#FF0303" />
+                        <TableRow
+                            android:id="@+id/weekday"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/textMon"
-                        android:layout_width="51dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="1dp"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginRight="1dp"
+                            <TextView
+                                android:id="@+id/textSun"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="1dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_weight="1"
 
-                        android:layout_marginBottom="1dp"
-                        android:background="@android:color/white"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="월" />
+                                android:layout_marginRight="1dp"
+                                android:layout_marginBottom="1dp"
+                                android:background="@android:color/white"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="일"
+                                android:textColor="#FF0303" />
 
-                    <TextView
-                        android:id="@+id/textTue"
-                        android:layout_width="51dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="1dp"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginRight="1dp"
+                            <TextView
+                                android:id="@+id/textMon"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="1dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_marginRight="1dp"
+                                android:layout_weight="1"
 
-                        android:layout_marginBottom="1dp"
-                        android:background="@android:color/white"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="화" />
+                                android:layout_marginBottom="1dp"
+                                android:background="@android:color/white"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="월" />
 
-                    <TextView
-                        android:id="@+id/textWen"
-                        android:layout_width="51dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="1dp"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginRight="1dp"
+                            <TextView
+                                android:id="@+id/textTue"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="1dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_marginRight="1dp"
+                                android:layout_weight="1"
 
-                        android:layout_marginBottom="1dp"
-                        android:background="@android:color/white"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="수" />
+                                android:layout_marginBottom="1dp"
+                                android:background="@android:color/white"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="화" />
 
-                    <TextView
-                        android:id="@+id/textThur"
-                        android:layout_width="51dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="1dp"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginRight="1dp"
+                            <TextView
+                                android:id="@+id/textWen"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="1dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_marginRight="1dp"
+                                android:layout_weight="1"
 
-                        android:layout_marginBottom="1dp"
-                        android:background="@android:color/white"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="목" />
+                                android:layout_marginBottom="1dp"
+                                android:background="@android:color/white"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="수" />
 
-                    <TextView
-                        android:id="@+id/textFri"
-                        android:layout_width="51dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="1dp"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginRight="1dp"
+                            <TextView
+                                android:id="@+id/textThur"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="1dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_marginRight="1dp"
+                                android:layout_weight="1"
 
-                        android:layout_marginBottom="1dp"
-                        android:background="@android:color/white"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="금" />
+                                android:layout_marginBottom="1dp"
+                                android:background="@android:color/white"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="목" />
 
-                    <TextView
-                        android:id="@+id/textSat"
-                        android:layout_width="51dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="1dp"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginRight="1dp"
+                            <TextView
+                                android:id="@+id/textFri"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="1dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_marginRight="1dp"
+                                android:layout_weight="1"
 
-                        android:layout_marginBottom="1dp"
-                        android:background="@android:color/white"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="토"
-                        android:textColor="#021BF7" />
+                                android:layout_marginBottom="1dp"
+                                android:background="@android:color/white"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="금" />
 
-                </TableRow>
+                            <TextView
+                                android:id="@+id/textSat"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="1dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_marginRight="1dp"
+                                android:layout_weight="1"
 
-                <TableRow
-                    android:id="@+id/weekdate"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
 
+                                android:layout_marginBottom="1dp"
+                                android:background="@android:color/white"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="토"
+                                android:textColor="#021BF7" />
 
-                    <TextView
-                        android:id="@+id/dateSun"
-                        android:layout_width="51dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="1dp"
-                        android:layout_marginTop="1dp"
+                        </TableRow>
 
-                        android:layout_marginRight="1dp"
-                        android:layout_marginBottom="1dp"
-                        android:background="@android:color/white"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="1"
-                        android:textColor="#FF0303" />
+                        <TableRow
+                            android:id="@+id/weekdate"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/dateMon"
-                        android:layout_width="51dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="1dp"
-                        android:layout_marginTop="1dp"
+                            <TextView
+                                android:id="@+id/dateSun"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="1dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_weight="1"
 
-                        android:layout_marginRight="1dp"
-                        android:layout_marginBottom="1dp"
-                        android:background="@android:color/white"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="2" />
+                                android:layout_marginRight="1dp"
+                                android:layout_marginBottom="1dp"
+                                android:background="@android:color/white"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="1"
+                                android:textColor="#FF0303" />
 
-                    <TextView
-                        android:id="@+id/dateTue"
-                        android:layout_width="51dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="1dp"
-                        android:layout_marginTop="1dp"
+                            <TextView
+                                android:id="@+id/dateMon"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="1dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_weight="1"
 
-                        android:layout_marginRight="1dp"
-                        android:layout_marginBottom="1dp"
-                        android:background="@android:color/white"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="3" />
+                                android:layout_marginRight="1dp"
+                                android:layout_marginBottom="1dp"
+                                android:background="@android:color/white"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="2" />
 
-                    <TextView
-                        android:id="@+id/dateWen"
-                        android:layout_width="51dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="1dp"
-                        android:layout_marginTop="1dp"
+                            <TextView
+                                android:id="@+id/dateTue"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="1dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_weight="1"
 
-                        android:layout_marginRight="1dp"
-                        android:layout_marginBottom="1dp"
-                        android:background="@android:color/white"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="4" />
+                                android:layout_marginRight="1dp"
+                                android:layout_marginBottom="1dp"
+                                android:background="@android:color/white"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="3" />
 
-                    <TextView
-                        android:id="@+id/dateThur"
-                        android:layout_width="51dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="1dp"
-                        android:layout_marginTop="1dp"
+                            <TextView
+                                android:id="@+id/dateWen"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="1dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_weight="1"
 
-                        android:layout_marginRight="1dp"
-                        android:layout_marginBottom="1dp"
-                        android:background="@android:color/white"
-                        android:gravity="center"
-                        android:padding="10dp"
+                                android:layout_marginRight="1dp"
+                                android:layout_marginBottom="1dp"
+                                android:background="@android:color/white"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="4" />
 
-                        android:text="5" />
+                            <TextView
+                                android:id="@+id/dateThur"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="1dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_weight="1"
 
-                    <TextView
-                        android:id="@+id/dateFri"
-                        android:layout_width="51dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="1dp"
-                        android:layout_marginTop="1dp"
+                                android:layout_marginRight="1dp"
+                                android:layout_marginBottom="1dp"
+                                android:background="@android:color/white"
+                                android:gravity="center"
+                                android:padding="10dp"
 
-                        android:layout_marginRight="1dp"
-                        android:layout_marginBottom="1dp"
-                        android:background="@android:color/white"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="6" />
+                                android:text="5" />
 
-                    <TextView
-                        android:id="@+id/dateSat"
-                        android:layout_width="51dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="1dp"
-                        android:layout_marginTop="1dp"
+                            <TextView
+                                android:id="@+id/dateFri"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="1dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_weight="1"
 
-                        android:layout_marginRight="1dp"
-                        android:layout_marginBottom="1dp"
-                        android:background="@android:color/white"
-                        android:gravity="center"
-                        android:padding="10dip"
-                        android:text="7"
-                        android:textColor="#021BF7" />
+                                android:layout_marginRight="1dp"
+                                android:layout_marginBottom="1dp"
+                                android:background="@android:color/white"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="6" />
 
-                </TableRow>
-            </TableLayout>
+                            <TextView
+                                android:id="@+id/dateSat"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="1dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_weight="1"
 
+                                android:layout_marginRight="1dp"
+                                android:layout_marginBottom="1dp"
+                                android:background="@android:color/white"
+                                android:gravity="center"
+                                android:padding="10dip"
+                                android:text="7"
+                                android:textColor="#021BF7" />
+
+                        </TableRow>
+                    </TableLayout>
+                </TableLayout>
+            </TableRow>
         </TableRow>
 
         <TableRow
@@ -265,7 +288,7 @@
 
             <ScrollView
                 android:id="@+id/dayTableScroll"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="460dp"
                 android:layout_span="2">
 
@@ -278,12 +301,11 @@
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
+                        android:layout_height="match_parent">
 
                         <TextView
                             android:id="@+id/time0"
-                            android:layout_width="43dp"
+                            android:layout_width="40dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -291,7 +313,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -304,7 +327,7 @@
 
                                     <TextView
                                         android:id="@+id/day000"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginRight="1dp"
@@ -323,7 +346,7 @@
 
                                     <TextView
                                         android:id="@+id/day030"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -347,7 +370,7 @@
 
                         <TextView
                             android:id="@+id/time1"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -355,7 +378,10 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+
+                            android:layout_weight="1"
+                            >
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -368,7 +394,7 @@
 
                                     <TextView
                                         android:id="@+id/day100"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -389,7 +415,7 @@
 
                                     <TextView
                                         android:id="@+id/day130"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginRight="1dp"
@@ -412,7 +438,7 @@
 
                         <TextView
                             android:id="@+id/time2"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -420,7 +446,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -432,7 +459,7 @@
 
                                     <TextView
                                         android:id="@+id/day200"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="1dp"
 
@@ -452,7 +479,7 @@
 
                                     <TextView
                                         android:id="@+id/day230"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="1dp"
 
@@ -477,7 +504,7 @@
 
                         <TextView
                             android:id="@+id/time3"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -485,7 +512,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -497,7 +525,7 @@
 
                                     <TextView
                                         android:id="@+id/day300"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="1dp"
 
@@ -517,7 +545,7 @@
 
                                     <TextView
                                         android:id="@+id/day330"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="1dp"
 
@@ -542,7 +570,7 @@
 
                         <TextView
                             android:id="@+id/time4"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -550,7 +578,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -562,13 +591,14 @@
 
                                     <TextView
                                         android:id="@+id/day400"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -581,13 +611,14 @@
 
                                     <TextView
                                         android:id="@+id/day430"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -605,7 +636,7 @@
 
                         <TextView
                             android:id="@+id/time5"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -613,7 +644,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -625,13 +657,14 @@
 
                                     <TextView
                                         android:id="@+id/day500"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -644,13 +677,14 @@
 
                                     <TextView
                                         android:id="@+id/day530"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -668,7 +702,7 @@
 
                         <TextView
                             android:id="@+id/time6"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -676,7 +710,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -688,13 +723,14 @@
 
                                     <TextView
                                         android:id="@+id/day600"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -707,13 +743,14 @@
 
                                     <TextView
                                         android:id="@+id/day630"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -731,7 +768,7 @@
 
                         <TextView
                             android:id="@+id/time7"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -739,7 +776,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -751,13 +789,14 @@
 
                                     <TextView
                                         android:id="@+id/day700"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -770,13 +809,14 @@
 
                                     <TextView
                                         android:id="@+id/day730"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -794,7 +834,7 @@
 
                         <TextView
                             android:id="@+id/time8"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -802,7 +842,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -814,13 +855,14 @@
 
                                     <TextView
                                         android:id="@+id/day800"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -833,13 +875,14 @@
 
                                     <TextView
                                         android:id="@+id/day830"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -857,7 +900,7 @@
 
                         <TextView
                             android:id="@+id/time9"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -865,7 +908,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -877,13 +921,14 @@
 
                                     <TextView
                                         android:id="@+id/day900"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -896,13 +941,14 @@
 
                                     <TextView
                                         android:id="@+id/day930"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -920,7 +966,7 @@
 
                         <TextView
                             android:id="@+id/time10"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -928,7 +974,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -940,13 +987,14 @@
 
                                     <TextView
                                         android:id="@+id/day1000"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -959,13 +1007,14 @@
 
                                     <TextView
                                         android:id="@+id/day1030"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -983,7 +1032,7 @@
 
                         <TextView
                             android:id="@+id/time11"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -991,7 +1040,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -1003,13 +1053,14 @@
 
                                     <TextView
                                         android:id="@+id/day1100"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1022,13 +1073,14 @@
 
                                     <TextView
                                         android:id="@+id/day1130"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1046,7 +1098,7 @@
 
                         <TextView
                             android:id="@+id/time12"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1054,7 +1106,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -1066,13 +1119,14 @@
 
                                     <TextView
                                         android:id="@+id/day1200"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1085,13 +1139,14 @@
 
                                     <TextView
                                         android:id="@+id/day1230"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1109,7 +1164,7 @@
 
                         <TextView
                             android:id="@+id/time13"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1117,7 +1172,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -1129,13 +1185,14 @@
 
                                     <TextView
                                         android:id="@+id/day1300"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1148,13 +1205,14 @@
 
                                     <TextView
                                         android:id="@+id/day1330"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1172,7 +1230,7 @@
 
                         <TextView
                             android:id="@+id/time14"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1180,7 +1238,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -1192,13 +1251,14 @@
 
                                     <TextView
                                         android:id="@+id/day1400"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1211,13 +1271,14 @@
 
                                     <TextView
                                         android:id="@+id/day1430"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1235,7 +1296,7 @@
 
                         <TextView
                             android:id="@+id/time15"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1243,7 +1304,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -1255,13 +1317,14 @@
 
                                     <TextView
                                         android:id="@+id/day1500"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1274,13 +1337,14 @@
 
                                     <TextView
                                         android:id="@+id/day1530"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1298,7 +1362,7 @@
 
                         <TextView
                             android:id="@+id/time16"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1306,7 +1370,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -1318,13 +1383,14 @@
 
                                     <TextView
                                         android:id="@+id/day1600"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1337,13 +1403,14 @@
 
                                     <TextView
                                         android:id="@+id/day1630"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1361,7 +1428,7 @@
 
                         <TextView
                             android:id="@+id/time17"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1369,7 +1436,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -1381,13 +1449,14 @@
 
                                     <TextView
                                         android:id="@+id/day1700"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1400,13 +1469,14 @@
 
                                     <TextView
                                         android:id="@+id/day1730"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1424,7 +1494,7 @@
 
                         <TextView
                             android:id="@+id/time18"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1432,7 +1502,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -1444,13 +1515,14 @@
 
                                     <TextView
                                         android:id="@+id/day1800"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1463,13 +1535,14 @@
 
                                     <TextView
                                         android:id="@+id/day1830"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1487,7 +1560,7 @@
 
                         <TextView
                             android:id="@+id/time19"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1495,7 +1568,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -1507,13 +1581,14 @@
 
                                     <TextView
                                         android:id="@+id/day1900"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1526,13 +1601,14 @@
 
                                     <TextView
                                         android:id="@+id/day1930"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1550,7 +1626,7 @@
 
                         <TextView
                             android:id="@+id/time20"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1558,7 +1634,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -1570,13 +1647,14 @@
 
                                     <TextView
                                         android:id="@+id/day2000"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1589,13 +1667,14 @@
 
                                     <TextView
                                         android:id="@+id/day2030"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1613,7 +1692,7 @@
 
                         <TextView
                             android:id="@+id/time21"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1621,7 +1700,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -1633,13 +1713,14 @@
 
                                     <TextView
                                         android:id="@+id/day2100"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1652,13 +1733,14 @@
 
                                     <TextView
                                         android:id="@+id/day2130"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1676,7 +1758,7 @@
 
                         <TextView
                             android:id="@+id/time22"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1684,7 +1766,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -1696,13 +1779,14 @@
 
                                     <TextView
                                         android:id="@+id/day2200"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1715,13 +1799,14 @@
 
                                     <TextView
                                         android:id="@+id/day2230"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1739,7 +1824,7 @@
 
                         <TextView
                             android:id="@+id/time23"
-                            android:layout_width="43dp"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
                             android:gravity="right"
@@ -1747,7 +1832,8 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TableLayout
                                 android:layout_width="match_parent"
@@ -1759,13 +1845,14 @@
 
                                     <TextView
                                         android:id="@+id/day2300"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
@@ -1778,13 +1865,14 @@
 
                                     <TextView
                                         android:id="@+id/day2330"
-                                        android:layout_width="370dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
                                         android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
                                         android:padding="10dp"
                                         android:text=" " />
