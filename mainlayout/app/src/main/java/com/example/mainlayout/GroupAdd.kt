@@ -25,6 +25,7 @@ class GroupAdd : AppCompatActivity() {
     var userNames = arrayListOf<String>()
     var userInfos = arrayListOf<String>()
     var userTypes = arrayListOf<String>()
+    var userIcons = arrayListOf<String?>()
     private val userID:String = "User01"
 
 
@@ -34,7 +35,7 @@ class GroupAdd : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.group_add)
         val listView = findViewById<ListView>(R.id.group_add_list)
-        listView.adapter = GroupAddAdapter(this,userNames,userInfos,userTypes) //custom adapter*/
+        listView.adapter = GroupAddAdapter(this,userNames,userInfos,userTypes,userIcons) //custom adapter*/
 
     }
 
@@ -54,7 +55,6 @@ class GroupAdd : AppCompatActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(newText: String?): Boolean {
-                Log.d("a", "This is here!!")
                 if (newText!!.isNotEmpty())
                 {
                     searchData = newText
@@ -75,6 +75,7 @@ class GroupAdd : AppCompatActivity() {
                             userNames.add(dataSnapshot.child("UserInfo/userName").value.toString())
                             userInfos.add(dataSnapshot.child("UserInfo/userInfo").value.toString())
                             userTypes.add(dataSnapshot.child("UserInfo/userType").value.toString())
+                            userIcons.add(dataSnapshot.child("UserInfo/userIcon").value.toString())
                             (listView.adapter as BaseAdapter).notifyDataSetChanged()
                         }
 
@@ -102,7 +103,7 @@ class GroupAdd : AppCompatActivity() {
                                 userNames.add(dataSnapshot.child("UserInfo/userName").value.toString())
                                 userInfos.add(dataSnapshot.child("UserInfo/userInfo").value.toString())
                                 userTypes.add(dataSnapshot.child("UserInfo/userType").value.toString())
-                                Log.d("a", "This is why" + dataSnapshot.child("UserInfo/userName").value.toString() + dataSnapshot.child("UserInfo/userType").value.toString())
+                                userIcons.add(dataSnapshot.child("UserInfo/userIcon").value.toString())
                                 (listView.adapter as BaseAdapter).notifyDataSetChanged()
                             }
                         }
@@ -138,6 +139,7 @@ class GroupAdd : AppCompatActivity() {
         userNames.clear()
         userInfos.clear()
         userTypes.clear()
+        userIcons.clear()
     }
 
 }

@@ -8,14 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.example.mainlayout.GroupAdd
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class GroupAddAdapter(context: Context, val userNamesArr: ArrayList<String>, val userInfosArr: ArrayList<String>, val userTypesArr: ArrayList<String>) : BaseAdapter(){
+class GroupAddAdapter(context: Context, val userNamesArr: ArrayList<String>, val userInfosArr: ArrayList<String>, val userTypesArr: ArrayList<String>, val userIconsArr: ArrayList<String?>) : BaseAdapter(){
     private val userID:String = "User01"
 
     private val mContext : Context
@@ -51,6 +53,12 @@ class GroupAddAdapter(context: Context, val userNamesArr: ArrayList<String>, val
 
         val followBtn = rowMain.findViewById<Button>(R.id.add_group_button)
         val userFollowDB =databaseReference.child("Users/" + userID + "/Follow/"+ userTypesArr[position] + "/" + userNamesArr[position])
+        val icImageView = rowMain.findViewById<ImageView>(R.id.add_group_icon)
+        Log.d("a", "This is " + userIconsArr[position])
+        if(userIconsArr[position]!= "null") {
+            Log.d("a", "This is !!!!!!!!" + userIconsArr[position])
+            Glide.with(mContext).load(userIconsArr[position]).into(icImageView)
+        }
         userFollowDB.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(dataSnapShot: DataSnapshot) {
                 if(dataSnapShot.value != null){

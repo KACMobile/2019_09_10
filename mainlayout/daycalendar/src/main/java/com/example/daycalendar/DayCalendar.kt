@@ -102,6 +102,36 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
                         }
                     }
+                    if (snapshot.key.toString() == "Users"){
+                        for (deeperSnapshot in snapshot.children) {
+                            val groupBackgroundColor = deeperSnapshot.value.toString().toInt()
+                            val groupDB = databaseReference.child("Users/" + deeperSnapshot.key.toString()+"/Schedule")
+                            val editor = scheduleColorPreference.edit()
+                            editor.putInt(deeperSnapshot.key.toString(), groupBackgroundColor)
+                            editor.commit()
+                            groupDB.addValueEventListener(object : ValueEventListener {
+                                override fun onDataChange(groupDataSnapshot: DataSnapshot) {
+
+                                    for(deeperSnapshot in groupDataSnapshot.children) {
+                                        followListSnapshot.add(deeperSnapshot)
+                                        for (deepestSnapshot in deeperSnapshot.child((currentMonth + 1).toString()).children) {
+                                            setScheduleOnCalendar(deepestSnapshot.value as HashMap<String, Any>, groupBackgroundColor)
+
+                                        }
+                                    }
+
+
+                                }
+
+                                override fun onCancelled(groupDataSnapshot: DatabaseError) {
+
+                                }
+
+                            }
+                            )
+
+                        }
+                    }
                 }
 
             }
@@ -284,7 +314,6 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 if(schedulePeriod <= 30) view.text = scheduleName + scheduleInfo
                 else if (count == startTime.toInt()) view.text = scheduleName
                 else if(count == (startTime.toInt() + 30)) view.text = scheduleInfo
-                Log.d("check","count : " + count + " startTime : " + startTime)
                 view.setBackgroundColor(color)
                 changedCell.add(view)
                 if (count % 100 == 0){

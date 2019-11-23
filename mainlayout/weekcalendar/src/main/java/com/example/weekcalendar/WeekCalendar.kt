@@ -130,12 +130,9 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
                             editor.commit()
                             groupDB.addValueEventListener(object : ValueEventListener {
                                 override fun onDataChange(groupDataSnapshot: DataSnapshot) {
-                                    followListSnapshot.add(groupDataSnapshot)
-                                    Log.d("a", "This is Users" + groupDataSnapshot.key.toString())
                                     for(deeperSnapshot in groupDataSnapshot.children) {
-                                        Log.d("a", "This is Users!" + deeperSnapshot.value.toString())
+                                        followListSnapshot.add(deeperSnapshot)
                                         for (deepestSnapshot in deeperSnapshot.child((currentMonth + 1).toString()).children) {
-                                            Log.d("a", "This is Users!!" + deepestSnapshot.value.toString())
                                             setScheduleOnCalendar(deepestSnapshot.value as HashMap<String, Any>, groupBackgroundColor)
 
                                         }
@@ -235,7 +232,6 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         for(snapShot in followListSnapshot){
             val scheduleColorPreference = context.getSharedPreferences("ScheduleColorInfo", Context.MODE_PRIVATE)
             for (deeperSnapShot in snapShot.child((currentMonth + 1).toString()).children) {
-                Log.d("a","This is here" + deeperSnapShot.child("UserID").value.toString())
                 groupBackgroundColor = scheduleColorPreference.getInt(deeperSnapShot.child("userID").value.toString(), Color.BLUE)
                 setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>,groupBackgroundColor)
 
