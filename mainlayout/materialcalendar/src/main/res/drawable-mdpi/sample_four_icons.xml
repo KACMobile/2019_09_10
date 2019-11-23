@@ -4,25 +4,26 @@
         <bitmap
             android:gravity="top|left"
             android:tint="@android:color/holo_green_dark"
-            android:src="@drawable/ic_adb" />
+            android:src="@drawable/ic_dot" />
     </item>
     <item>
         <bitmap
             android:gravity="top|right"
             android:tint="@android:color/holo_red_dark"
-            android:src="@drawable/ic_favorite" />
+            android:src="@drawable/ic_dot" />
     </item>
 
     <item android:top="40dp">
         <bitmap
             android:gravity="bottom|left"
             android:tint="@android:color/holo_blue_dark"
-            android:src="@drawable/ic_pet"/>
+            android:src="@drawable/ic_dot"/>
     </item>
 
     <item>
         <bitmap
             android:gravity="bottom|right"
-            android:src="@drawable/ic_add"/>
+            android:tint="@android:color/holo_orange_dark"
+            android:src="@drawable/ic_dot"/>
     </item>
 </layer-list>

@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         rotateForward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward)
         rotateBackward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward)
         //val userFollow = databaseReference.child("Users/" + userID + "/Follow")
-        databaseReference.child("Users").child(userID).child("Follow").child("Groups").child("KAU").setValue(Color.RED)//DB에 임시추가
+        //databaseReference.child("Users").child(userID).child("Follow").child("Groups").child("KAU").setValue(Color.RED)//DB에 임시추가
 
 
 
@@ -137,13 +137,14 @@ class MainActivity : AppCompatActivity() {
             "KAU", "KAU", "모바일SW", false, "1000", "1300", "14주",
             false, false, 2019, 11, 26
         )*/
-        insertGroup(
-            "프리미어12", "프리미어12", "결승", false, "1900", "2300", "대한민국 VS 일본",
+        /*insertGroup(
+            "KBO", "프리미어12", "결승", false, "1900", "2300", "대한민국 VS 일본",
             false, false, 2019, 11, 17
-        )
+        )*/
+        //insertGroupInfo("User01", "User01")
         /*insertSchedule(
-            userID, "할 일", "1", false, "400", "200", "Mob",
-            false, false, 2019, 11, 20
+            userID, "할 일", "Test", false, "300", "600", "Test",
+            false, false, 2019, 11, 23
         )*/
         /*val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
@@ -271,13 +272,13 @@ class MainActivity : AppCompatActivity() {
     {
         if (isGroupFragment)
         {
-            fab.show()
-            groupFab.hide()
+            fab.hide()
+            groupFab.show()
         }
         else //groupFragment = false
         {
-            fab.hide()
-            groupFab.show()
+            fab.show()
+            groupFab.hide()
         }
     }
 
@@ -355,6 +356,24 @@ class MainActivity : AppCompatActivity() {
         dataArray.add(schedule)
         var a: String = schedule.scheduleName
         databaseReference.child("Groups").child(userName).child("Schedule").child(dateMonth.toString()).setValue(dataArray)
+
+
+    }
+    public data class Info(var userName:String = "",
+                           var userInfo:String? = null,
+                           var userType:String? = "Group") {
+
+    }
+    fun insertGroupInfo(
+        userName: String,
+        userInfo: String?
+    ) {
+        val databaseReference = firebaseDatabase.reference
+        val groupInfo = Info(
+            userName,
+            userInfo
+        )
+        databaseReference.child("Users").child(userName).child("UserInfo").setValue(groupInfo)
 
 
     }

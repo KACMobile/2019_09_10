@@ -536,7 +536,9 @@ public class CalendarView extends LinearLayout {
         for(DataSnapshot snapshot : dataSnapShot.getChildren()){
             for(DataSnapshot deeperSnapShot : snapshot.getChildren()){
                 for(DataSnapshot deepestSnapShot : deeperSnapShot.getChildren()) {
-                    insertEvents(Integer.parseInt(deepestSnapShot.child("dateYear").getValue().toString()), Integer.parseInt(deepestSnapShot.child("dateMonth").getValue().toString()), Integer.parseInt(deepestSnapShot.child("date").getValue().toString()));
+                    int scheduleCount = (int)deeperSnapShot.getChildrenCount();
+                    Log.d("a", "This is" + scheduleCount);
+                    insertEvents(Integer.parseInt(deepestSnapShot.child("dateYear").getValue().toString()), Integer.parseInt(deepestSnapShot.child("dateMonth").getValue().toString()), Integer.parseInt(deepestSnapShot.child("date").getValue().toString()),scheduleCount);
                 }
 
             }
@@ -544,10 +546,21 @@ public class CalendarView extends LinearLayout {
         }
 
     }
-    public void insertEvents(int year, int month, int date){
+    public void insertEvents(int year, int month, int date, int scheduleCount){
         Calendar cal = Calendar.getInstance();
         cal.set(year,month-1,date);
-        events.add(new EventDay(cal,R.drawable.sample_three_icons));
+        if (scheduleCount == 1)
+            events.add(new EventDay(cal,R.drawable.sample_circle));
+        else if (scheduleCount == 2){
+            Log.d("a", "This is!!"+scheduleCount);
+            events.add(new EventDay(cal,R.drawable.sample_two_dots));
+        }
+        else if (scheduleCount == 3){
+            Log.d("a", "This is!!!"+scheduleCount);
+            events.add(new EventDay(cal,R.drawable.sample_three_icons));
+        }
+        else
+            events.add(new EventDay(cal,R.drawable.sample_four_icons));
         setEvents(events);
 
 

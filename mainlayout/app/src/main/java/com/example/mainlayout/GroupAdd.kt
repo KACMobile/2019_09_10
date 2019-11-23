@@ -3,6 +3,7 @@ package com.example.mainlayout
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
@@ -12,94 +13,131 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.contentValuesOf
 import com.example.mainlayout.R
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 
 class GroupAdd : AppCompatActivity() {
+
+    private val firebaseDatabase = FirebaseDatabase.getInstance()
+    private val databaseReference = firebaseDatabase.reference
+    var userNames = arrayListOf<String>()
+    var userInfos = arrayListOf<String>()
+    var userTypes = arrayListOf<String>()
+    private val userID:String = "User01"
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.group_add)
-
         val listView = findViewById<ListView>(R.id.group_add_list)
-
-        listView.adapter = MyCustomAdapter(this) //custom adapter
-
-    }
-    private class MyCustomAdapter(context: Context) : BaseAdapter(){
-
-        private val mContext : Context
-
-        private val names = arrayListOf<String>(
-            "Group1", "Group2", "Group3","Group4","Group5"
-        )
-
-        init {
-            mContext = context
-        }
-
-        override fun getCount(): Int {
-            return names.size
-        }
-
-        override fun getItemId(position: Int): Long {
-            return position.toLong()
-        }
-
-        override fun getItem(position: Int): Any {
-            return "Test"
-        }
-        //각각의 줄 렌더링
-        override fun getView(position: Int, convertView: View?, viewGroup: ViewGroup?): View {
-
-            val layoutInflater = LayoutInflater.from(mContext)
-            val rowMain = layoutInflater.inflate(R.layout.group_add_row, viewGroup, false)
-
-            val nameTextView = rowMain.findViewById<TextView>(R.id.add_group_name)
-            nameTextView.text = names.get(position)
-
-            //val addBtn = rowMain.findViewById<Button>(R.id.add_group_button)
-
-
-            val positionTextView = rowMain.findViewById<TextView>(R.id.add_group_info)
-            positionTextView.text = "group info $position"
-
-
-            return rowMain
-
-//            val textView = TextView(mContext)
-//            textView.text = "this is list row"
-//            return textView
-        }
-
+        listView.adapter = GroupAddAdapter(this,userNames,userInfos,userTypes) //custom adapter*/
 
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
         val inflater = menuInflater
         inflater.inflate(R.menu.add_group_menu, menu)
 
-        /*val manager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchItem = menu?.findItem(R.id.search)
-        val searchView = searchItem?.actionView as SearchView
+        //검색어 저장 변수
+        var searchData : String
 
-        searchView.setSearchableInfo(manager.getSearchableInfo(componentName))
+        val searchItem = menu.findItem(R.id.search)
+        val searchView = searchItem.actionView as SearchView
+
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                searchView.clearFocus()
-                searchView.setQuery("" , false)
-                searchItem.collapseActionView()
-                Toast.makeText(this@GroupAdd, "query", Toast.LENGTH_LONG).show()
+            override fun onQueryTextSubmit(newText: String?): Boolean {
+                Log.d("a", "This is here!!")
+                if (newText!!.isNotEmpty())
+                {
+                    searchData = newText
+                    //Toast.makeText(this@GroupAdd, "You search $searchData", Toast.LENGTH_LONG).show()
+                }
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                return false
+                val listView = findViewById<ListView>(R.id.group_add_list)
+                clearArr()
+
+                if (newText!!.isNotEmpty()) {
+                    searchData = newText
+
+                    databaseReference.child("Groups").orderByKey().startAt(searchData).endAt(searchData + "\uf8ff").addChildEventListener(object: ChildEventListener{
+                        override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
+                            userNames.add(dataSnapshot.child("UserInfo/userName").value.toString())
+                            userInfos.add(dataSnapshot.child("UserInfo/userInfo").value.toString())
+                            userTypes.add(dataSnapshot.child("UserInfo/userType").value.toString())
+                            (listView.adapter as BaseAdapter).notifyDataSetChanged()
+                        }
+
+                        override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+
+                        }
+
+                        override fun onCancelled(p0: DatabaseError) {
+
+                        }
+
+                        override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+
+                        }
+
+                        override fun onChildRemoved(p0: DataSnapshot) {
+
+                        }
+                    }
+                    )
+
+                    databaseReference.child("Users").orderByKey().startAt(searchData).endAt(searchData + "\uf8ff").addChildEventListener(object: ChildEventListener{
+                        override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
+                            if(dataSnapshot.child("UserInfo/userName").value.toString()!=userID) {
+                                userNames.add(dataSnapshot.child("UserInfo/userName").value.toString())
+                                userInfos.add(dataSnapshot.child("UserInfo/userInfo").value.toString())
+                                userTypes.add(dataSnapshot.child("UserInfo/userType").value.toString())
+                                Log.d("a", "This is why" + dataSnapshot.child("UserInfo/userName").value.toString() + dataSnapshot.child("UserInfo/userType").value.toString())
+                                (listView.adapter as BaseAdapter).notifyDataSetChanged()
+                            }
+                        }
+
+                        override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+
+                        }
+
+                        override fun onCancelled(p0: DatabaseError) {
+
+                        }
+
+                        override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+
+                        }
+
+                        override fun onChildRemoved(p0: DataSnapshot) {
+
+                        }
+                    }
+                    )
+
+                }
+                (listView.adapter as BaseAdapter).notifyDataSetChanged()
+                return true
             }
-        })*/
+        })
 
         return true
     }
+
+    public fun clearArr(){
+        userNames.clear()
+        userInfos.clear()
+        userTypes.clear()
+    }
+
 }

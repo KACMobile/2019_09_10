@@ -29,11 +29,11 @@
 
     <Button
         android:id="@+id/add_group_button"
-        android:layout_width="60dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/common_google_signin_btn_text_dark_default"
         android:src="@drawable/ic_add_circle_outline_black_24dp"
-        android:text="추가"
+        android:text="구독"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintRight_toLeftOf="parent"
