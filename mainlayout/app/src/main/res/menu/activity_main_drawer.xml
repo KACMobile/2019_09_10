@@ -23,29 +23,11 @@
         </menu>
     </item>
 
-    <item android:title="내 일정">
-        <menu>
-            <item
-                android:id="@+id/check_user"
-                android:title="users"
-                app:actionLayout="@layout/my_schedule_switch"
-                app:showAsAction="always" />
-        </menu>
-    </item>
     <item android:title="그룹">
         <menu>
             <item
                 android:id="@+id/check_group"
                 android:title="Groups1"
-                app:actionLayout="@layout/my_schedule_switch"
-                app:showAsAction="always" />
-        </menu>
-    </item>
-    <item android:title="구독">
-        <menu>
-            <item
-                android:id="@+id/check_subs"
-                android:title="Subs1"
                 app:actionLayout="@layout/my_schedule_switch"
                 app:showAsAction="always" />
         </menu>

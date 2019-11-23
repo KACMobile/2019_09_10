@@ -1,6 +1,7 @@
 package com.example.mainlayout
 
 import android.app.*
+import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -25,7 +26,7 @@ import android.view.animation.AnimationUtils
 import com.google.firebase.database.*
 import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener{
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -179,8 +180,14 @@ class MainActivity : AppCompatActivity() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
+        navView.setNavigationItemSelectedListener(this)
+
+
+
+
+
+
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.daily_calender, R.id.week_calender, R.id.month_calender, R.id.group_fragment
@@ -240,10 +247,15 @@ class MainActivity : AppCompatActivity() {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         menuInflater.inflate(R.menu.activity_main_drawer, menu)
+
+
         return true
     }
+// 그룹 체크 리스너
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
-
+        return true
+    }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
