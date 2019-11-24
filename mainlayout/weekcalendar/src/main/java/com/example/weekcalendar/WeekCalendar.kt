@@ -50,6 +50,15 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
     lateinit var saveDataSnap: DataSnapshot //DataSnapshot을 받으면 set함
     var followListSnapshot = arrayListOf<DataSnapshot>() //followList DataSnapshot을 받으면 add함
 
+    val hollydays = arrayOf(hollyday(1,1, "신정", false), hollyday(2, 4, "설날", true),
+        hollyday(2, 5, "설날", true), hollyday(2, 6, "설날", true),
+        hollyday(3, 1, "삼일절", false), hollyday(5, 5, "어린이날", false),
+        hollyday(5, 6, "어린이날 대체공휴일", false), hollyday(5, 12, "부처님 오신날", true),
+        hollyday(6, 6, "현충일", false), hollyday(8, 15, "광복절", false),
+        hollyday(9, 12, "추석", true), hollyday(9, 13, "추석", true),
+        hollyday(9, 14, "추석", true), hollyday(10, 3, "개천절", false),
+        hollyday(10, 9, "한글날", false), hollyday(12, 25, "크리스마스", false))
+
     init {
         LayoutInflater.from(context).inflate(R.layout.weekcalendar, this, true)
         val scheduleColorPreference = context.getSharedPreferences("ScheduleColorInfo", Context.MODE_PRIVATE)
@@ -198,10 +207,12 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             dayText[todayDOW - 1].setBackgroundColor(Color.YELLOW)
         else
             dayText[todayDOW - 1].setBackgroundColor(Color.WHITE)
+
         timeRow[currentTime].setBackgroundColor(Color.YELLOW)
 
 
         for (i in 1..7) {
+            dateArray[i-1].setBackgroundColor(Color.WHITE)
             var date = currentDate - currentDOW + i
 
             if (date > currentLastDayOfMonth)
@@ -213,6 +224,13 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
                     (lastDayOfMonth[currentMonth - 1] - abs(date)).toString()
             else
                 dateArray[i - 1].text = date.toString()
+
+            for(j in hollydays){
+                if (j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth+1){
+                    dateArray[i-1].setBackgroundColor(Color.RED)
+                }
+
+            }
         }
 
         for(i in changedCell){

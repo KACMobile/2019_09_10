@@ -32,6 +32,15 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
     var currentDate = cal.get(Calendar.DATE)
     var currentDOW = cal.get(Calendar.DAY_OF_WEEK)
 
+    val hollydays = arrayOf(hollyday(1,1, "신정", false), hollyday(2, 4, "설날", true),
+        hollyday(2, 5, "설날", true), hollyday(2, 6, "설날", true),
+        hollyday(3, 1, "삼일절", false), hollyday(5, 5, "어린이날", false),
+        hollyday(5, 6, "어린이날 대체공휴일", false), hollyday(5, 12, "부처님 오신날", true),
+        hollyday(6, 6, "현충일", false), hollyday(8, 15, "광복절", false),
+        hollyday(9, 12, "추석", true), hollyday(9, 13, "추석", true),
+        hollyday(9, 14, "추석", true), hollyday(10, 3, "개천절", false),
+        hollyday(10, 9, "한글날", false), hollyday(12, 25, "크리스마스", false))
+
     var changedCell= arrayListOf<TextView>()
     lateinit var saveDataSnap: DataSnapshot //DataSnapshot을 받으면 set함
     var followListSnapshot = arrayListOf<DataSnapshot>() //followList DataSnapshot을 받으면 add함
@@ -161,6 +170,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         var currentLastDayOfMonth = cal.getActualMaximum(Calendar.DATE)
         var currentTime = cal.get(Calendar.HOUR_OF_DAY)
 
+
         val dateArray = arrayOf(
             daycalendarview.dateSun,daycalendarview.dateMon,
             daycalendarview.dateTue, daycalendarview.dateWen,
@@ -190,6 +200,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
         for (i in 0..6) {
             dayText[i].setBackgroundColor(Color.WHITE)
+            dateArray[i].setBackgroundColor(Color.WHITE)
         } // 요일 배경색 초기화
 
         for (i in 0..23) {
@@ -210,6 +221,13 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 else dateArray[i-1].text = (lastDayOfMonth[currentMonth-1] - abs(date) ).toString()
             else
                 dateArray[i-1].text =  date.toString()
+
+            for(j in hollydays){
+                if (j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth+1){
+                    dateArray[i-1].setBackgroundColor(Color.RED)
+                }
+
+            }
         }
 
         for(i in changedCell){

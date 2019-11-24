@@ -36,7 +36,6 @@ class DailyFragment : Fragment() {//일간 캘린더
                     Navigation.findNavController(view).navigate(R.id.Daily_CurrentToPre)
                     Navigation.findNavController(view).navigate(R.id.Daily_PreToCurrent)
                 }
-
             })
 
         }
