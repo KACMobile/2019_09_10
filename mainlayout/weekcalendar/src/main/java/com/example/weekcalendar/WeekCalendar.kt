@@ -57,7 +57,8 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         hollyday(6, 6, "현충일", false), hollyday(8, 15, "광복절", false),
         hollyday(9, 12, "추석", true), hollyday(9, 13, "추석", true),
         hollyday(9, 14, "추석", true), hollyday(10, 3, "개천절", false),
-        hollyday(10, 9, "한글날", false), hollyday(12, 25, "크리스마스", false))
+        hollyday(10, 9, "한글날", false), hollyday(12, 25, "크리스마스", false),
+        hollyday(11,1, "내생일", false))
 
     init {
         LayoutInflater.from(context).inflate(R.layout.weekcalendar, this, true)
@@ -215,21 +216,28 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             dateArray[i-1].setBackgroundColor(Color.WHITE)
             var date = currentDate - currentDOW + i
 
-            if (date > currentLastDayOfMonth)
-                dateArray[i - 1].text = (date - currentLastDayOfMonth).toString()
-            else if (date < 1)
-                if (currentYear % 4 == 0) dateArray[i - 1].text =
-                    (leapYearLastDayOfMonth[currentMonth - 1] - abs(date)).toString()
-                else dateArray[i - 1].text =
-                    (lastDayOfMonth[currentMonth - 1] - abs(date)).toString()
-            else
-                dateArray[i - 1].text = date.toString()
+            for(j in hollydays) {
 
-            for(j in hollydays){
-                if (j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth+1){
-                    dateArray[i-1].setBackgroundColor(Color.RED)
+                if (date > currentLastDayOfMonth) {
+                    dateArray[i - 1].text = (date - currentLastDayOfMonth).toString()
+                    if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth+2)
+                        dateArray[i-1].setBackgroundColor(Color.RED)
                 }
-
+                else if (date < 1)
+                    if (currentYear % 4 == 0) {dateArray[i - 1].text = (leapYearLastDayOfMonth[currentMonth - 1] - abs(date)).toString()
+                        if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth)
+                            dateArray[i-1].setBackgroundColor(Color.RED)
+                    }
+                    else {
+                        dateArray[i - 1].text = (lastDayOfMonth[currentMonth - 1] - abs(date)).toString()
+                        if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth)
+                            dateArray[i-1].setBackgroundColor(Color.RED)
+                    }
+                else {
+                    dateArray[i - 1].text = date.toString()
+                    if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth+1)
+                        dateArray[i-1].setBackgroundColor(Color.RED)
+                }
             }
         }
 

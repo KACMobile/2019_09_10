@@ -214,20 +214,43 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         for(i in 1..7) {
             var date = currentDate - currentDOW  + i
 
-            if(date>currentLastDayOfMonth)
-                dateArray[i-1].text = (date-currentLastDayOfMonth).toString()
-            else if(date<1)
-                if(currentYear%4 == 0) dateArray[i-1].text = (leapYearLastDayOfMonth[currentMonth-1]-abs(date)).toString()
-                else dateArray[i-1].text = (lastDayOfMonth[currentMonth-1] - abs(date) ).toString()
-            else
-                dateArray[i-1].text =  date.toString()
-
             for(j in hollydays){
-                if (j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth+1){
-                    dateArray[i-1].setBackgroundColor(Color.RED)
+
+                if(date>currentLastDayOfMonth) {
+                    dateArray[i - 1].text = (date - currentLastDayOfMonth).toString()
+                    if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth+2)
+                        dateArray[i-1].setBackgroundColor(Color.RED)
+                }
+                else if(date<1)
+                    if(currentYear%4 == 0) {
+                        dateArray[i - 1].text = (leapYearLastDayOfMonth[currentMonth - 1] - abs(date)).toString()
+                        if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth)
+                            dateArray[i-1].setBackgroundColor(Color.RED)
+                    }
+                    else {
+                        dateArray[i-1].text = (lastDayOfMonth[currentMonth-1] - abs(date) ).toString()
+                        if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth)
+                            dateArray[i-1].setBackgroundColor(Color.RED)
+                    }
+                else {
+                    dateArray[i-1].text =  date.toString()
+                    if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth+1)
+                        dateArray[i-1].setBackgroundColor(Color.RED)
                 }
 
+                /*
+                for(j in hollydays){
+                    if (j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth+1){
+                        dateArray[i-1].setBackgroundColor(Color.RED)
+                    }
+
+                }
+
+                 */
+
             }
+
+
         }
 
         for(i in changedCell){
