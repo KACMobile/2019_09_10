@@ -19,6 +19,7 @@ import android.view.Menu
 
 import android.os.Build
 import android.os.PowerManager
+import android.util.Log
 import android.view.MenuItem
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -203,7 +204,7 @@ class MainActivity : AppCompatActivity() {
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
         })
-        /*
+
         if(::saveDataSnap.isInitialized) {
             for (snapShot in saveDataSnap.children) {
                 for (deeperSnapShot in snapShot.child((Calendar.getInstance().get(Calendar.MONTH)+1).toString()).children) {
@@ -211,7 +212,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-         */
+
 
         /*//Switch관련 저장 및 처리
         val userFollow = databaseReference.child("Users/" + userID + "Follow")
@@ -395,17 +396,28 @@ class MainActivity : AppCompatActivity() {
         val startTimeHour= if (startTime.length>3) startTime.slice(IntRange(0, 1)).toInt() else startTime.slice(IntRange(0, 0)).toInt()
         val startTimeMinute = if (startTime.length>3) startTime.slice(IntRange(2, 3)).toInt() else startTime.slice(IntRange(1, 2)).toInt()
 
+
         if(alarmAble==true && CalendarInfo.currentYear ==dateYear && (CalendarInfo.currentMonth +1)==dateMonth && CalendarInfo.currentDate ==date
-            && currentHour<=startTimeHour && currentMinute<=startTimeMinute) {
+            && currentHour<startTimeHour) {
             Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
+            Log.d("Alarm1", "scheduleName : " + scheduleName + " currentHour : " + currentHour + " startTimeHour : " + startTimeHour)
         }
+
+        if(alarmAble==true && CalendarInfo.currentYear ==dateYear && (CalendarInfo.currentMonth +1)==dateMonth && CalendarInfo.currentDate ==date
+            && currentHour==startTimeHour && currentMinute<=startTimeMinute){
+            Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
+            Log.d("Alarm2", "scheduleName : " + scheduleName + " currentHour : " + currentHour + " startTimeHour : " + startTimeHour)
+        }
+
     }
 
     fun Alarm(scheduleName: String, scheduleInfo: String?, dateYear: Int, dateMonth: Int, date: Int,
               startTimeHour: Int, startTimeMinute:Int, endTime: String) {
         val calendar = Calendar.getInstance()
-        val notificationmanager
-                = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        calendar.set(dateYear, dateMonth, date, startTimeHour, startTimeMinute)
+
+        val notificationmanager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
         val notyintent = Intent(this, BroadCastD::class.java) //BroadCastD 클래스로 보낼 intent
         notyintent.putExtra("notificationId",
             dateYear + dateMonth + date + startTimeHour + startTimeMinute + endTime.toInt())
@@ -416,7 +428,7 @@ class MainActivity : AppCompatActivity() {
 
         val builder = Notification.Builder(this,NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_btn_speak_now)
-            .setWhen(System.currentTimeMillis())
+            .setWhen(calendar.timeInMillis)
             .setNumber(1)
             .setContentTitle(scheduleName)
             .setContentText(scheduleInfo)
@@ -426,11 +438,9 @@ class MainActivity : AppCompatActivity() {
 
         if (Build.VERSION.SDK_INT >= 26){
             val channelName :CharSequence = "noty_channel"
-            //val description :String = "upper oreo"
             val importance :Int = NotificationManager.IMPORTANCE_HIGH
 
             val channel: NotificationChannel = NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName , importance)
-            //channel.setDescription(description)
 
             notificationmanager.createNotificationChannel(channel)
         }
@@ -448,8 +458,6 @@ class MainActivity : AppCompatActivity() {
             dateYear + dateMonth + date + startTimeHour + startTimeMinute + endTime.toInt(), // 여러개의 알람을 등록하기 위한 primary id 값 세팅
             intent, // 정보가 담긴 intent
             PendingIntent.FLAG_UPDATE_CURRENT)
-
-        calendar.set(dateYear, dateMonth, date, startTimeHour, startTimeMinute)
 
         val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         am.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, sender)

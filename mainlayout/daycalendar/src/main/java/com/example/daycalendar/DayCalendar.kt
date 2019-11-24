@@ -40,7 +40,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         LayoutInflater.from(context).inflate(R.layout.daycalendar,this,true)
         val scheduleColorPreference = context.getSharedPreferences("ScheduleColorInfo", Context.MODE_PRIVATE)
         calendardefaultsetting()
-
+        /*
         this.setOnTouchListener(object : OnSwipeTouchListener(context) {
             override fun onSwipeLeft() {
                 super.onSwipeLeft()
@@ -54,6 +54,8 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 calendardefaultsetting()
             }
         } )
+
+         */
 
         val userDB = databaseReference.child("Users/" + userID + "/Schedule")
         userDB.addValueEventListener( object: ValueEventListener{

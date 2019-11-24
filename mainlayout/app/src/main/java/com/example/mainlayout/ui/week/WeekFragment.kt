@@ -1,22 +1,17 @@
 package com.example.mainlayout.ui.week
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.example.mainlayout.CalendarInfo
+import androidx.navigation.Navigation
+import com.example.daycalendar.OnSwipeTouchListener
 import com.example.mainlayout.R
 import com.example.weekcalendar.WeekCalendar
 import com.google.firebase.database.DataSnapshot
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.week_calender.*
-import java.util.*
 
 class WeekFragment : Fragment() {//주간 캘린더
 
@@ -50,6 +45,24 @@ class WeekFragment : Fragment() {//주간 캘린더
         weekViewModel.text.observe(this, Observer {
         })
         val view = root.findViewById<WeekCalendar>(R.id.week_CalendarView)
+
+        val mContext = getContext()
+
+        if (mContext != null) {
+            view.setOnTouchListener(object : OnSwipeTouchListener(mContext) {
+                override fun onSwipeLeft() {
+                    Navigation.findNavController(view).navigate(R.id.Week_CurrentToNext)
+                    Navigation.findNavController(view).navigate(R.id.Week_NextToCurrent)
+                }
+
+                override fun onSwipeRight() {
+                    Navigation.findNavController(view).navigate(R.id.Week_CurrentToPre)
+                    Navigation.findNavController(view).navigate(R.id.Week_PreToCurrent)
+                }
+
+            })
+
+        }
 
 
         return root
