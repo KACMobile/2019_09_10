@@ -56,14 +56,15 @@
                             <TextView
                                 android:id="@+id/textSun"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="37dp"
                                 android:layout_marginLeft="1dp"
                                 android:layout_marginTop="1dp"
-                                android:layout_weight="1"
-
                                 android:layout_marginRight="1dp"
+
                                 android:layout_marginBottom="1dp"
+                                android:layout_weight="1"
                                 android:background="@android:color/white"
+                                android:fontFamily="@font/nanumbarungothicb"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="일"
@@ -72,14 +73,15 @@
                             <TextView
                                 android:id="@+id/textMon"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="37dp"
                                 android:layout_marginLeft="1dp"
                                 android:layout_marginTop="1dp"
                                 android:layout_marginRight="1dp"
-                                android:layout_weight="1"
-
                                 android:layout_marginBottom="1dp"
+
+                                android:layout_weight="1"
                                 android:background="@android:color/white"
+                                android:fontFamily="@font/nanumbarungothicb"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="월" />
@@ -87,14 +89,15 @@
                             <TextView
                                 android:id="@+id/textTue"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="37dp"
                                 android:layout_marginLeft="1dp"
                                 android:layout_marginTop="1dp"
                                 android:layout_marginRight="1dp"
-                                android:layout_weight="1"
-
                                 android:layout_marginBottom="1dp"
+
+                                android:layout_weight="1"
                                 android:background="@android:color/white"
+                                android:fontFamily="@font/nanumbarungothicb"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="화" />
@@ -102,14 +105,15 @@
                             <TextView
                                 android:id="@+id/textWen"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="37dp"
                                 android:layout_marginLeft="1dp"
                                 android:layout_marginTop="1dp"
                                 android:layout_marginRight="1dp"
-                                android:layout_weight="1"
-
                                 android:layout_marginBottom="1dp"
+
+                                android:layout_weight="1"
                                 android:background="@android:color/white"
+                                android:fontFamily="@font/nanumbarungothicb"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="수" />
@@ -117,14 +121,15 @@
                             <TextView
                                 android:id="@+id/textThur"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="37dp"
                                 android:layout_marginLeft="1dp"
                                 android:layout_marginTop="1dp"
                                 android:layout_marginRight="1dp"
-                                android:layout_weight="1"
-
                                 android:layout_marginBottom="1dp"
+
+                                android:layout_weight="1"
                                 android:background="@android:color/white"
+                                android:fontFamily="@font/nanumbarungothicb"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="목" />
@@ -132,14 +137,15 @@
                             <TextView
                                 android:id="@+id/textFri"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="37dp"
                                 android:layout_marginLeft="1dp"
                                 android:layout_marginTop="1dp"
                                 android:layout_marginRight="1dp"
-                                android:layout_weight="1"
-
                                 android:layout_marginBottom="1dp"
+
+                                android:layout_weight="1"
                                 android:background="@android:color/white"
+                                android:fontFamily="@font/nanumbarungothicb"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="금" />
@@ -147,15 +153,16 @@
                             <TextView
                                 android:id="@+id/textSat"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="37dp"
                                 android:layout_marginLeft="1dp"
                                 android:layout_marginTop="1dp"
                                 android:layout_marginRight="1dp"
-                                android:layout_weight="1"
-
-
                                 android:layout_marginBottom="1dp"
+
+
+                                android:layout_weight="1"
                                 android:background="@android:color/white"
+                                android:fontFamily="@font/nanumbarungothicb"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="토"
@@ -171,14 +178,15 @@
                             <TextView
                                 android:id="@+id/dateSun"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="37dp"
                                 android:layout_marginLeft="1dp"
                                 android:layout_marginTop="1dp"
-                                android:layout_weight="1"
-
                                 android:layout_marginRight="1dp"
+
                                 android:layout_marginBottom="1dp"
+                                android:layout_weight="1"
                                 android:background="@android:color/white"
+                                android:fontFamily="@font/nanumbarungothicb"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="1"
@@ -187,14 +195,15 @@
                             <TextView
                                 android:id="@+id/dateMon"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="37dp"
                                 android:layout_marginLeft="1dp"
                                 android:layout_marginTop="1dp"
-                                android:layout_weight="1"
-
                                 android:layout_marginRight="1dp"
+
                                 android:layout_marginBottom="1dp"
+                                android:layout_weight="1"
                                 android:background="@android:color/white"
+                                android:fontFamily="@font/nanumbarungothicb"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="2" />
@@ -202,14 +211,15 @@
                             <TextView
                                 android:id="@+id/dateTue"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="37dp"
                                 android:layout_marginLeft="1dp"
                                 android:layout_marginTop="1dp"
-                                android:layout_weight="1"
-
                                 android:layout_marginRight="1dp"
+
                                 android:layout_marginBottom="1dp"
+                                android:layout_weight="1"
                                 android:background="@android:color/white"
+                                android:fontFamily="@font/nanumbarungothicb"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="3" />
@@ -217,14 +227,15 @@
                             <TextView
                                 android:id="@+id/dateWen"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="37dp"
                                 android:layout_marginLeft="1dp"
                                 android:layout_marginTop="1dp"
-                                android:layout_weight="1"
-
                                 android:layout_marginRight="1dp"
+
                                 android:layout_marginBottom="1dp"
+                                android:layout_weight="1"
                                 android:background="@android:color/white"
+                                android:fontFamily="@font/nanumbarungothicb"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="4" />
@@ -232,30 +243,32 @@
                             <TextView
                                 android:id="@+id/dateThur"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="37dp"
                                 android:layout_marginLeft="1dp"
                                 android:layout_marginTop="1dp"
-                                android:layout_weight="1"
-
                                 android:layout_marginRight="1dp"
-                                android:layout_marginBottom="1dp"
-                                android:background="@android:color/white"
-                                android:gravity="center"
-                                android:padding="10dp"
 
+                                android:layout_marginBottom="1dp"
+                                android:layout_weight="1"
+                                android:background="@android:color/white"
+                                android:fontFamily="@font/nanumbarungothicb"
+                                android:gravity="center"
+
+                                android:padding="10dp"
                                 android:text="5" />
 
                             <TextView
                                 android:id="@+id/dateFri"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="37dp"
                                 android:layout_marginLeft="1dp"
                                 android:layout_marginTop="1dp"
-                                android:layout_weight="1"
-
                                 android:layout_marginRight="1dp"
+
                                 android:layout_marginBottom="1dp"
+                                android:layout_weight="1"
                                 android:background="@android:color/white"
+                                android:fontFamily="@font/nanumbarungothicb"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="6" />
@@ -263,14 +276,15 @@
                             <TextView
                                 android:id="@+id/dateSat"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="37dp"
                                 android:layout_marginLeft="1dp"
                                 android:layout_marginTop="1dp"
-                                android:layout_weight="1"
-
                                 android:layout_marginRight="1dp"
+
                                 android:layout_marginBottom="1dp"
+                                android:layout_weight="1"
                                 android:background="@android:color/white"
+                                android:fontFamily="@font/nanumbarungothicb"
                                 android:gravity="center"
                                 android:padding="10dip"
                                 android:text="7"
@@ -309,8 +323,9 @@
                             android:layout_width="40dp"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
-                            android:text="0:00 " />
+                            android:text="0:00" />
 
                         <TableRow
                             android:layout_width="match_parent"
@@ -329,12 +344,15 @@
                                     <TextView
                                         android:id="@+id/day000"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
                                         android:layout_marginLeft="1dp"
+                                        android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
-                                        android:layout_weight="1"
 
+                                        android:layout_marginBottom="1dp"
+                                        android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -350,12 +368,11 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="1dp"
-                                        android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
 
-                                        android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -374,6 +391,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="1:00" />
 
@@ -396,7 +414,7 @@
                                     <TextView
                                         android:id="@+id/day100"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
 
@@ -404,6 +422,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -417,12 +436,13 @@
                                     <TextView
                                         android:id="@+id/day130"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginRight="1dp"
 
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -442,6 +462,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="2:00" />
 
@@ -461,7 +482,7 @@
                                     <TextView
                                         android:id="@+id/day200"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
                                         android:layout_marginLeft="1dp"
 
                                         android:layout_marginTop="1dp"
@@ -469,6 +490,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -481,7 +503,7 @@
                                     <TextView
                                         android:id="@+id/day230"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
                                         android:layout_marginLeft="1dp"
 
                                         android:layout_marginTop="1dp"
@@ -489,6 +511,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -508,6 +531,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="3:00" />
 
@@ -527,7 +551,7 @@
                                     <TextView
                                         android:id="@+id/day300"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
                                         android:layout_marginLeft="1dp"
 
                                         android:layout_marginTop="1dp"
@@ -535,6 +559,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -547,7 +572,7 @@
                                     <TextView
                                         android:id="@+id/day330"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
                                         android:layout_marginLeft="1dp"
 
                                         android:layout_marginTop="1dp"
@@ -555,6 +580,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -574,6 +600,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="4:00" />
 
@@ -593,7 +620,7 @@
                                     <TextView
                                         android:id="@+id/day400"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -601,6 +628,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -613,7 +641,7 @@
                                     <TextView
                                         android:id="@+id/day430"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -621,6 +649,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -640,6 +669,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="5:00" />
 
@@ -659,7 +689,7 @@
                                     <TextView
                                         android:id="@+id/day500"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -667,6 +697,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -679,7 +710,7 @@
                                     <TextView
                                         android:id="@+id/day530"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -687,6 +718,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -706,6 +738,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="6:00" />
 
@@ -725,7 +758,7 @@
                                     <TextView
                                         android:id="@+id/day600"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -733,6 +766,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -745,7 +779,7 @@
                                     <TextView
                                         android:id="@+id/day630"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -753,6 +787,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -772,6 +807,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="7:00" />
 
@@ -791,7 +827,7 @@
                                     <TextView
                                         android:id="@+id/day700"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -799,6 +835,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -811,7 +848,7 @@
                                     <TextView
                                         android:id="@+id/day730"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -819,6 +856,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -838,6 +876,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="8:00" />
 
@@ -857,7 +896,7 @@
                                     <TextView
                                         android:id="@+id/day800"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -865,6 +904,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -877,7 +917,7 @@
                                     <TextView
                                         android:id="@+id/day830"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -885,6 +925,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -904,6 +945,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="9:00" />
 
@@ -923,7 +965,7 @@
                                     <TextView
                                         android:id="@+id/day900"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -931,6 +973,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -943,7 +986,7 @@
                                     <TextView
                                         android:id="@+id/day930"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -951,6 +994,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -970,6 +1014,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="10:00" />
 
@@ -989,7 +1034,7 @@
                                     <TextView
                                         android:id="@+id/day1000"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -997,6 +1042,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1009,7 +1055,7 @@
                                     <TextView
                                         android:id="@+id/day1030"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1017,6 +1063,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1036,6 +1083,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="11:00" />
 
@@ -1055,7 +1103,7 @@
                                     <TextView
                                         android:id="@+id/day1100"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1063,6 +1111,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1075,7 +1124,7 @@
                                     <TextView
                                         android:id="@+id/day1130"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1083,6 +1132,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1102,6 +1152,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="12:00" />
 
@@ -1121,7 +1172,7 @@
                                     <TextView
                                         android:id="@+id/day1200"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1129,6 +1180,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1141,7 +1193,7 @@
                                     <TextView
                                         android:id="@+id/day1230"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1149,6 +1201,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1168,6 +1221,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="13:00" />
 
@@ -1187,7 +1241,7 @@
                                     <TextView
                                         android:id="@+id/day1300"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1195,6 +1249,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1207,7 +1262,7 @@
                                     <TextView
                                         android:id="@+id/day1330"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1215,6 +1270,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1234,6 +1290,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="14:00" />
 
@@ -1253,7 +1310,7 @@
                                     <TextView
                                         android:id="@+id/day1400"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1261,6 +1318,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1273,7 +1331,7 @@
                                     <TextView
                                         android:id="@+id/day1430"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1281,6 +1339,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1300,6 +1359,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="15:00" />
 
@@ -1319,7 +1379,7 @@
                                     <TextView
                                         android:id="@+id/day1500"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1327,6 +1387,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1339,7 +1400,7 @@
                                     <TextView
                                         android:id="@+id/day1530"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1347,6 +1408,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1366,6 +1428,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="16:00" />
 
@@ -1385,7 +1448,7 @@
                                     <TextView
                                         android:id="@+id/day1600"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1393,6 +1456,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1405,7 +1469,7 @@
                                     <TextView
                                         android:id="@+id/day1630"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1413,6 +1477,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1432,6 +1497,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="17:00" />
 
@@ -1451,7 +1517,7 @@
                                     <TextView
                                         android:id="@+id/day1700"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1459,6 +1525,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1471,7 +1538,7 @@
                                     <TextView
                                         android:id="@+id/day1730"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1479,6 +1546,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1498,6 +1566,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="18:00" />
 
@@ -1517,7 +1586,7 @@
                                     <TextView
                                         android:id="@+id/day1800"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1525,6 +1594,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1537,7 +1607,7 @@
                                     <TextView
                                         android:id="@+id/day1830"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1545,6 +1615,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1564,6 +1635,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="19:00" />
 
@@ -1583,7 +1655,7 @@
                                     <TextView
                                         android:id="@+id/day1900"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1591,6 +1663,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1603,7 +1676,7 @@
                                     <TextView
                                         android:id="@+id/day1930"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1611,6 +1684,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1630,6 +1704,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="20:00" />
 
@@ -1649,7 +1724,7 @@
                                     <TextView
                                         android:id="@+id/day2000"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1657,6 +1732,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1669,7 +1745,7 @@
                                     <TextView
                                         android:id="@+id/day2030"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1677,6 +1753,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1696,6 +1773,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="21:00" />
 
@@ -1715,7 +1793,7 @@
                                     <TextView
                                         android:id="@+id/day2100"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1723,6 +1801,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1735,7 +1814,7 @@
                                     <TextView
                                         android:id="@+id/day2130"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1743,6 +1822,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1762,6 +1842,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="22:00" />
 
@@ -1781,7 +1862,7 @@
                                     <TextView
                                         android:id="@+id/day2200"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1789,6 +1870,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1801,7 +1883,7 @@
                                     <TextView
                                         android:id="@+id/day2230"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1809,6 +1891,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1828,6 +1911,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@android:color/white"
+                            android:fontFamily="@font/nanumbarungothicb"
                             android:gravity="right"
                             android:text="23:00" />
 
@@ -1847,7 +1931,7 @@
                                     <TextView
                                         android:id="@+id/day2300"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1855,6 +1939,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 
@@ -1867,7 +1952,7 @@
                                     <TextView
                                         android:id="@+id/day2330"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="40dp"
 
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
@@ -1875,6 +1960,7 @@
                                         android:layout_marginBottom="1dp"
                                         android:layout_weight="1"
                                         android:background="@android:color/white"
+                                        android:fontFamily="@font/nanumbarungothicb"
                                         android:padding="10dp"
                                         android:text=" " />
 

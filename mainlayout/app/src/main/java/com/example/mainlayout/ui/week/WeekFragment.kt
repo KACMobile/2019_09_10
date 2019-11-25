@@ -33,7 +33,6 @@ class WeekFragment : Fragment() {//주간 캘린더
 
         //var fragmentweekCalendar = week_CalendarView
 
-
         /*if (wCalendar.get(Calendar.DATE)!=CalendarInfo.currentDate
             || wCalendar. get(Calendar.MONTH)!=CalendarInfo.currentMonth
             || wCalendar. get(Calendar.YEAR)!=CalendarInfo.currentYear)
