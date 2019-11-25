@@ -471,5 +471,5 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         am.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, sender)
     }
 
-    
+
 }

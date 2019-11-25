@@ -57,15 +57,16 @@ class GroupFragment : Fragment() {
         }
         )
 
-        }
-
-
         return rootView
-
-        //val listView = view?.findViewById<ListView>(R.id.main_listview)
-        //listView?.adapter = MyCustomAdapter(this)
-
     }
+
+
+
+
+    //val listView = view?.findViewById<ListView>(R.id.main_listview)
+    //listView?.adapter = MyCustomAdapter(this)
+
+
     private lateinit var viewModel: GroupViewModel
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -78,4 +79,4 @@ class GroupFragment : Fragment() {
 
 
 
-}
+    }
