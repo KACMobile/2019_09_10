@@ -22,10 +22,7 @@ class GroupAdd : AppCompatActivity() {
 
     private val firebaseDatabase = FirebaseDatabase.getInstance()
     private val databaseReference = firebaseDatabase.reference
-    var userNames = arrayListOf<String>()
-    var userInfos = arrayListOf<String>()
-    var userTypes = arrayListOf<String>()
-    var userIcons = arrayListOf<String?>()
+    var userInfos = arrayListOf<UserInfo>()
     private val userID:String = "User01"
 
 
@@ -35,7 +32,7 @@ class GroupAdd : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.group_add)
         val listView = findViewById<ListView>(R.id.group_add_list)
-        listView.adapter = GroupAddAdapter(this,userNames,userInfos,userTypes,userIcons) //custom adapter*/
+        listView.adapter = GroupAddAdapter(this, userInfos) //custom adapter*/
 
     }
 
@@ -65,17 +62,13 @@ class GroupAdd : AppCompatActivity() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 val listView = findViewById<ListView>(R.id.group_add_list)
-                clearArr()
+                userInfos.clear()
 
                 if (newText!!.isNotEmpty()) {
                     searchData = newText
-
                     databaseReference.child("Groups").orderByKey().startAt(searchData).endAt(searchData + "\uf8ff").addChildEventListener(object: ChildEventListener{
                         override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
-                            userNames.add(dataSnapshot.child("UserInfo/userName").value.toString())
-                            userInfos.add(dataSnapshot.child("UserInfo/userInfo").value.toString())
-                            userTypes.add(dataSnapshot.child("UserInfo/userType").value.toString())
-                            userIcons.add(dataSnapshot.child("UserInfo/userIcon").value.toString())
+                            userInfos.add(UserInfo(dataSnapshot.child("UserInfo/userName").value.toString(), dataSnapshot.child("UserInfo/userInfo").value.toString(), dataSnapshot.child("UserInfo/userType").value.toString(), dataSnapshot.child("UserInfo/userIcon").value.toString()))
                             (listView.adapter as BaseAdapter).notifyDataSetChanged()
                         }
 
@@ -100,10 +93,7 @@ class GroupAdd : AppCompatActivity() {
                     databaseReference.child("Users").orderByKey().startAt(searchData).endAt(searchData + "\uf8ff").addChildEventListener(object: ChildEventListener{
                         override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
                             if(dataSnapshot.child("UserInfo/userName").value.toString()!=userID) {
-                                userNames.add(dataSnapshot.child("UserInfo/userName").value.toString())
-                                userInfos.add(dataSnapshot.child("UserInfo/userInfo").value.toString())
-                                userTypes.add(dataSnapshot.child("UserInfo/userType").value.toString())
-                                userIcons.add(dataSnapshot.child("UserInfo/userIcon").value.toString())
+                                userInfos.add(UserInfo(dataSnapshot.child("UserInfo/userName").value.toString(), dataSnapshot.child("UserInfo/userInfo").value.toString(), dataSnapshot.child("UserInfo/userType").value.toString(), dataSnapshot.child("UserInfo/userIcon").value.toString()))
                                 (listView.adapter as BaseAdapter).notifyDataSetChanged()
                             }
                         }
@@ -135,11 +125,5 @@ class GroupAdd : AppCompatActivity() {
         return true
     }
 
-    public fun clearArr(){
-        userNames.clear()
-        userInfos.clear()
-        userTypes.clear()
-        userIcons.clear()
-    }
 
 }

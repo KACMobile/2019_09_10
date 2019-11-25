@@ -201,7 +201,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
         val currentDOW = cal.get(Calendar.DAY_OF_WEEK)
 
-        if (currentYear % 4 != 0) currentLastDayOfMonth = leapYearLastDayOfMonth[currentMonth]
+        if (currentYear % 4 == 0) currentLastDayOfMonth = leapYearLastDayOfMonth[currentMonth]
 
 
         if (currentMonth == todayMonth && thisYear == currentYear && thisWOM ==currentWOM)
