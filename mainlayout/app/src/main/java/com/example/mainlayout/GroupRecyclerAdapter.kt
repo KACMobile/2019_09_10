@@ -1,25 +1,28 @@
 package com.example.mainlayout
 
+import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.group_fragment_row.view.*
 
-class GroupRecyclerAdapter(private val items: ArrayList<UserInfo>) : RecyclerView.Adapter<GroupRecyclerAdapter.ViewHolder>() {
+class GroupRecyclerAdapter(val context:Context, private val dataList: ArrayList<GroupFragmentData>) : RecyclerView.Adapter<GroupRecyclerAdapter.ViewHolder>() {
     override fun getItemCount(): Int {
-        return items.size
+        return dataList.size
     }
 
     override fun onBindViewHolder(holder: GroupRecyclerAdapter.ViewHolder, position: Int) {
-        val item = items[position]
+        val data = dataList[position]
         val listener = View.OnClickListener { it->
             Toast.makeText(it.context, "Click", Toast.LENGTH_SHORT).show()
         }
         holder.apply{
-            bind(listener, item)
-            itemView.tag = item
+            bind(context, listener, data)
+            itemView.tag = data
         }
     }
 
@@ -29,9 +32,15 @@ class GroupRecyclerAdapter(private val items: ArrayList<UserInfo>) : RecyclerVie
     }
     class ViewHolder(v: View): RecyclerView.ViewHolder(v){
         private var view:View = v
-        fun bind(listener: View.OnClickListener, item: UserInfo) {
-            view.name_textView.text = item.userNames
-            view.position_textview.text = item.userInfos
+        fun bind(context:Context, listener: View.OnClickListener, data:GroupFragmentData) {
+            view.group_fragment_GroupName.text = data.userNames
+            view.group_fragment_ScheduleName.text = data.scheduleName
+            view.group_fragment_StartTime.text = data.startTime
+            view.group_fragment_Date.text = data.dateMonth.toString() + "월" + data.date + "일"
+            if(data.userIcons != "null")
+                Glide.with(context).load(data.userIcons).into(view.group_fragment_image)
+            else
+                Glide.with(context).load(R.drawable.user_icon).into(view.group_fragment_image)
 
         }
     }

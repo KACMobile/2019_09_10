@@ -6,10 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.bumptech.glide.Glide
 import com.example.mainlayout.GroupAdd
 import com.google.firebase.database.DataSnapshot
@@ -80,11 +77,13 @@ class GroupAddAdapter(context: Context, val userInfosArr: ArrayList<UserInfo>) :
             if(followBtn.text == "구독"){
                 databaseReference.child("Users").child(userID).child("Follow").child(userInfosArr[position].userTypes).child(userInfosArr[position].userNames).setValue(Color.RED)
                 followBtn.text = ("구독중")
+                Toast.makeText(it.context, "구독되었습니다.", Toast.LENGTH_SHORT).show()
                 //followBtn.setBackgroundColor(Color.RED)
             }
             else{
                 databaseReference.child("Users").child(userID).child("Follow").child(userInfosArr[position].userTypes).child(userInfosArr[position].userNames).setValue(null)
                 followBtn.text = ("구독")
+                Toast.makeText(it.context, "구독을 해지하셨습니다.", Toast.LENGTH_SHORT).show()
                 //followBtn.setBackgroundColor(Color.RED)
 
             }

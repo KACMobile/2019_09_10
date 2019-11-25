@@ -62,10 +62,10 @@ class GroupAdd : AppCompatActivity() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 val listView = findViewById<ListView>(R.id.group_add_list)
-                userInfos.clear()
 
                 if (newText!!.isNotEmpty()) {
                     searchData = newText
+                    //userInfos.clear()
                     databaseReference.child("Groups").orderByKey().startAt(searchData).endAt(searchData + "\uf8ff").addChildEventListener(object: ChildEventListener{
                         override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
                             userInfos.add(UserInfo(dataSnapshot.child("UserInfo/userName").value.toString(), dataSnapshot.child("UserInfo/userInfo").value.toString(), dataSnapshot.child("UserInfo/userType").value.toString(), dataSnapshot.child("UserInfo/userIcon").value.toString()))
@@ -118,6 +118,7 @@ class GroupAdd : AppCompatActivity() {
 
                 }
                 (listView.adapter as BaseAdapter).notifyDataSetChanged()
+                userInfos.clear()
                 return true
             }
         })

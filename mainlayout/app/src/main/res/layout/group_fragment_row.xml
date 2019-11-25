@@ -3,26 +3,69 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/containerbox">
 
     <TextView
-        android:id="@+id/name_textView"
+        android:id="@+id/group_fragment_GroupName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="12dp"
         android:text="TextView"
+        android:textColor="#4D000000"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/group_fragment_ScheduleName"
+        app:layout_constraintStart_toStartOf="@+id/group_fragment_ScheduleName"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.875" />
+
+    <TextView
+        android:id="@+id/group_fragment_ScheduleName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"
+        android:text="TextView"
+        android:textSize="28dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/group_fragment_image"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/group_fragment_image"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="45dp"
+        app:layout_constraintBottom_toBottomOf="@+id/group_fragment_ScheduleName"
+        app:layout_constraintEnd_toStartOf="@id/group_fragment_ScheduleName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/group_fragment_ScheduleName"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/user_icon" />
 
     <TextView
-        android:id="@+id/position_textview"
+        android:id="@+id/group_fragment_StartTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="15dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.402"
-        app:layout_constraintStart_toEndOf="@+id/name_textView"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="28dp"
+        app:layout_constraintBottom_toBottomOf="@+id/group_fragment_ScheduleName"
+        app:layout_constraintStart_toEndOf="@+id/group_fragment_ScheduleName"
+        app:layout_constraintTop_toTopOf="@+id/group_fragment_ScheduleName" />
+    <TextView
+        android:id="@+id/group_fragment_Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="TextView"
+        android:textColor="#4D000000"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/group_fragment_StartTime"
+        app:layout_constraintStart_toStartOf="@+id/group_fragment_StartTime"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.875" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
