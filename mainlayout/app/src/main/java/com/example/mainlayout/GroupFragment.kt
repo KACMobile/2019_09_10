@@ -1,6 +1,5 @@
 package com.example.mainlayout
 
-import android.content.Context
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,11 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.ListView
-import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 
 
 class GroupFragment : Fragment() {
+    private val firebaseDatabase = FirebaseDatabase.getInstance()
+    private val databaseReference = firebaseDatabase.reference
+    var userInfos = arrayListOf<UserInfo>()
+    private val userID:String = "User01"
+
 
     companion object {
         fun newInstance() = GroupFragment()
@@ -23,7 +30,37 @@ class GroupFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.group_fragment, container, false)
+        val rootView = inflater.inflate(R.layout.group_fragment, container, false)
+        val recyclerView = rootView.findViewById<RecyclerView>(R.id.group_fragment_recyclerView)
+        recyclerView.adapter = GroupRecyclerAdapter(userInfos)
+
+        databaseReference.child("Users" + userID + "Follow").addChildEventListener(object: ChildEventListener{
+            override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+
+            }
+        }
+        )
+
+        }
+
+
+        return rootView
 
         //val listView = view?.findViewById<ListView>(R.id.main_listview)
         //listView?.adapter = MyCustomAdapter(this)
@@ -34,52 +71,11 @@ class GroupFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(GroupViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
-    private class MyCustomAdapter(context: Context): BaseAdapter() {
-
-        private val mContext: Context
-
-        private val names = arrayListOf<String>(
-            "Group1", "Group2", "Group3", "Group4", "Group5"
-        )
-
-        init {
-            mContext = context
-        }
-
-        // responsible for how many rows in my list
-        override fun getCount(): Int {
-            return names.size
-        }
-
-        // you can also ignore this
-        override fun getItemId(position: Int): Long {
-            return position.toLong()
-        }
-
-        // you can ignore this for now
-        override fun getItem(position: Int): Any {
-            return "TEST"
-        }
-
-        // responsible for rendering out each row
-        override fun getView(position: Int, convertView: View?, viewGroup: ViewGroup?): View {
-            val layoutInflater = LayoutInflater.from(mContext)
-            val rowMain = layoutInflater.inflate(R.layout.group_add_row, viewGroup, false)
-
-            val nameTextView = rowMain.findViewById<TextView>(R.id.name_textView)
-            nameTextView.text = names.get(position)
-
-            val positionTextView = rowMain.findViewById<TextView>(R.id.position_textview)
-            positionTextView.text = "Group $position"
-
-
-            return rowMain
-
-        }
 
     }
+
+
+
+
 
 }

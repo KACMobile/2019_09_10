@@ -17,7 +17,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class GroupAddAdapter(context: Context, val userNamesArr: ArrayList<String>, val userInfosArr: ArrayList<String>, val userTypesArr: ArrayList<String>, val userIconsArr: ArrayList<String?>) : BaseAdapter(){
+class GroupAddAdapter(context: Context, val userInfosArr: ArrayList<UserInfo>) : BaseAdapter(){
     private val userID:String = "User01"
 
     private val mContext : Context
@@ -27,7 +27,7 @@ class GroupAddAdapter(context: Context, val userNamesArr: ArrayList<String>, val
     }
 
     override fun getCount(): Int {
-        return userNamesArr.size
+        return userInfosArr.size
     }
 
     override fun getItemId(position: Int): Long {
@@ -45,19 +45,17 @@ class GroupAddAdapter(context: Context, val userNamesArr: ArrayList<String>, val
         val rowMain = layoutInflater.inflate(R.layout.group_add_row, viewGroup, false)
 
         val nameTextView = rowMain.findViewById<TextView>(R.id.add_group_name)
-        nameTextView.text = userNamesArr[position]
+        nameTextView.text = userInfosArr[position].userNames
 
 
         val infoTextView = rowMain.findViewById<TextView>(R.id.add_group_info)
-        infoTextView.text = userInfosArr[position]
+        infoTextView.text = userInfosArr[position].userInfos
 
         val followBtn = rowMain.findViewById<Button>(R.id.add_group_button)
-        val userFollowDB =databaseReference.child("Users/" + userID + "/Follow/"+ userTypesArr[position] + "/" + userNamesArr[position])
+        val userFollowDB =databaseReference.child("Users/" + userID + "/Follow/"+ userInfosArr[position].userTypes + "/" + userInfosArr[position].userNames)
         val icImageView = rowMain.findViewById<ImageView>(R.id.add_group_icon)
-        Log.d("a", "This is " + userIconsArr[position])
-        if(userIconsArr[position]!= "null") {
-            Log.d("a", "This is !!!!!!!!" + userIconsArr[position])
-            Glide.with(mContext).load(userIconsArr[position]).into(icImageView)
+        if(userInfosArr[position].userIcons!= "null") {
+            Glide.with(mContext).load(userInfosArr[position].userIcons).into(icImageView)
         }
         userFollowDB.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(dataSnapShot: DataSnapshot) {
@@ -73,19 +71,19 @@ class GroupAddAdapter(context: Context, val userNamesArr: ArrayList<String>, val
         }
 
         )
-        if(databaseReference.child("Users").child(userID).child("Follow").child(userNamesArr[position]) == null) {
+        if(databaseReference.child("Users").child(userID).child("Follow").child(userInfosArr[position].userNames) == null) {
             followBtn.text = ("구독중")
             followBtn.setBackgroundColor(Color.GRAY)
         }
 
         followBtn.setOnClickListener{
             if(followBtn.text == "구독"){
-                databaseReference.child("Users").child(userID).child("Follow").child(userTypesArr[position]).child(userNamesArr[position]).setValue(Color.RED)
+                databaseReference.child("Users").child(userID).child("Follow").child(userInfosArr[position].userTypes).child(userInfosArr[position].userNames).setValue(Color.RED)
                 followBtn.text = ("구독중")
                 //followBtn.setBackgroundColor(Color.RED)
             }
             else{
-                databaseReference.child("Users").child(userID).child("Follow").child(userTypesArr[position]).child(userNamesArr[position]).setValue(null)
+                databaseReference.child("Users").child(userID).child("Follow").child(userInfosArr[position].userTypes).child(userInfosArr[position].userNames).setValue(null)
                 followBtn.text = ("구독")
                 //followBtn.setBackgroundColor(Color.RED)
 
@@ -98,10 +96,6 @@ class GroupAddAdapter(context: Context, val userNamesArr: ArrayList<String>, val
 
 
         return rowMain
-
-//            val textView = TextView(mContext)
-//            textView.text = "this is list row"
-//            return textView
     }
 
 
