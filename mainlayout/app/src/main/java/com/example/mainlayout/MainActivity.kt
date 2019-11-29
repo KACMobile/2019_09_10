@@ -297,14 +297,14 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         {
             fab.hide()
             groupFab.show()
-            Toast.makeText(applicationContext, "isGroupFrag = ${isGroupFragment}", Toast.LENGTH_LONG ).show()
+            //Toast.makeText(applicationContext, "isGroupFrag = ${isGroupFragment}", Toast.LENGTH_LONG ).show()
 
         }
         else //groupFragment = false
         {
             fab.show()
             groupFab.hide()
-            Toast.makeText(applicationContext, "isGroupFrag = ${isGroupFragment}", Toast.LENGTH_LONG ).show()
+            //Toast.makeText(applicationContext, "isGroupFrag = ${isGroupFragment}", Toast.LENGTH_LONG ).show()
 
         }
     }
