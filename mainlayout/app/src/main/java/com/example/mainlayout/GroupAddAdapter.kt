@@ -79,13 +79,13 @@ class GroupAddAdapter(context: Context, val userInfosArr: ArrayList<UserInfo>) :
                 databaseReference.child("Users").child(userID).child("Follow").child(userInfosArr[position].userTypes).child(userInfosArr[position].userNames).setValue(Color.RED)
                 followBtn.text = ("구독중")
                 Toast.makeText(it.context, "구독되었습니다.", Toast.LENGTH_SHORT).show()
-                //followBtn.setBackgroundColor(Color.RED)
+                followBtn.setBackgroundColor(Color.GRAY)
             }
             else{
                 databaseReference.child("Users").child(userID).child("Follow").child(userInfosArr[position].userTypes).child(userInfosArr[position].userNames).setValue(null)
                 followBtn.text = ("구독")
                 Toast.makeText(it.context, "구독을 해지하셨습니다.", Toast.LENGTH_SHORT).show()
-                //followBtn.setBackgroundColor(Color.RED)
+                followBtn.setBackgroundColor(Color.WHITE)
 
             }
 

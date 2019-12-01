@@ -1,12 +1,15 @@
 package com.example.mainlayout
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.make_schedule.*
 
 import android.widget.Button
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.CheckBox
@@ -16,6 +19,9 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.*
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import android.widget.Toast
+
+
 
 class MakeSchedule :AppCompatActivity(){
 
@@ -45,6 +51,8 @@ class MakeSchedule :AppCompatActivity(){
         val nameText : TextInputEditText = findViewById(R.id.nameTextView)
         val infoText : TextInputEditText = findViewById(R.id.infoTextView)
 
+        val tagText : TextView = findViewById(R.id.tag_text)
+
         //일정 데이터
         var alarm : Boolean = false
         var isitShare : Boolean = false
@@ -56,6 +64,13 @@ class MakeSchedule :AppCompatActivity(){
         var endTime : Int = 0
         var scheduleInfo : String = " "
         var scheduleName : String = "무제"
+        var tag : String = "할 일"
+
+        tag_text.setOnClickListener {
+            showdialog()
+            tag == tag_text.text
+        }
+
 
         val userDB = databaseReference.child("Users/" + userID + "/Schedule")
         userDB.addValueEventListener( object: ValueEventListener {
@@ -74,7 +89,8 @@ class MakeSchedule :AppCompatActivity(){
             val dpd = DatePickerDialog(
                 this,
                 DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
-                    editDateStart.setText("" + mDay + "/" + (mMonth + 1) + "/" + mYear)
+                    editDateStart.setText("" + mYear + "/" + (mMonth + 1) + "/" + mDay)
+                    editDateEnd.setText("" + mYear + "/" + (mMonth + 1) + "/" + mDay)
                     dateYear = mYear
                     dateMonth = mMonth
                     dateDay = mDay
@@ -90,7 +106,9 @@ class MakeSchedule :AppCompatActivity(){
             val timeSetListener = TimePickerDialog.OnTimeSetListener{timePicker, hour, minute ->
                 cal.set(Calendar.HOUR_OF_DAY,hour)
                 cal.set(Calendar.MINUTE,minute)
-                editTimeStart.setText("" + hour + ":" + minute)
+                editTimeStart.setText("" + hour + "시 " + minute + "분")
+                editTimeEnd.setText("" + (hour+1) + "시 " + minute + "분")
+
                 if(minute<30)
                     startTime = 0
                 else
@@ -106,7 +124,7 @@ class MakeSchedule :AppCompatActivity(){
             val dpd = DatePickerDialog(
                 this,
                 DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
-                    editDateEnd.setText("" + mDay + "/" + (mMonth + 1) + "/" + mYear)
+                    editDateEnd.setText("" + mYear + "/" + (mMonth + 1) + "/" + mDay)
                 },
                 year,
                 month,
@@ -119,7 +137,7 @@ class MakeSchedule :AppCompatActivity(){
             val timeSetListener = TimePickerDialog.OnTimeSetListener{timePicker, hour, minute ->
                 cal.set(Calendar.HOUR_OF_DAY,hour)
                 cal.set(Calendar.MINUTE,minute)
-                editTimeEnd.setText("" + hour + ":" + minute)
+                editTimeEnd.setText("" + hour + ":시 " + minute + "분")
                 if(minute<30)
                     endTime = 0
                 else
@@ -145,7 +163,7 @@ class MakeSchedule :AppCompatActivity(){
             scheduleInfo = infoText.text.toString()
 
             insertSchedule(
-                userID, "할 일", scheduleName, alarm, startTime.toString(), endTime.toString(), scheduleInfo,
+                userID, tag, scheduleName, alarm, startTime.toString(), endTime.toString(), scheduleInfo,
                 isitShare, isitShareEdit, dateYear, dateMonth+1, dateDay
             )
 
@@ -155,6 +173,24 @@ class MakeSchedule :AppCompatActivity(){
         }
 
 
+    }
+    private fun showdialog() {
+        val array = arrayOf("할 일", "시간표", "일정", "알림")
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Tag")
+        builder.setItems(array,{_, which ->
+            val selected = array[which]
+
+            try {
+                tag_text.setText("   "+selected)
+            }catch (e:IllegalArgumentException){
+                Toast.makeText(applicationContext, "Tag is not Selected", Toast.LENGTH_LONG ).show()
+            }
+        })
+
+        val dialog = builder.create()
+
+        dialog.show()
     }
 
     fun insertSchedule(

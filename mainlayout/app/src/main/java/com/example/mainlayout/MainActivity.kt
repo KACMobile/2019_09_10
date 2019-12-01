@@ -26,8 +26,25 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import com.google.firebase.database.*
 import java.util.*
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import com.example.mainlayout.ui.daily.DailyFragment
+import com.example.mainlayout.ui.month.MonthFragment
+import com.example.mainlayout.ui.week.WeekFragment
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.app_bar_main.*
 
-class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener{
+class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelectedListener{
+
+    lateinit var dailyFragment: DailyFragment
+    lateinit var weekFragment: WeekFragment
+    lateinit var monthFragment: MonthFragment
+    lateinit var groupFragment: GroupFragment
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -45,7 +62,7 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     lateinit var rotateBackward : Animation
     lateinit var rotateForward : Animation
 
-    var isGroupFragment : Boolean = true
+    var isGroupFragment : Boolean = false
     var isOpen : Boolean = false
 
     val NOTIFICATION_CHANNEL_ID = "10001"
@@ -53,11 +70,32 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     lateinit var fab : FloatingActionButton
     lateinit var groupFab : FloatingActionButton
 
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        val toolbar: Toolbar = findViewById(R.id.toolBar)
+
+        setSupportActionBar(toolBar)
+
+
+        val actionBar = supportActionBar
+        actionBar?.title = " "
+        val drawerToggle : ActionBarDrawerToggle = object : ActionBarDrawerToggle(
+            this,
+            drawer_layout,
+            toolBar,
+            (R.string.navigation_drawer_open),
+            (R.string.navigation_drawer_close)
+        ){
+
+        }
+        drawerToggle.isDrawerIndicatorEnabled = true
+        drawer_layout.addDrawerListener(drawerToggle)
+        drawerToggle.syncState()
 
 
         fab = findViewById(R.id.fab)
@@ -65,7 +103,7 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         val groupFab1: FloatingActionButton = findViewById(R.id.groupfab1)
         val groupFab2: FloatingActionButton = findViewById(R.id.groupfab2)
         val groupFab3: FloatingActionButton = findViewById(R.id.groupfab3)
-        whichFab(isGroupFragment)
+        whichFab()
 
 
         fabOpen = AnimationUtils.loadAnimation(this, R.anim.fab_open)
@@ -74,9 +112,7 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         rotateBackward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward)
         //val userFollow = databaseReference.child("Users/" + userID + "/Follow")
         //databaseReference.child("Users").child(userID).child("Follow").child("Groups").child("KAU").setValue(Color.RED)//DB에 임시추가
-
-
-
+        //val currentFragment : DailyFragment = FragmentManager
         fun animateFab()
         {
             if (isOpen)
@@ -89,6 +125,7 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 groupFab2.hide()
                 groupFab3.hide()
                 isOpen = false
+
             }
             else
             {
@@ -103,11 +140,8 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             }
         }
 
-
-
-
-        groupFab.setOnClickListener{view ->
-            animateFab()
+        groupFab.setOnClickListener{
+                animateFab()
         }
 
         groupFab1.setOnClickListener{view ->
@@ -127,6 +161,7 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             val nextIntent = Intent(this, MakeSchedule::class.java)
             startActivity(nextIntent)
         }
+
         /*insertGroup(
             "KAU", "KAU", "모바일SW", false, "1000", "1300", "13주",
             false, false, 2019, 11, 19
@@ -179,19 +214,25 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         val navController = findNavController(R.id.nav_host_fragment)
 
         navView.setNavigationItemSelectedListener(this)
+        navView.bringToFront();
+
+        dailyFragment = DailyFragment()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.nav_host_fragment, dailyFragment)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .commit()
 
 
 
-
-
-
-        appBarConfiguration = AppBarConfiguration(
+        /*appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.daily_calender, R.id.week_calender, R.id.month_calender, R.id.group_fragment
             ), drawerLayout
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        setupActionBarWithNavController(navController, appBarConfiguration)*/
+
+        //navView.setupWithNavController(navController)사용할 경우 onNavigationItemSelected메소드 사용불
 
         val userDB = databaseReference.child("Users/" + userID + "/Schedule")
         userDB.addValueEventListener( object: ValueEventListener{
@@ -232,71 +273,114 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 editor.putBoolean("KAU", false)
         }
         groupSwitch.isChecked = checkPreference.getBoolean("KAU",true)*/
-
-
-
-
-
-
     }
+    ////
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
-        menuInflater.inflate(R.menu.activity_main_drawer, menu)
-
-
-        return true
-    }
-// 그룹 체크 리스너
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         when(item?.itemId){
-            R.id.group_fragment -> {
-                isGroupFragment = true
-                whichFab(isGroupFragment)
-            }
-            R.id.daily_calender -> {
-                isGroupFragment = false
-                whichFab(isGroupFragment)
-            }
-            R.id.week_calender -> {
-                isGroupFragment = false
-                whichFab(isGroupFragment)
-            }
-            R.id.month_calender -> {
-                isGroupFragment = false
-                whichFab(isGroupFragment)
+            R.id.app_bar_setting ->{
+                //전체 세팅
             }
         }
-
         return super.onOptionsItemSelected(item)
     }
-    fun whichFab(isGroupFragment: Boolean)
+
+    fun whichFab()
     {
         if (isGroupFragment)
         {
             fab.hide()
             groupFab.show()
+            //Toast.makeText(applicationContext, "isGroupFrag = ${isGroupFragment}", Toast.LENGTH_LONG ).show()
+
         }
         else //groupFragment = false
         {
             fab.show()
             groupFab.hide()
+            //Toast.makeText(applicationContext, "isGroupFrag = ${isGroupFragment}", Toast.LENGTH_LONG ).show()
+
+        }
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId){
+            R.id.group_fragment ->{
+                groupFragment = GroupFragment()
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment, groupFragment)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit()
+
+                isGroupFragment = true
+                whichFab()
+
+            }
+            R.id.daily_calender ->{
+                dailyFragment = DailyFragment()
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment, dailyFragment)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit()
+
+                isGroupFragment = false
+                whichFab()
+
+            }
+            R.id.week_calender ->{
+                weekFragment = WeekFragment()
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment, weekFragment)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit()
+
+                isGroupFragment = false
+                whichFab()
+
+
+
+            }
+            R.id.month_calender ->{
+                monthFragment = MonthFragment()
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment, monthFragment)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit()
+
+                isGroupFragment = false
+                whichFab()
+
+            }
+        }
+        drawer_layout.closeDrawer(GravityCompat.START)
+
+        return true
+    }
+
+    override fun onBackPressed() {
+        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+            drawer_layout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
         }
     }
 
 
-
-    override fun onSupportNavigateUp(): Boolean {
+    /*override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
+    }*/
 
 
 
