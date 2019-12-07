@@ -68,7 +68,16 @@ class GroupAdd : AppCompatActivity() {
                     //userInfos.clear()
                     databaseReference.child("Groups").orderByKey().startAt(searchData).endAt(searchData + "\uf8ff").addChildEventListener(object: ChildEventListener{
                         override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
-                            userInfos.add(UserInfo(dataSnapshot.child("UserInfo/userName").value.toString(), dataSnapshot.child("UserInfo/userInfo").value.toString(), dataSnapshot.child("UserInfo/userType").value.toString(), dataSnapshot.child("UserInfo/userIcon").value.toString()))
+                            var lat:Double? = null
+                            var lng:Double? = null
+                            if(dataSnapshot.child("UserInfo/locateLat").value != null && dataSnapshot.child("UserInfo/locateLng").value != null){
+                                lat  = dataSnapshot.child("UserInfo/locateLat").value as Double
+                                lng = dataSnapshot.child("UserInfo/locateLng").value as Double
+                            }
+                            userInfos.add(UserInfo(dataSnapshot.child("UserInfo/userName").value.toString(), dataSnapshot.child("UserInfo/userInfo").value.toString(),
+                                dataSnapshot.child("UserInfo/userType").value.toString(), dataSnapshot.child("UserInfo/userIcon").value.toString(),
+                                dataSnapshot.child("UserInfo/userHomepage").value.toString(),dataSnapshot.child("UserInfo/userTEL").value.toString(),
+                                lat, lng))
                             (listView.adapter as BaseAdapter).notifyDataSetChanged()
                         }
 
@@ -93,7 +102,16 @@ class GroupAdd : AppCompatActivity() {
                     databaseReference.child("Users").orderByKey().startAt(searchData).endAt(searchData + "\uf8ff").addChildEventListener(object: ChildEventListener{
                         override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
                             if(dataSnapshot.child("UserInfo/userName").value.toString()!=userID) {
-                                userInfos.add(UserInfo(dataSnapshot.child("UserInfo/userName").value.toString(), dataSnapshot.child("UserInfo/userInfo").value.toString(), dataSnapshot.child("UserInfo/userType").value.toString(), dataSnapshot.child("UserInfo/userIcon").value.toString()))
+                                var lat:Double? = null
+                                var lng:Double? = null
+                                if(dataSnapshot.child("UserInfo/locateLat").value != null && dataSnapshot.child("UserInfo/locateLng").value != null){
+                                    lat  = dataSnapshot.child("UserInfo/locateLat").value as Double
+                                    lng = dataSnapshot.child("UserInfo/locateLng").value as Double
+                                }
+                                userInfos.add(UserInfo(dataSnapshot.child("UserInfo/userName").value.toString(), dataSnapshot.child("UserInfo/userInfo").value.toString(),
+                                    dataSnapshot.child("UserInfo/userType").value.toString(), dataSnapshot.child("UserInfo/userIcon").value.toString(),
+                                    dataSnapshot.child("UserInfo/userHomepage").value.toString(), dataSnapshot.child("UserInfo/userTEL").value.toString(),
+                                    lat, lng))
                                 (listView.adapter as BaseAdapter).notifyDataSetChanged()
                             }
                         }

@@ -11,7 +11,7 @@
         android:id="@+id/calendarHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/defaultColor">
+        android:background="#CFD0F3">
 
         <ImageButton
             android:id="@+id/previousButton"
@@ -38,7 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:gravity="center"
-            android:textColor="@android:color/white"
+            android:textColor="#181717"
             android:textSize="18sp"
             app:layout_constraintLeft_toRightOf="@id/previousButton"
             app:layout_constraintRight_toLeftOf="@id/forwardButton"

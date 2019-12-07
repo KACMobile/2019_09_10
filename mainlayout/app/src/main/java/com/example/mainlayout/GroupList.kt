@@ -21,14 +21,23 @@ class GroupList : AppCompatActivity() {
         val userfollow = databaseReference.child("Users/" + userID + "/Follow")
         userfollow.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                userInfos.clear()
+
                 for(snapshot in dataSnapshot.children){
                     if(snapshot.key.toString() == "Groups"){
                         for(deeperSnapshot in snapshot.children){
                             val groupDB =databaseReference.child("Groups/"+ deeperSnapshot.key.toString())
                             groupDB.addValueEventListener(object: ValueEventListener{
                                 override fun onDataChange(groupDataSnapshot: DataSnapshot) {
-                                    userInfos.add(UserInfo(groupDataSnapshot.child("UserInfo/userName").value.toString(), groupDataSnapshot.child("UserInfo/userInfo").value.toString(), groupDataSnapshot.child("UserInfo/userType").value.toString(), groupDataSnapshot.child("UserInfo/userIcon").value.toString()))
+                                    var lat:Double? = null
+                                    var lng:Double? = null
+                                    if(groupDataSnapshot.child("UserInfo/locateLat").value != null && groupDataSnapshot.child("UserInfo/locateLng").value != null){
+                                        lat  = groupDataSnapshot.child("UserInfo/locateLat").value as Double
+                                        lng = groupDataSnapshot.child("UserInfo/locateLng").value as Double
+                                    }
+                                    userInfos.add(UserInfo(groupDataSnapshot.child("UserInfo/userName").value.toString(), groupDataSnapshot.child("UserInfo/userInfo").value.toString(),
+                                        groupDataSnapshot.child("UserInfo/userType").value.toString(), groupDataSnapshot.child("UserInfo/userIcon").value.toString(),
+                                        groupDataSnapshot.child("UserInfo/userHomepage").value.toString(), groupDataSnapshot.child("UserInfo/userTEL").value.toString(),
+                                        lat, lng))
                                     (listView.adapter as BaseAdapter).notifyDataSetChanged()
 
                                 }
@@ -44,7 +53,16 @@ class GroupList : AppCompatActivity() {
                             val userDB =databaseReference.child("Users/"+ deeperSnapshot.key.toString())
                             userDB.addValueEventListener(object: ValueEventListener{
                                 override fun onDataChange(userDataSnapshot: DataSnapshot) {
-                                    userInfos.add(UserInfo(userDataSnapshot.child("UserInfo/userName").value.toString(), userDataSnapshot.child("UserInfo/userInfo").value.toString(), userDataSnapshot.child("UserInfo/userType").value.toString(), userDataSnapshot.child("UserInfo/userIcon").value.toString()))
+                                    var lat:Double? = null
+                                    var lng:Double? = null
+                                    if(userDataSnapshot.child("UserInfo/locateLat").value != null && userDataSnapshot.child("UserInfo/locateLng").value != null){
+                                        lat  = userDataSnapshot.child("UserInfo/locateLat").value as Double
+                                        lng = userDataSnapshot.child("UserInfo/locateLng").value as Double
+                                    }
+                                    userInfos.add(UserInfo(userDataSnapshot.child("UserInfo/userName").value.toString(), userDataSnapshot.child("UserInfo/userInfo").value.toString(),
+                                        userDataSnapshot.child("UserInfo/userType").value.toString(), userDataSnapshot.child("UserInfo/userIcon").value.toString(),
+                                        userDataSnapshot.child("UserInfo/userHomepage").value.toString(), userDataSnapshot.child("UserInfo/userTEL").value.toString(),
+                                                lat, lng))
                                     (listView.adapter as BaseAdapter).notifyDataSetChanged()
 
                                 }
@@ -56,6 +74,7 @@ class GroupList : AppCompatActivity() {
                         }
 
                     }
+                    userInfos.clear()
                 }
             }
 

@@ -1,7 +1,6 @@
 package com.example.mainlayout
 
 import android.app.*
-import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -9,9 +8,6 @@ import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -26,12 +22,8 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import com.google.firebase.database.*
 import java.util.*
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.example.mainlayout.ui.daily.DailyFragment
 import com.example.mainlayout.ui.month.MonthFragment
@@ -69,6 +61,8 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
     lateinit var fab : FloatingActionButton
     lateinit var groupFab : FloatingActionButton
+
+    lateinit var muserInfo: UserInfo
 
 
 
@@ -153,7 +147,8 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
             startActivity(Intent)
         }
         groupFab3.setOnClickListener{view ->
-            val Intent = Intent( this, GroupSetting::class.java)
+            val Intent = Intent( this, MyPageActivity::class.java)
+            if(::muserInfo.isInitialized) Intent.putExtra("userInfo",muserInfo)
             startActivity(Intent)
         }
 
@@ -234,11 +229,21 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
         //navView.setupWithNavController(navController)사용할 경우 onNavigationItemSelected메소드 사용불
 
-        val userDB = databaseReference.child("Users/" + userID + "/Schedule")
+        val userDB = databaseReference.child("Users/" + userID)
         userDB.addValueEventListener( object: ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                saveDataSnap = dataSnapshot
-                for(snapShot in dataSnapshot.children){
+                var lat:Double? = null
+                var lng:Double? = null
+                if(dataSnapshot.child("UserInfo/locateLat").value != null && dataSnapshot.child("UserInfo/locateLng").value != null){
+                    lat  = dataSnapshot.child("UserInfo/locateLat").value as Double
+                    lng = dataSnapshot.child("UserInfo/locateLng").value as Double
+                }
+                muserInfo = UserInfo(dataSnapshot.child("UserInfo/userName").value.toString(), dataSnapshot.child("UserInfo/userInfo").value.toString(),
+                    dataSnapshot.child("UserInfo/userType").value.toString(), dataSnapshot.child("UserInfo/userIcon").value.toString(),
+                    dataSnapshot.child("UserInfo/userHomePage").value.toString(), dataSnapshot.child("UserInfo/userTEL").value.toString(),
+                    lat, lng)
+                saveDataSnap = dataSnapshot.child("Schedule")
+                for(snapShot in dataSnapshot.child("Schedule").children){
                     for(deeperSnapShot in snapShot.child((CalendarInfo.currentMonth +1).toString()).children){
                         setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
 
@@ -492,13 +497,11 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         if(alarmAble==true && CalendarInfo.currentYear ==dateYear && (CalendarInfo.currentMonth +1)==dateMonth && CalendarInfo.currentDate ==date
             && currentHour<startTimeHour) {
             Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
-            Log.d("Alarm1", "scheduleName : " + scheduleName + " currentHour : " + currentHour + " startTimeHour : " + startTimeHour)
         }
 
         if(alarmAble==true && CalendarInfo.currentYear ==dateYear && (CalendarInfo.currentMonth +1)==dateMonth && CalendarInfo.currentDate ==date
             && currentHour==startTimeHour && currentMinute<=startTimeMinute){
             Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
-            Log.d("Alarm2", "scheduleName : " + scheduleName + " currentHour : " + currentHour + " startTimeHour : " + startTimeHour)
         }
 
     }

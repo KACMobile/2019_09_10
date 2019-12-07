@@ -537,7 +537,6 @@ public class CalendarView extends LinearLayout {
             for(DataSnapshot deeperSnapShot : snapshot.getChildren()){
                 for(DataSnapshot deepestSnapShot : deeperSnapShot.getChildren()) {
                     int scheduleCount = (int)deeperSnapShot.getChildrenCount();
-                    Log.d("a", "This is" + scheduleCount);
                     insertEvents(Integer.parseInt(deepestSnapShot.child("dateYear").getValue().toString()), Integer.parseInt(deepestSnapShot.child("dateMonth").getValue().toString()), Integer.parseInt(deepestSnapShot.child("date").getValue().toString()),scheduleCount);
                 }
 
@@ -552,11 +551,9 @@ public class CalendarView extends LinearLayout {
         if (scheduleCount == 1)
             events.add(new EventDay(cal,R.drawable.sample_circle));
         else if (scheduleCount == 2){
-            Log.d("a", "This is!!"+scheduleCount);
             events.add(new EventDay(cal,R.drawable.sample_two_dots));
         }
         else if (scheduleCount == 3){
-            Log.d("a", "This is!!!"+scheduleCount);
             events.add(new EventDay(cal,R.drawable.sample_three_icons));
         }
         else
