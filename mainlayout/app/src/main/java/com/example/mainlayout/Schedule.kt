@@ -1,6 +1,6 @@
 package com.example.mainlayout
 
-public data class Schedule(var userID:String = "",
+data class Schedule(var userID:String = "",
                            var scheduleName:String = "",
                            var scheduleInfo: String? = "",
                            var dateYear: Int = 0,

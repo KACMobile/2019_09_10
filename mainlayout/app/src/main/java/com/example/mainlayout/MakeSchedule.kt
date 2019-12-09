@@ -183,6 +183,7 @@ class MakeSchedule :AppCompatActivity(){
 
             try {
                 tag_text.setText("   "+selected)
+
             }catch (e:IllegalArgumentException){
                 Toast.makeText(applicationContext, "Tag is not Selected", Toast.LENGTH_LONG ).show()
             }

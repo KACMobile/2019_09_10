@@ -1,6 +1,7 @@
 package com.example.mainlayout
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
@@ -51,8 +52,7 @@ class GroupAddAdapter(context: Context, val userInfosArr: ArrayList<UserInfo>) :
         val followBtn = rowMain.findViewById<Button>(R.id.add_group_button)
         val userFollowDB =databaseReference.child("Users/" + userID + "/Follow/"+ userInfosArr[position].userTypes + "/" + userInfosArr[position].userNames)
         val icImageView = rowMain.findViewById<ImageView>(R.id.add_group_icon)
-        Log.d("a","This is " + userInfosArr[position].userIcons.toString())
-        if(userInfosArr[position].userIcons!= "null") {
+        if(userInfosArr[position].userIcons != "null") {
             Glide.with(mContext).load(userInfosArr[position].userIcons).into(icImageView)
         }
         userFollowDB.addValueEventListener(object : ValueEventListener{
@@ -89,6 +89,11 @@ class GroupAddAdapter(context: Context, val userInfosArr: ArrayList<UserInfo>) :
 
             }
 
+        }
+        rowMain.setOnClickListener {
+            val groupPageIntent = Intent(mContext, GroupPageActivity::class.java)
+            groupPageIntent.putExtra("userInfo",userInfosArr[position])
+            mContext.startActivity(groupPageIntent)
         }
 
 
