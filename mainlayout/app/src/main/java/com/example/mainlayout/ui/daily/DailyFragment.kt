@@ -18,7 +18,6 @@ class DailyFragment : Fragment() {//일간 캘린더
     private lateinit var dailyViewModel: DailyViewModel
 
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dailyViewModel = ViewModelProviders.of(this).get(DailyViewModel::class.java)
         val view = inflater.inflate(R.layout.daily_calender, container, false)

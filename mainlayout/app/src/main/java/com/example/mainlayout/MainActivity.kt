@@ -28,16 +28,20 @@ import com.google.firebase.database.*
 import java.util.*
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.net.Uri
+import android.provider.Settings
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.example.mainlayout.CalendarInfo.Companion.calendar
 import com.example.mainlayout.ui.daily.DailyFragment
 import com.example.mainlayout.ui.month.MonthFragment
 import com.example.mainlayout.ui.week.WeekFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+
 
 class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelectedListener{
 
@@ -72,14 +76,13 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
 
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolBar)
 
         setSupportActionBar(toolBar)
+
 
 
         val actionBar = supportActionBar
@@ -141,7 +144,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         }
 
         groupFab.setOnClickListener{
-                animateFab()
+            animateFab()
         }
 
         groupFab1.setOnClickListener{view ->
@@ -240,7 +243,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
                 saveDataSnap = dataSnapshot
                 for(snapShot in dataSnapshot.children){
                     for(deeperSnapShot in snapShot.child((CalendarInfo.currentMonth +1).toString()).children){
-                        setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
+                        //setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
 
                     }
                 }
@@ -252,7 +255,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         if(::saveDataSnap.isInitialized) {
             for (snapShot in saveDataSnap.children) {
                 for (deeperSnapShot in snapShot.child((Calendar.getInstance().get(Calendar.MONTH)+1).toString()).children) {
-                    setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
+                    //setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
                 }
             }
         }
@@ -491,43 +494,106 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
         if(alarmAble==true && CalendarInfo.currentYear ==dateYear && (CalendarInfo.currentMonth +1)==dateMonth && CalendarInfo.currentDate ==date
             && currentHour<startTimeHour) {
-            Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
+            //Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
             Log.d("Alarm1", "scheduleName : " + scheduleName + " currentHour : " + currentHour + " startTimeHour : " + startTimeHour)
         }
 
         if(alarmAble==true && CalendarInfo.currentYear ==dateYear && (CalendarInfo.currentMonth +1)==dateMonth && CalendarInfo.currentDate ==date
             && currentHour==startTimeHour && currentMinute<=startTimeMinute){
-            Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
+            //Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
             Log.d("Alarm2", "scheduleName : " + scheduleName + " currentHour : " + currentHour + " startTimeHour : " + startTimeHour)
         }
 
     }
 
+    fun Alarm(notificaionId: Int){
+        Log.d("Alarm", "들어옴1!!!!!")
+        val alarm_manager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val calendar = Calendar.getInstance()
+
+
+        val my_intent = Intent(this@MainActivity,BroadCastD::class.java)
+
+        calendar.set(2019,11,19,5,42)
+
+        val notificationId = notificaionId
+        val scheduleName = "알람 이름"
+        val scheduleInfo = "알람 정보"
+
+        my_intent.putExtra("notificationId", notificationId)
+        my_intent.putExtra("scheduleName", scheduleName)
+        my_intent.putExtra("scheduleInfo", scheduleInfo)
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            this, // context 정보
+            0, // 여러개의 알람을 등록하기 위한 primary id 값 세팅
+            my_intent, // 정보가 담긴 intent
+            PendingIntent.FLAG_UPDATE_CURRENT)
+
+        alarm_manager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+
+
+        /*
+        val mAlarmIntent : Intent = Intent("android.intent.action.ALARM_START")
+        val mPendingIntent : PendingIntent = PendingIntent.getBroadcast(this, 0, mAlarmIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val mAlarmManager :AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val calendar = Calendar.getInstance()
+        mAlarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, mPendingIntent)
+
+        Log.d("in Alarm", "들어옴1")
+
+        //calendar.timeInMillis, mPendingIntent)
+
+         */
+
+
+
+    }
+    /*
     fun Alarm(scheduleName: String, scheduleInfo: String?, dateYear: Int, dateMonth: Int, date: Int,
               startTimeHour: Int, startTimeMinute:Int, endTime: String) {
+        val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val notificationId = dateYear + dateMonth + date + startTimeHour + startTimeMinute + endTime.toInt()
+        val notyintent = Intent(this@MainActivity, BroadCastD::class.java) //BroadCastD 클래스로 보낼 intent
+        notyintent.putExtra("notificationId", notificationId)
+        notyintent.putExtra("scheduleName", scheduleName)
+        notyintent.putExtra("scheduleInfo", scheduleInfo)
+        //notyintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+
+        Log.d("In Alarm", "Id : " + notificationId + " scheduleName : "+ scheduleName + " scheduleInfo : "+ scheduleInfo)
+
+        val sender = PendingIntent.getBroadcast(
+            this, // context 정보
+            notificationId, // 여러개의 알람을 등록하기 위한 primary id 값 세팅
+            intent, // 정보가 담긴 intent
+            0)
+
         val calendar = Calendar.getInstance()
-        calendar.set(dateYear, dateMonth, date, startTimeHour, startTimeMinute)
+        //calendar.set(dateYear, dateMonth, date, startTimeHour, startTimeMinute)
+        calendar.set(2019,11,19,2,59)
 
-        val notificationmanager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        //val notificationmanager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val notyintent = Intent(this, BroadCastD::class.java) //BroadCastD 클래스로 보낼 intent
-        notyintent.putExtra("notificationId",
-            dateYear + dateMonth + date + startTimeHour + startTimeMinute + endTime.toInt())
-        notyintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
 
         val pendingIntent = PendingIntent.getActivity(
             this, 0, notyintent, PendingIntent.FLAG_UPDATE_CURRENT)
 
+
+        /*
         val builder = Notification.Builder(this,NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_btn_speak_now)
             .setWhen(calendar.timeInMillis)
-            .setNumber(1)
+            .setNumber(dateYear + dateMonth + date + startTimeHour + startTimeMinute + endTime.toInt())
             .setContentTitle(scheduleName)
             .setContentText(scheduleInfo)
             .setColor(Color.RED)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
+         */
 
+
+        /*
         if (Build.VERSION.SDK_INT >= 26){
             val channelName :CharSequence = "noty_channel"
             val importance :Int = NotificationManager.IMPORTANCE_HIGH
@@ -536,24 +602,26 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
             notificationmanager.createNotificationChannel(channel)
         }
+         */
 
+
+
+        /*
         val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
         val wakeLock = powerManager.newWakeLock(
             PowerManager.FULL_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP or PowerManager.ON_AFTER_RELEASE,
             "My:Tag") // 스마트폰 화면이 꺼져있으면 화면 켜고 알림 울리기위해서 (FULL_WAKE_LOCK)
         wakeLock.acquire(5000)
+         */
 
-        notificationmanager.notify(dateYear + dateMonth + date + startTimeHour + startTimeMinute + endTime.toInt(), builder.build())
+        //notificationmanager.notify(dateYear + dateMonth + date + startTimeHour + startTimeMinute + endTime.toInt(), builder.build())
 
-        val sender = PendingIntent.getBroadcast(
-            this, // context 정보
-            dateYear + dateMonth + date + startTimeHour + startTimeMinute + endTime.toInt(), // 여러개의 알람을 등록하기 위한 primary id 값 세팅
-            intent, // 정보가 담긴 intent
-            PendingIntent.FLAG_UPDATE_CURRENT)
-
-        val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        am.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, sender)
+        am.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+        am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, sender)
+        Log.d("In Alarm", "after am set")
     }
+
+     */
 
 
 }

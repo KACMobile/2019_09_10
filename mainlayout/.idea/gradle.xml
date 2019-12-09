@@ -10,6 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/daycalendar" />
+            <option value="$PROJECT_DIR$/icu4j-4_8_1_1" />
             <option value="$PROJECT_DIR$/materialcalendar" />
             <option value="$PROJECT_DIR$/weekcalendar" />
           </set>

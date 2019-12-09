@@ -2,6 +2,7 @@ package com.example.daycalendar
 
 import android.content.Context
 import android.graphics.Color
+import android.icu.util.ChineseCalendar
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,10 +16,14 @@ import java.util.*
 import kotlin.math.abs
 
 
+
+
 class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0 )
     : ConstraintLayout(context,attrs,defStyleAttr)
 {
     var cal: Calendar = Calendar.getInstance()
+    var cc = ChineseCalendar()
+
     val database = FirebaseDatabase.getInstance()
     val databaseReference = database.reference
 
@@ -32,13 +37,11 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
     var currentDate = cal.get(Calendar.DATE)
     var currentDOW = cal.get(Calendar.DAY_OF_WEEK)
 
-    val hollydays = arrayOf(hollyday(1,1, "신정", false), hollyday(2, 4, "설날", true),
-        hollyday(2, 5, "설날", true), hollyday(2, 6, "설날", true),
+    val hollydays = arrayOf(hollyday(1,1, "신정", false), hollyday(1, 1, "설날", true),
         hollyday(3, 1, "삼일절", false), hollyday(5, 5, "어린이날", false),
-        hollyday(5, 6, "어린이날 대체공휴일", false), hollyday(5, 12, "부처님 오신날", true),
+        hollyday(4, 8, "부처님 오신날", true),
         hollyday(6, 6, "현충일", false), hollyday(8, 15, "광복절", false),
-        hollyday(9, 12, "추석", true), hollyday(9, 13, "추석", true),
-        hollyday(9, 14, "추석", true), hollyday(10, 3, "개천절", false),
+        hollyday(8, 15, "추석", true), hollyday(10, 3, "개천절", false),
         hollyday(10, 9, "한글날", false), hollyday(12, 25, "크리스마스", false))
 
     var changedCell= arrayListOf<TextView>()
@@ -217,46 +220,82 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             var date = currentDate - currentDOW  + i
 
             for(j in hollydays){
-
-                if(date>currentLastDayOfMonth) {
-                    dateArray[i - 1].text = (date - currentLastDayOfMonth).toString()
-                    if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth+2) {
-                        dateArray[i - 1].setBackgroundColor(Color.RED)
-                        if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
-                    }
-                }
-                else if(date<1)
-                    if(currentYear%4 == 0) {
-                        dateArray[i - 1].text = (leapYearLastDayOfMonth[currentMonth - 1] - abs(date)).toString()
-                        if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth){
+                if(j.islunar == false){
+                    if(date>currentLastDayOfMonth) {
+                        dateArray[i - 1].text = (date - currentLastDayOfMonth).toString()
+                        if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth+2) {
                             dateArray[i - 1].setBackgroundColor(Color.RED)
                             if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
                         }
                     }
+                    else if(date<1)
+                        if(currentYear%4 == 0) {
+                            dateArray[i - 1].text = (leapYearLastDayOfMonth[currentMonth - 1] - abs(date)).toString()
+                            if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth){
+                                dateArray[i - 1].setBackgroundColor(Color.RED)
+                                if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                            }
+                        }
+                        else {
+                            dateArray[i-1].text = (lastDayOfMonth[currentMonth-1] - abs(date) ).toString()
+                            if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth){
+                                dateArray[i - 1].setBackgroundColor(Color.RED)
+                                if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                            }
+                        }
                     else {
-                        dateArray[i-1].text = (lastDayOfMonth[currentMonth-1] - abs(date) ).toString()
-                        if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth){
+                        dateArray[i-1].text =  date.toString()
+                        if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth+1){
                             dateArray[i - 1].setBackgroundColor(Color.RED)
                             if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
                         }
                     }
-                else {
-                    dateArray[i-1].text =  date.toString()
-                    if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth+1){
-                        dateArray[i - 1].setBackgroundColor(Color.RED)
-                        if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                }else{
+                    var suncal = Calendar.getInstance()
+                    suncal.setTimeInMillis(cc.timeInMillis)
+
+                    cc.set( ChineseCalendar.EXTENDED_YEAR, currentYear + 2637);
+                    cc.set( ChineseCalendar.MONTH, j.holymonth - 1);
+                    cc.set( ChineseCalendar.DAY_OF_MONTH,  j.holydate);
+
+                    val ccdate = suncal.get(Calendar.DAY_OF_MONTH)
+                    val ccmonth = suncal.get(Calendar.MONTH)+1
+                    val ccyear = suncal.get(Calendar.YEAR)
+
+                    if(ccyear == currentYear){
+                        if(ccdate>currentLastDayOfMonth) {
+                            dateArray[i - 1].text = (ccdate - currentLastDayOfMonth).toString()
+                            if(ccdate.toString() == (dateArray[i-1].text) && ccmonth == currentMonth+2) {
+                                dateArray[i - 1].setBackgroundColor(Color.RED)
+                                if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                            }
+                        }
+                        else if(date<1)
+                            if(currentYear%4 == 0) {
+                                dateArray[i - 1].text = (leapYearLastDayOfMonth[currentMonth - 1] - abs(date)).toString()
+                                if(ccdate.toString() == (dateArray[i-1].text) && ccmonth == currentMonth){
+                                    dateArray[i - 1].setBackgroundColor(Color.RED)
+                                    if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                                }
+                            }
+                            else {
+                                dateArray[i-1].text = (lastDayOfMonth[currentMonth-1] - abs(date) ).toString()
+                                if(ccdate.toString() == (dateArray[i-1].text) && ccmonth == currentMonth){
+                                    dateArray[i - 1].setBackgroundColor(Color.RED)
+                                    if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                                }
+                            }
+                        else {
+                            dateArray[i-1].text =  date.toString()
+                            if(ccdate.toString() == (dateArray[i-1].text) && ccmonth == currentMonth+1){
+                                dateArray[i - 1].setBackgroundColor(Color.RED)
+                                if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                            }
+                        }
                     }
                 }
 
-                /*
-                for(j in hollydays){
-                    if (j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth+1){
-                        dateArray[i-1].setBackgroundColor(Color.RED)
-                    }
 
-                }
-
-                 */
 
             }
 
@@ -376,6 +415,43 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                     count += 70
             }
         }
+
+        var suncal = Calendar.getInstance()
+        //suncal.set(2020, 1, 1)
+
+        //cc.setTimeInMillis(suncal.timeInMillis)
+
+        cc.set( ChineseCalendar.EXTENDED_YEAR,  2020 + 2637);
+        cc.set( ChineseCalendar.MONTH, 1 - 1);
+        cc.set( ChineseCalendar.DAY_OF_MONTH, 1);
+
+        suncal.setTimeInMillis(cc.timeInMillis)
+
+        val sunyear = suncal.get(Calendar.YEAR)
+        val sunmonth = suncal.get(Calendar.MONTH)+1
+        val sundate = suncal.get(Calendar.DAY_OF_MONTH)
+
+        var idFromTime1 = resources.getIdentifier("day000", "id", context.packageName)
+        view = findViewById<TextView>(idFromTime1)
+        view.text = sunyear.toString()
+        var idFromTime2 = resources.getIdentifier("day030", "id", context.packageName)
+        view = findViewById<TextView>(idFromTime2)
+        view.text = sunmonth.toString()
+        var idFromTime3 = resources.getIdentifier("day100", "id", context.packageName)
+        view = findViewById<TextView>(idFromTime3)
+        view.text = sundate.toString()
+        /*
+        var idFromTime4 = resources.getIdentifier("day130", "id", context.packageName)
+        view = findViewById<TextView>(idFromTime4)
+        view.text = currentYear.toString()
+        var idFromTime5 = resources.getIdentifier("day200", "id", context.packageName)
+        view = findViewById<TextView>(idFromTime5)
+        view.text = (currentMonth+2).toString()
+        var idFromTime6 = resources.getIdentifier("day230", "id", context.packageName)
+        view = findViewById<TextView>(idFromTime6)
+        view.text = currentDate.toString()
+
+         */
 
         cal.set(currentYear,currentMonth,currentDate)
     }

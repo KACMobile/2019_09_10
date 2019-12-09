@@ -1,2 +1,2 @@
-include ':app', ':materialcalendar', 'weekcalendar', 'daycalendar'
+include ':app', ':materialcalendar', 'weekcalendar', 'daycalendar', ':icu4j-4_8_1_1'
 rootProject.name='MainLayout'
