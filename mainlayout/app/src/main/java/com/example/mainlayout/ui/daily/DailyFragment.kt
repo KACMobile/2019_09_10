@@ -19,7 +19,8 @@ import com.example.mainlayout.MainActivity
 
 
 
-class DailyFragment : Fragment() {//?ùºÍ∞? Ï∫òÎ¶∞?çî
+
+class DailyFragment : Fragment() {//?ÔøΩÔøΩÔøΩ? Ï∫òÎ¶∞?ÔøΩÔøΩ
 
     private lateinit var dailyViewModel: DailyViewModel
 
@@ -40,7 +41,8 @@ class DailyFragment : Fragment() {//?ùºÍ∞? Ï∫òÎ¶∞?çî
         val dateinfo = date.text.toString()
 
         var actionBar = (activity as MainActivity).supportActionBar
-        actionBar!!.title = yearinfo + "?ÖÑ " +  monthinfo + "?õî " + dateinfo + "?ùº"
+        actionBar!!.title = yearinfo + "ÎÖÑ " +  monthinfo + "Ïõî " + dateinfo + "Ïùº"
+
 
         view.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_MOVE) {
@@ -54,7 +56,8 @@ class DailyFragment : Fragment() {//?ùºÍ∞? Ï∫òÎ¶∞?çî
                 val dateinfo = date.text.toString()
 
                 var actionBar = (activity as MainActivity).supportActionBar
-                actionBar!!.title = yearinfo + "?ÖÑ " +  monthinfo + "?õî " + dateinfo + "?ùº"
+                actionBar!!.title = yearinfo + "ÎÖÑ " +  monthinfo + "Ïõî " + dateinfo + "Ïùº"
+
 
             }
             true
