@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
             val nextIntent = Intent(this, SettingActivity::class.java)
             startActivity(nextIntent)
         }
-
     }
 
     override fun onRestart() {

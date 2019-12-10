@@ -35,7 +35,8 @@
                     android:layout_width="40dp"
                     android:layout_height="80dp"
                     android:background="@android:color/white"
-                    android:gravity="right" />
+                    android:gravity="right"
+                    android:textColor="#00FFFFFF" />
 
                 <TableLayout
                     android:layout_width="match_parent"
@@ -293,6 +294,43 @@
                         </TableRow>
                     </TableLayout>
                 </TableLayout>
+            </TableRow>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/calendarInfo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/curr_year"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@android:color/white"
+                    android:gravity="right"
+                    android:textColor="#00FFFFFF" />
+
+                <TextView
+                    android:id="@+id/curr_month"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@android:color/white"
+                    android:gravity="right"
+                    android:textColor="#00FFFFFF" />
+
+                <TextView
+                    android:id="@+id/curr_date"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@android:color/white"
+                    android:gravity="right"
+                    android:textColor="#00FFFFFF" />
+
+
             </TableRow>
         </TableRow>
 

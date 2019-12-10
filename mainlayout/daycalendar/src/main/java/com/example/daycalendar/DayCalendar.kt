@@ -16,8 +16,6 @@ import java.util.*
 import kotlin.math.abs
 
 
-
-
 class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0 )
     : ConstraintLayout(context,attrs,defStyleAttr)
 {
@@ -76,7 +74,6 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 for(snapShot in dataSnapshot.children){
                     for(deeperSnapShot in snapShot.child((currentMonth+1).toString()).children){
                         setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>,Color.CYAN)
-
                     }
                 }
             }
@@ -170,6 +167,22 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
     }
 
     fun calendardefaultsetting() {
+
+
+        var idFromTime = resources.getIdentifier("curr_year", "id", context.packageName)
+        var view = findViewById<TextView>(idFromTime)
+        view.text = currentYear.toString()
+
+        idFromTime = resources.getIdentifier("curr_month", "id", context.packageName)
+        view = findViewById<TextView>(idFromTime)
+        view.text = currentMonth.toString()
+
+        idFromTime = resources.getIdentifier("curr_date", "id", context.packageName)
+        view = findViewById<TextView>(idFromTime)
+        view.text = currentDate.toString()
+
+
+
         var currentLastDayOfMonth = cal.getActualMaximum(Calendar.DATE)
         var currentTime = cal.get(Calendar.HOUR_OF_DAY)
 
@@ -335,6 +348,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         currentWOM = cal.get(Calendar.WEEK_OF_MONTH)
         currentDate = cal.get(Calendar.DATE)
         currentDOW = cal.get(Calendar.DAY_OF_WEEK)
+
     }
 
     fun setNextDay() {
@@ -415,43 +429,6 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                     count += 70
             }
         }
-
-        var suncal = Calendar.getInstance()
-        //suncal.set(2020, 1, 1)
-
-        //cc.setTimeInMillis(suncal.timeInMillis)
-
-        cc.set( ChineseCalendar.EXTENDED_YEAR,  2020 + 2637);
-        cc.set( ChineseCalendar.MONTH, 1 - 1);
-        cc.set( ChineseCalendar.DAY_OF_MONTH, 1);
-
-        suncal.setTimeInMillis(cc.timeInMillis)
-
-        val sunyear = suncal.get(Calendar.YEAR)
-        val sunmonth = suncal.get(Calendar.MONTH)+1
-        val sundate = suncal.get(Calendar.DAY_OF_MONTH)
-
-        var idFromTime1 = resources.getIdentifier("day000", "id", context.packageName)
-        view = findViewById<TextView>(idFromTime1)
-        view.text = sunyear.toString()
-        var idFromTime2 = resources.getIdentifier("day030", "id", context.packageName)
-        view = findViewById<TextView>(idFromTime2)
-        view.text = sunmonth.toString()
-        var idFromTime3 = resources.getIdentifier("day100", "id", context.packageName)
-        view = findViewById<TextView>(idFromTime3)
-        view.text = sundate.toString()
-        /*
-        var idFromTime4 = resources.getIdentifier("day130", "id", context.packageName)
-        view = findViewById<TextView>(idFromTime4)
-        view.text = currentYear.toString()
-        var idFromTime5 = resources.getIdentifier("day200", "id", context.packageName)
-        view = findViewById<TextView>(idFromTime5)
-        view.text = (currentMonth+2).toString()
-        var idFromTime6 = resources.getIdentifier("day230", "id", context.packageName)
-        view = findViewById<TextView>(idFromTime6)
-        view.text = currentDate.toString()
-
-         */
 
         cal.set(currentYear,currentMonth,currentDate)
     }

@@ -7,6 +7,5 @@
 
     <color name="itemHighlightColor">#1F000000</color>
     <color name="itemFocusedColor">#1A000000</color>
-
     <color name="defaultColor">#2962FF</color>
 </resources>
