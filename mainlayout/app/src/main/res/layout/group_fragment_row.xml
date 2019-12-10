@@ -29,7 +29,7 @@
 
     <TextView
         android:id="@+id/group_fragment_ScheduleName"
-        android:layout_width="220dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="40dp"
@@ -39,6 +39,8 @@
         android:text="TextView"
         android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/group_fragment_StartTime"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@+id/group_fragment_image"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,7 +50,6 @@
         android:layout_height="52dp"
         android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/group_fragment_ScheduleName"
-        app:layout_constraintEnd_toStartOf="@id/group_fragment_ScheduleName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/group_fragment_ScheduleName"
         app:layout_constraintVertical_bias="1.0"

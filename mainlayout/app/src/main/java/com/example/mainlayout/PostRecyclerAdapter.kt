@@ -1,11 +1,9 @@
 package com.example.mainlayout
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.post_fragment_row.view.*
@@ -42,12 +40,16 @@ public class PostRecyclerAdapter(val context: Context, private val postList: Arr
             view.post_userName.text = userInfo.userInfos
             view.post_Text.text = post.postText
             view.post_Date.text = year + "년 " + month + "월 " + day + "일 " + hour + ":" + minute
-            if(userInfo.userIcons != null)
+            if(userInfo.userIcons != "null")
                 Glide.with(context).load(userInfo.userIcons).into(view.post_userIcon)
             if(post.postImage != "null")
                 Glide.with(context).load(post.postImage).into(view.post_Image)
             else
                 view.post_Image.visibility = View.GONE
+            if(post.postLat != "null" && post.postLng != "null")
+                Glide.with(context).load("https://maps.google.com/maps/api/staticmap?center=" + post.postLat + "," + post.postLng + "&zoom=15&size=200x200&sensor=false&key=AIzaSyCsEHUViLllof4Fx-GvhXkdJuO4lxw6dUA").into(view.post_mapImage)
+            else
+                view.post_mapImage.visibility = View.GONE
 
 
         }

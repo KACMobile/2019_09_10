@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.net.Uri
 import android.provider.Settings
+import android.view.MotionEvent
 import android.widget.Toast
 
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -73,6 +74,9 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
     lateinit var muserInfo: UserInfo
 
+    public fun setActionBarTitle(str:String){
+        actionBar?.title = str
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,6 +90,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
         val actionBar = supportActionBar
         actionBar?.title = " "
+
         val drawerToggle : ActionBarDrawerToggle = object : ActionBarDrawerToggle(
             this,
             drawer_layout,
@@ -226,8 +231,6 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
 
-
-
         /*appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.daily_calender, R.id.week_calender, R.id.month_calender, R.id.group_fragment
@@ -265,7 +268,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         if(::saveDataSnap.isInitialized) {
             for (snapShot in saveDataSnap.children) {
                 for (deeperSnapShot in snapShot.child((Calendar.getInstance().get(Calendar.MONTH)+1).toString()).children) {
-                    //setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
+                    setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
                 }
             }
         }
@@ -508,7 +511,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
             //Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
             Log.d("Alarm1", "scheduleName : " + scheduleName + " currentHour : " + currentHour + " startTimeHour : " + startTimeHour)
 
-            //Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
+            Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
 
         }
 
@@ -518,7 +521,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
             //Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
             Log.d("Alarm2", "scheduleName : " + scheduleName + " currentHour : " + currentHour + " startTimeHour : " + startTimeHour)
 
-            //Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
+            Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
         }
 
     }
@@ -567,7 +570,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
 
     }
-    /*
+
     fun Alarm(scheduleName: String, scheduleInfo: String?, dateYear: Int, dateMonth: Int, date: Int,
               startTimeHour: Int, startTimeMinute:Int, endTime: String) {
         val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -638,7 +641,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         Log.d("In Alarm", "after am set")
     }
 
-     */
+
 
 
 }

@@ -2,13 +2,16 @@ package com.example.mainlayout.ui.week
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import com.example.daycalendar.OnSwipeTouchListener
+import com.example.mainlayout.MainActivity
 import com.example.mainlayout.R
 import com.example.weekcalendar.WeekCalendar
 import com.google.firebase.database.DataSnapshot
@@ -28,8 +31,20 @@ class WeekFragment : Fragment() {//주간 캘린더
 
         weekViewModel =
             ViewModelProviders.of(this).get(WeekViewModel::class.java)
-        val root = inflater.inflate(R.layout.week_calender, container, false)
+        val view = inflater.inflate(R.layout.week_calender, container, false)
 
+
+        val year = view.findViewById<View>(R.id.curr_year) as TextView
+        val yearinfo = year.text.toString()
+
+        val month = view.findViewById<View>(R.id.curr_month) as TextView
+        val monthinfo = month.text.toString()
+
+        val date = view.findViewById<View>(R.id.curr_date) as TextView
+        val dateinfo = date.text.toString()
+
+        var actionBar = (activity as MainActivity).supportActionBar
+        actionBar!!.title = yearinfo + "년 " +  monthinfo + "월 "
 
         //var fragmentweekCalendar = week_CalendarView
 
@@ -43,28 +58,26 @@ class WeekFragment : Fragment() {//주간 캘린더
         //week_CalendarView.setCurrent(wCalendar.get(Calendar.YEAR), wCalendar.get(Calendar.MONTH), wCalendar.get(Calendar.DATE))
         weekViewModel.text.observe(this, Observer {
         })
-        val view = root.findViewById<WeekCalendar>(R.id.week_CalendarView)
+        view.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_MOVE) {
+                val year = view.findViewById<View>(R.id.curr_year) as TextView
+                val yearinfo = year.text.toString()
 
-        val mContext = getContext()
+                val month = view.findViewById<View>(R.id.curr_month) as TextView
+                val monthinfo = month.text.toString()
 
-        if (mContext != null) {
-            view.setOnTouchListener(object : OnSwipeTouchListener(mContext) {
-                override fun onSwipeLeft() {
-                    Navigation.findNavController(view).navigate(R.id.Week_CurrentToNext)
-                    Navigation.findNavController(view).navigate(R.id.Week_NextToCurrent)
-                }
+                val date = view.findViewById<View>(R.id.curr_date) as TextView
+                val dateinfo = date.text.toString()
 
-                override fun onSwipeRight() {
-                    Navigation.findNavController(view).navigate(R.id.Week_CurrentToPre)
-                    Navigation.findNavController(view).navigate(R.id.Week_PreToCurrent)
-                }
+                var actionBar = (activity as MainActivity).supportActionBar
+                actionBar!!.title = yearinfo + "년 " +  monthinfo + "월 "
 
-            })
-
+            }
+            true
         }
 
 
-        return root
+        return view
     }
 
     /*override fun setArguments(args: Bundle?) {

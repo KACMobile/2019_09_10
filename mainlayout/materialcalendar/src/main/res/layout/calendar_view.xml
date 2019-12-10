@@ -11,7 +11,7 @@
         android:id="@+id/calendarHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#CFD0F3">
+        android:background="#D8D8D8">
 
         <ImageButton
             android:id="@+id/previousButton"

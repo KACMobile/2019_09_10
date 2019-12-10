@@ -75,7 +75,7 @@ class GroupFragment : Fragment() {
                                             groupDataSnapshot.child("UserInfo/userType").value.toString(),
                                             groupDataSnapshot.child("UserInfo/userIcon").value.toString(),
                                             null, null, null, null)
-                                        postArray.add(Post(deeperDataSnapshot.child("postText").value.toString(), deeperDataSnapshot.child("postDate").value.toString(), deeperDataSnapshot.child("postTime").value.toString(), deeperDataSnapshot.child("postImage").value.toString(),userInfo))
+                                        postArray.add(Post(deeperDataSnapshot.child("postText").value.toString(), deeperDataSnapshot.child("postDate").value.toString(), deeperDataSnapshot.child("postTime").value.toString(), deeperDataSnapshot.child("postImage").value.toString(), deeperDataSnapshot.child("postLat").value.toString(), deeperDataSnapshot.child("postLng").value.toString(),userInfo))
                                     }
                                     postArray.sortWith(Comparator { data1, data2 -> data2.postTime.toInt() - data1.postTime.toInt()})
                                     postArray.sortWith(Comparator { data1, data2 -> data2.postDate.toInt() - data1.postDate.toInt()})
@@ -124,7 +124,7 @@ class GroupFragment : Fragment() {
                                             userDataSnapshot.child("UserInfo/userIcon").value.toString(),
                                             null, null, null, null)
 
-                                        postArray.add(Post(deeperDataSnapshot.child("postText").value.toString(), deeperDataSnapshot.child("postDate").value.toString(), deeperDataSnapshot.child("postTime").value.toString(), deeperDataSnapshot.child("postImage").value.toString(),userInfo))
+                                        postArray.add(Post(deeperDataSnapshot.child("postText").value.toString(), deeperDataSnapshot.child("postDate").value.toString(), deeperDataSnapshot.child("postTime").value.toString(), deeperDataSnapshot.child("postImage").value.toString(), deeperDataSnapshot.child("postLat").value.toString(), deeperDataSnapshot.child("postLng").value.toString(),userInfo))
                                     }
                                     postArray.sortWith(Comparator { data1, data2 -> data2.postTime.toInt() - data1.postTime.toInt()})
                                     postArray.sortWith(Comparator { data1, data2 -> data2.postDate.toInt() - data1.postDate.toInt()})
