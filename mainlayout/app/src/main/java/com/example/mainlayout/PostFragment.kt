@@ -38,7 +38,7 @@ class PostFragment : Fragment() {
                 postArray.clear()
                 for(deeperDataSnapshot in dataSnapshot.children){
 
-                    postArray.add(Post(deeperDataSnapshot.child("postText").value.toString(), deeperDataSnapshot.child("postDate").value.toString(), deeperDataSnapshot.child("postTime").value.toString(), deeperDataSnapshot.child("postImage").value.toString(),userInfo))
+                    postArray.add(Post(deeperDataSnapshot.child("postText").value.toString(), deeperDataSnapshot.child("postDate").value.toString(), deeperDataSnapshot.child("postTime").value.toString(), deeperDataSnapshot.child("postImage").value.toString(),deeperDataSnapshot.child("postLat").value.toString(),deeperDataSnapshot.child("postLng").value.toString(),userInfo))
                 }
                 postArray.sortWith(Comparator { data1, data2 -> data2.postTime.toInt() - data1.postTime.toInt()})
                 postArray.sortWith(Comparator { data1, data2 -> data2.postDate.toInt() - data1.postDate.toInt()})

@@ -13,5 +13,5 @@
         tools:layout_editor_absoluteX="257dp"
         tools:layout_editor_absoluteY="284dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/group_fragment_schedule_row"/>
+        tools:listitem="@layout/group_fragment_row"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

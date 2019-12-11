@@ -1,5 +1,6 @@
 package com.example.mainlayout
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.Window
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.example.mainlayout.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -30,6 +32,7 @@ class MyPageActivity : AppCompatActivity() {
         val tabLayout = findViewById<TabLayout>(R.id.group_page_tablayout)
         val viewPager = findViewById<ViewPager>(R.id.group_page_viewpager)
         val alarmImage = findViewById<ImageView>(R.id.group_page_alarm)
+        val fab =findViewById<FloatingActionButton>(R.id.group_page_fab)
 
         val intent = intent
         val userInfo = intent.getSerializableExtra("userInfo") as UserInfo
@@ -45,6 +48,12 @@ class MyPageActivity : AppCompatActivity() {
 
         closeButton.setOnClickListener {
             finish()
+        }
+
+        fab.setOnClickListener{
+            val intent = Intent(this, NewPostActivity::class.java)
+            intent.putExtra("userInfo", userInfo)
+            this.startActivity(intent)
         }
 
 

@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.weekcalendar.*
 import kotlinx.android.synthetic.main.weekcalendar.view.*
 import android.icu.util.ChineseCalendar
 
-
 import org.w3c.dom.Attr
 import org.w3c.dom.Text
 import java.time.Month

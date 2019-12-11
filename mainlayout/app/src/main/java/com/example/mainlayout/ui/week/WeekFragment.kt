@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
-import com.example.daycalendar.OnSwipeTouchListener
 import com.example.mainlayout.MainActivity
 import com.example.mainlayout.R
 import com.example.weekcalendar.WeekCalendar
@@ -34,7 +33,6 @@ class WeekFragment : Fragment() {//주간 캘린더
 
         var yearinfo = view.week_CalendarView.currentYear
         var monthinfo = view.week_CalendarView.currentMonth + 1
-        var dateinfo = view.week_CalendarView.currentDate
 
         var actionBar = (activity as MainActivity).supportActionBar
         actionBar!!.title = "" + yearinfo + "년 " +  monthinfo + "월 "
@@ -49,7 +47,6 @@ class WeekFragment : Fragment() {//주간 캘린더
 
                 var yearinfo = view.week_CalendarView.currentYear
                 var monthinfo = view.week_CalendarView.currentMonth + 1
-                var dateinfo = view.week_CalendarView.currentDate
 
                 var actionBar = (activity as MainActivity).supportActionBar
                 actionBar!!.title = "" + yearinfo + "년 " + monthinfo + "월 "
@@ -62,7 +59,6 @@ class WeekFragment : Fragment() {//주간 캘린더
 
                 var yearinfo = view.week_CalendarView.currentYear
                 var monthinfo = view.week_CalendarView.currentMonth + 1
-                var dateinfo = view.week_CalendarView.currentDate
 
                 var actionBar = (activity as MainActivity).supportActionBar
                 actionBar!!.title = "" + yearinfo + "년 " + monthinfo + "월 "

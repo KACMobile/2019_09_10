@@ -19,10 +19,10 @@ import kotlinx.android.synthetic.main.daily_calender.view.*
 
 
 
-class DailyFragment : Fragment() {//일간 캘린더
+
+class DailyFragment : Fragment() {//
 
     private lateinit var dailyViewModel: DailyViewModel
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,7 +36,6 @@ class DailyFragment : Fragment() {//일간 캘린더
 
         var yearinfo = view.day_CalendarView.currentYear
         var monthinfo = view.day_CalendarView.currentMonth + 1
-        var dateinfo = view.day_CalendarView.currentDate
 
         var actionBar = (activity as MainActivity).supportActionBar
         actionBar!!.title = "" + yearinfo + "년 " + monthinfo + "월 "
@@ -49,12 +48,11 @@ class DailyFragment : Fragment() {//일간 캘린더
 
                 var yearinfo = view.day_CalendarView.currentYear
                 var monthinfo = view.day_CalendarView.currentMonth + 1
-                var dateinfo = view.day_CalendarView.currentDate
 
                 var actionBar = (activity as MainActivity).supportActionBar
                 actionBar!!.title = "" + yearinfo + "년 " + monthinfo + "월 "
-            }
 
+            }
             override fun onSwipeRight() {
                 super.onSwipeRight()
                 day_CalendarView.setPreDay()
@@ -62,14 +60,14 @@ class DailyFragment : Fragment() {//일간 캘린더
 
                 var yearinfo = view.day_CalendarView.currentYear
                 var monthinfo = view.day_CalendarView.currentMonth + 1
-                var dateinfo = view.day_CalendarView.currentDate
 
                 var actionBar = (activity as MainActivity).supportActionBar
                 actionBar!!.title = "" + yearinfo + "년 " + monthinfo + "월 "
             }
         })
+        dailyViewModel.text.observe(this, Observer {
 
-        dailyViewModel.text.observe(this, Observer {})
+        })
 
 
         return view

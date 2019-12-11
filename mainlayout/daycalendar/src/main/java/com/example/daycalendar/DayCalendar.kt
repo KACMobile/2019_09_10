@@ -35,16 +35,16 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
     var currentDate = cal.get(Calendar.DATE)
     var currentDOW = cal.get(Calendar.DAY_OF_WEEK)
 
-    val hollydays = arrayOf(hollyday(1,1, "ì‹ ì •", false), hollyday(1, 1, "ì„¤ë‚ ", true),
-        hollyday(3, 1, "ì‚¼ì¼ì ˆ", false), hollyday(5, 5, "ì–´ë¦°ì´ë‚ ", false),
-        hollyday(4, 8, "ë¶€ì²˜ë‹˜ ì˜¤ì‹ ë‚ ", true),
-        hollyday(6, 6, "í˜„ì¶©ì¼", false), hollyday(8, 15, "ê´‘ë³µì ˆ", false),
-        hollyday(8, 15, "ì¶”ì„", true), hollyday(10, 3, "ê°œì²œì ˆ", false),
-        hollyday(10, 9, "í•œê¸€ë‚ ", false), hollyday(12, 25, "í¬ë¦¬ìŠ¤ë§ˆìŠ¤", false))
+    val hollydays = arrayOf(hollyday(1,1, "?‹ ? •", false), hollyday(1, 1, "?„¤?‚ ", true),
+        hollyday(3, 1, "?‚¼?¼? ˆ", false), hollyday(5, 5, "?–´ë¦°ì´?‚ ", false),
+        hollyday(4, 8, "ë¶?ì²˜ë‹˜ ?˜¤?‹ ?‚ ", true),
+        hollyday(6, 6, "?˜„ì¶©ì¼", false), hollyday(8, 15, "ê´‘ë³µ? ˆ", false),
+        hollyday(8, 15, "ì¶”ì„", true), hollyday(10, 3, "ê°œì²œ? ˆ", false),
+        hollyday(10, 9, "?•œê¸??‚ ", false), hollyday(12, 25, "?¬ë¦¬ìŠ¤ë§ˆìŠ¤", false))
 
     var changedCell= arrayListOf<TextView>()
-    lateinit var saveDataSnap: DataSnapshot //DataSnapshotì„ ë°›ìœ¼ë©´ setí•¨
-    var followListSnapshot = arrayListOf<DataSnapshot>() //followList DataSnapshotì„ ë°›ìœ¼ë©´ addí•¨
+    lateinit var saveDataSnap: DataSnapshot //DataSnapshot?„ ë°›ìœ¼ë©? set?•¨
+    var followListSnapshot = arrayListOf<DataSnapshot>() //followList DataSnapshot?„ ë°›ìœ¼ë©? add?•¨
 
     init {
         LayoutInflater.from(context).inflate(R.layout.daycalendar,this,true)
@@ -80,7 +80,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
         })
-        //followì¶”ê°€
+        //followì¶”ê??
         val userfollow = databaseReference.child("Users/" + userID + "/Follow")
         userfollow.addValueEventListener( object: ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -201,15 +201,15 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         for (i in 0..6) {
             dayText[i].setBackgroundColor(Color.WHITE)
             dateArray[i].setBackgroundColor(Color.WHITE)
-        } // ìš”ì¼ ë°°ê²½ìƒ‰ ì´ˆê¸°í™”
+        } // ?š”?¼ ë°°ê²½?ƒ‰ ì´ˆê¸°?™”
 
         for (i in 0..23) {
             timeRow[i].setBackgroundColor(Color.WHITE)
-        } // ì‹œê°„ ë°°ê²½ìƒ‰ ì´ˆê¸°í™”
+        } // ?‹œê°? ë°°ê²½?ƒ‰ ì´ˆê¸°?™”
 
-        dayText[currentDOW-1].setBackgroundColor(Color.YELLOW) // current ìš”ì¼ ë°°ê²½ìƒ‰ ì„¤ì •
+        dayText[currentDOW-1].setBackgroundColor(Color.YELLOW) // current ?š”?¼ ë°°ê²½?ƒ‰ ?„¤? •
 
-        timeRow[currentTime].setBackgroundColor(Color.YELLOW) // current ì‹œê°„ ë°°ê²½ìƒ‰ ì„¤ì •
+        timeRow[currentTime].setBackgroundColor(Color.YELLOW) // current ?‹œê°? ë°°ê²½?ƒ‰ ?„¤? •
 
         dateArray[0].setTextColor(Color.RED)
 
