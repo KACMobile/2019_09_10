@@ -37,6 +37,8 @@ import com.example.mainlayout.CalendarInfo.Companion.calendar
 import com.example.mainlayout.ui.daily.DailyFragment
 import com.example.mainlayout.ui.month.MonthFragment
 import com.example.mainlayout.ui.week.WeekFragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-    private val userID:String = "User01"
+    private var userID:String? = "User01"
 
     private val firebaseDatabase = FirebaseDatabase.getInstance()
 
@@ -78,12 +80,34 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
     var monthInfo = 12
     var dateInfo = 12
 
+    private var REQUEST_TEST :Int = 1
+
     public fun setActionBarTitle(str:String){
         actionBar?.title = str
     }
 
+    lateinit var mAuth :FirebaseAuth
+    var  mUser: FirebaseUser? = null
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        mUser = mAuth.currentUser
+        if(mUser != null){
+            userID = mUser!!.displayName
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        mAuth = FirebaseAuth.getInstance()
+        mUser = mAuth.currentUser
+
+
+        if(mUser==null){
+            var intent = Intent(this@MainActivity, GoogleLoginActivity::class.java)
+            startActivityForResult(intent, REQUEST_TEST)
+        }
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolBar)
@@ -261,7 +285,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
                 saveDataSnap = dataSnapshot.child("Schedule")
                 for(snapShot in dataSnapshot.child("Schedule").children){
                     for(deeperSnapShot in snapShot.child((CalendarInfo.currentMonth +1).toString()).children){
-                        setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
+                        //setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
 
                     }
                 }
@@ -273,7 +297,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         if(::saveDataSnap.isInitialized) {
             for (snapShot in saveDataSnap.children) {
                 for (deeperSnapShot in snapShot.child((Calendar.getInstance().get(Calendar.MONTH)+1).toString()).children) {
-                    setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
+                    //setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
                 }
             }
         }

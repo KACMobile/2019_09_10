@@ -45,6 +45,7 @@
             android:name=".BroadCastD"
             android:parentActivityName=".MainActivity" >
         </activity>
+        <activity android:name=".GoogleLoginActivity"/>
     </application>
 
 </manifest>
