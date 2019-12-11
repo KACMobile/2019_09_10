@@ -159,21 +159,10 @@
         android:layout_height="44dp"
         android:layout_marginTop="20dp"
         android:text="공유"
-        app:layout_constraintBottom_toTopOf="@+id/checkBox2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/always" />
-
-    <CheckBox
-        android:id="@+id/checkBox2"
-        android:layout_width="350dp"
-        android:layout_height="44dp"
-        android:text="공유 및 편집"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
 
     <CheckBox
         android:id="@+id/checkBox3"
@@ -183,7 +172,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.098"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox2" />
+        app:layout_constraintTop_toBottomOf="@id/checkBox" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/infoTextView"
@@ -201,8 +190,9 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:textSize="20dp"
-        android:text="   Tag 선택"
+        android:text="Tag 선택"
         android:textStyle="bold"
+        android:layout_marginLeft="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBox3"
         app:layout_constraintVertical_bias="0.05"

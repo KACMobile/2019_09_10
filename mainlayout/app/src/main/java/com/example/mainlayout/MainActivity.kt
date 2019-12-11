@@ -502,7 +502,6 @@ class MainActivity : AppCompatActivity() {
         endTime: String,
         scheduleInfo: String?,
         shareAble: Boolean?,
-        shareEditAble: Boolean?,
         dateYear: Int,
         dateMonth: Int,
         date: Int
@@ -518,8 +517,7 @@ class MainActivity : AppCompatActivity() {
             startTime,
             endTime,
             alarm,
-            shareAble,
-            shareEditAble
+            shareAble
         )
         dataArray.add(schedule)
         var a: String = schedule.scheduleName
@@ -536,7 +534,6 @@ class MainActivity : AppCompatActivity() {
         endTime: String,
         scheduleInfo: String?,
         shareAble: Boolean?,
-        shareEditAble: Boolean?,
         dateYear: Int,
         dateMonth: Int,
         date: Int
@@ -552,8 +549,7 @@ class MainActivity : AppCompatActivity() {
             startTime,
             endTime,
             alarm,
-            shareAble,
-            shareEditAble
+            shareAble
         )
         dataArray.add(schedule)
         var a: String = schedule.scheduleName
