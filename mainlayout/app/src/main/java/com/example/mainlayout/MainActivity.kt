@@ -94,6 +94,8 @@ class MainActivity : AppCompatActivity() {
         Log.d("tag", "mUser!!.displayName : " + mUser!!.displayName)
         if(mUser != null){
             userID = mUser!!.displayName
+            var UserInfo = UserInfo(userID!!, "좋은 하루 되세요", "Users")
+            databaseReference.child("Users").child(userID!!).child("UserInfo").setValue(UserInfo)
             Log.d("tag", "userID : " + userID)
 
         }
