@@ -115,7 +115,7 @@ class NewPostActivity : AppCompatActivity() {
                         val fileName: String = userID + "_" + System.currentTimeMillis()
                         val storageRef =
                             mstorage.getReferenceFromUrl("gs://mobilesw8-d30db.appspot.com/MobileProject8")
-                                .child(muserInfo.userTypes + "/" + muserInfo.userNames + "/" + fileName)
+                                .child(muserInfo.userType + "/" + muserInfo.userName + "/" + fileName)
                         storageRef.putFile(filePath!!).addOnSuccessListener(OnSuccessListener {
                             Toast.makeText(this, "Image Uploaded Successfully", Toast.LENGTH_SHORT).show();
 

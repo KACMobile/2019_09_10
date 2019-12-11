@@ -38,12 +38,12 @@ public class PostRecyclerAdapter(val context: Context, private val postList: Arr
             val day:String = post.postDate.substring(6,8)
             val hour:String = post.postTime.substring(0,2)
             val minute:String = post.postTime.substring(2,4)
-            view.post_userName.text = userInfo.userInfos
+            view.post_userName.text = userInfo.userInfo
             view.post_Text.text = post.postText
             view.post_Date.text = year + "년 " + month + "월 " + day + "일 " + hour + ":" + minute
             val mapImageView =view.post_mapImage
-            if(userInfo.userIcons != "null")
-                Glide.with(context).load(userInfo.userIcons).into(view.post_userIcon)
+            if(userInfo.userIcon != "null")
+                Glide.with(context).load(userInfo.userIcon).into(view.post_userIcon)
             if(post.postImage != "null")
                 Glide.with(context).load(post.postImage).into(view.post_Image)
             else
