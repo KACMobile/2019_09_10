@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
         editor.putString("UserID", userID)
         editor.commit()
 
-        var UserInfo = UserInfo(userID!!, "좋은 하루 되세요", "Users")
+        var UserInfo = UserInfo(userID!!, "좋은 하루 되세요", "Users",mAuth.currentUser!!.photoUrl.toString())
 
 
 
@@ -458,6 +458,7 @@ class MainActivity : AppCompatActivity() {
             fab.show()
             groupFab.hide()
             groupFab.isClickable = false
+
 
         }
     }
