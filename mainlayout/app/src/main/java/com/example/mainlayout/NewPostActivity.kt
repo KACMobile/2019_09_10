@@ -89,6 +89,7 @@ class NewPostActivity : AppCompatActivity() {
 
         mapsBtn.setOnClickListener {
             val intent =Intent(this, MapsActivity::class.java)
+            intent.putExtra("RequestCode", requestMapCode)
             startActivityForResult(intent,requestMapCode)
         }
 
