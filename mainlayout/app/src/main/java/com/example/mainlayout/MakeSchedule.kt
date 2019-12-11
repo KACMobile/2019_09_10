@@ -45,7 +45,6 @@ class MakeSchedule :AppCompatActivity(){
         val day = cal.get(Calendar.DAY_OF_MONTH)
 
         var cb_Share : CheckBox = findViewById(R.id.checkBox)
-        var cb_ShareEdit : CheckBox = findViewById(R.id.checkBox2)
         var cb_alarm : CheckBox = findViewById(R.id.checkBox3)
 
         val nameText : TextInputEditText = findViewById(R.id.nameTextView)
@@ -56,23 +55,21 @@ class MakeSchedule :AppCompatActivity(){
         //일정 데이터
         var alarm : Boolean = false
         var isitShare : Boolean = false
-        var isitShareEdit : Boolean = false
         var dateYear : Int = 2019
         var dateMonth : Int = 1
         var dateDay : Int = 1
         var startTime : Int = 0
-        var endTime : Int = 0
+        var endTime : String = "1200"
         var scheduleInfo : String = " "
         var scheduleName : String = "무제"
         var tag : String = "할 일"
 
         tag_text.setOnClickListener {
             showdialog()
-            tag == tag_text.text
         }
 
 
-        val userDB = databaseReference.child("Users/" + userID + "/Schedule")
+        /*val userDB = databaseReference.child("Users/" + userID + "/Schedule")
         userDB.addValueEventListener( object: ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for(snapShot in dataSnapshot.children){
@@ -83,7 +80,7 @@ class MakeSchedule :AppCompatActivity(){
             }
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
-        })
+        })*/
 
         editDateStart.setOnClickListener {
             val dpd = DatePickerDialog(
@@ -109,11 +106,15 @@ class MakeSchedule :AppCompatActivity(){
                 editTimeStart.setText("" + hour + "시 " + minute + "분")
                 editTimeEnd.setText("" + (hour+1) + "시 " + minute + "분")
 
-                if(minute<30)
+                if(minute<30) {
                     startTime = 0
-                else
+                    endTime = (100 * (hour+1)).toString()
+                }
+                else {
                     startTime = 30
+                    endTime = (100 * (hour+1)+30).toString()
 
+                }
                 startTime += 100*hour
             }
             TimePickerDialog(this, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE),
@@ -138,12 +139,13 @@ class MakeSchedule :AppCompatActivity(){
                 cal.set(Calendar.HOUR_OF_DAY,hour)
                 cal.set(Calendar.MINUTE,minute)
                 editTimeEnd.setText("" + hour + ":시 " + minute + "분")
-                if(minute<30)
-                    endTime = 0
-                else
-                    endTime = 30
-
-                endTime += 100*hour
+                val minuteString:String = " "
+                if(minute<30) {
+                    endTime = (100 * hour).toString()
+                }
+                else {
+                    endTime = (100 * hour+30).toString()
+                }
             }
             TimePickerDialog(this, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE),
                 true).show()
@@ -153,18 +155,30 @@ class MakeSchedule :AppCompatActivity(){
         saveBtn.setOnClickListener {
             if(cb_Share.isChecked)
                 isitShare = true
-            if(cb_ShareEdit.isChecked)
-                isitShareEdit = true
 
             if(cb_alarm.isChecked)
                 alarm = true
 
             scheduleName = nameText.text.toString()
             scheduleInfo = infoText.text.toString()
+            tag = tag_text.text.toString()
+
+            val userDB = databaseReference.child("Users/" + userID + "/Schedule")
+            userDB.addValueEventListener( object: ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    for(snapShot in dataSnapshot.children){
+                        for(deeperSnapShot in snapShot.child((dateMonth +1).toString()).children){
+                            dataArray.add(deeperSnapShot.value)//DB값을 다시 Array에 저장
+                        }
+                    }
+                }
+                override fun onCancelled(dataSnapshot: DatabaseError) {
+                }
+            })
 
             insertSchedule(
-                userID, tag, scheduleName, alarm, startTime.toString(), endTime.toString(), scheduleInfo,
-                isitShare, isitShareEdit, dateYear, dateMonth+1, dateDay
+                userID, tag, scheduleName, alarm, startTime.toString(), endTime, scheduleInfo,
+                isitShare, dateYear, dateMonth+1, dateDay
             )
 
 
@@ -182,7 +196,7 @@ class MakeSchedule :AppCompatActivity(){
             val selected = array[which]
 
             try {
-                tag_text.setText("   "+selected)
+                tag_text.setText(selected)
 
             }catch (e:IllegalArgumentException){
                 Toast.makeText(applicationContext, "Tag is not Selected", Toast.LENGTH_LONG ).show()
@@ -203,7 +217,6 @@ class MakeSchedule :AppCompatActivity(){
         endTime: String,
         scheduleInfo: String?,
         shareAble: Boolean?,
-        shareEditAble: Boolean?,
         dateYear: Int,
         dateMonth: Int,
         date: Int
@@ -218,9 +231,7 @@ class MakeSchedule :AppCompatActivity(){
             startTime,
             endTime,
             alarm,
-            shareAble,
-            shareEditAble
-        )
+            shareAble)
         dataArray.add(schedule)
 
         var dataHashMap = HashMap<String,Any>()
