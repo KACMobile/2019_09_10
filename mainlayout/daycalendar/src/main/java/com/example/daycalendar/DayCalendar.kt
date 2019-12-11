@@ -398,8 +398,14 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         var view = findViewById<TextView>(idFromTime)
         if (currentDate.toString() == date.toString() && (currentMonth + 1).toString() == dateMonth.toString() && currentYear.toString() == dateYear.toString()) {
             while (count < endTime.toInt()) {
-                idFromTime = resources.getIdentifier("day" + count, "id", context.packageName)
+                if(count == 0)
+                    idFromTime = resources.getIdentifier("day" + "000", "id", context.packageName)
+                else if(count == 30)
+                    idFromTime = resources.getIdentifier("day" + "030", "id", context.packageName)
+                else
+                    idFromTime = resources.getIdentifier("day" + count, "id", context.packageName)
                 view = findViewById<TextView>(idFromTime)
+                Log.d("a", "This is!?" +count)
                 if(schedulePeriod <= 30) view.text = scheduleName + scheduleInfo
                 else if (count == startTime.toInt()) view.text = scheduleName
                 else if(count == (startTime.toInt() + 30)) view.text = scheduleInfo

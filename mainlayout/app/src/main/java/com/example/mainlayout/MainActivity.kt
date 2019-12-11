@@ -12,12 +12,10 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import android.view.Menu
 
 import android.os.Build
 import android.os.PowerManager
 import android.util.Log
-import android.view.MenuItem
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import com.google.firebase.database.*
@@ -27,8 +25,8 @@ import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.net.Uri
 import android.provider.Settings
-import android.view.MotionEvent
-import android.widget.Toast
+import android.view.*
+import android.widget.*
 
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -43,7 +41,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
 
-class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelectedListener{
+class MainActivity : AppCompatActivity() {
 
     lateinit var dailyFragment: DailyFragment
     lateinit var weekFragment: WeekFragment
@@ -115,8 +113,22 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolBar)
 
         val actionBar = supportActionBar
-
         setActionBarTitle("" + yearInfo + monthInfo + dateInfo)
+
+        val listView1 : ListView = findViewById(R.id.navigation_drawer_list1)
+        val listView2 : ListView = findViewById(R.id.navigation_drawer_list2)
+
+        var gList = ArrayList<String>()
+        gList.add("Group1")
+        gList.add("Group2")
+        gList.add("Group3")
+        gList.add("Group4")
+
+        listView1.adapter = ListAdapter(this)
+        listView2.adapter = CheckListAdapter(gList, this)
+
+
+
 
 
         val drawerToggle : ActionBarDrawerToggle = object : ActionBarDrawerToggle(
@@ -171,9 +183,13 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
                 groupFab2.show()
                 groupFab3.show()
                 isOpen = true
+
             }
         }
-
+        fab.setOnClickListener { view ->
+            val nextIntent = Intent(this, MakeSchedule::class.java)
+            startActivity(nextIntent)
+        }
         groupFab.setOnClickListener{
             animateFab()
         }
@@ -192,11 +208,54 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
             startActivity(Intent)
         }
 
-        fab.setOnClickListener { view ->
-            val nextIntent = Intent(this, MakeSchedule::class.java)
-            startActivity(nextIntent)
-        }
 
+        listView1.setOnItemClickListener { parent: AdapterView<*>, view:View, position:Int, id ->
+            if (position == 0){
+                dailyFragment = DailyFragment()
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment, dailyFragment)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit()
+
+                isGroupFragment = false
+                whichFab()
+            }
+            if (position == 1){
+                weekFragment = WeekFragment()
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment, weekFragment)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit()
+
+                isGroupFragment = false
+                whichFab()
+            }
+            if (position == 2){
+                monthFragment = MonthFragment()
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment, monthFragment)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit()
+
+                isGroupFragment = false
+                whichFab()
+            }
+            if (position == 3){
+                groupFragment = GroupFragment()
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment, groupFragment)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit()
+
+                isGroupFragment = true
+                whichFab()
+            }
+            drawer_layout.closeDrawer(GravityCompat.START)
+        }
         /*insertGroup(
             "KAU", "KAU", "모바일SW", false, "1000", "1300", "13주",
             false, false, 2019, 11, 19
@@ -248,7 +307,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
 
-        navView.setNavigationItemSelectedListener(this)
+        //navView.setNavigationItemSelectedListener(this)
         navView.bringToFront();
 
 
@@ -321,6 +380,33 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
     }
     ////
 
+    //메뉴 리스트 1
+
+    class ListAdapter(private val context: Activity) : BaseAdapter(){
+        var names = arrayOf("일간", "주간", "월간", "그룹")
+
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+            var inflater = context.layoutInflater
+            var view1 = inflater.inflate(R.layout.fragment_list_row1, null)
+
+            var fTitle = view1.findViewById<TextView>(R.id.fragment_title)
+
+            fTitle.setText(names[position])
+            return view1
+        }
+
+        override fun getItem(position: Int): Any {
+            return position
+        }
+
+        override fun getItemId(position: Int): Long {
+            return position.toLong()
+        }
+
+        override fun getCount(): Int {
+            return 4
+        }
+    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         return true
@@ -342,19 +428,19 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         {
             fab.hide()
             groupFab.show()
-            //Toast.makeText(applicationContext, "isGroupFrag = ${isGroupFragment}", Toast.LENGTH_LONG ).show()
+            groupFab.isClickable = true
 
         }
         else //groupFragment = false
         {
             fab.show()
             groupFab.hide()
-            //Toast.makeText(applicationContext, "isGroupFrag = ${isGroupFragment}", Toast.LENGTH_LONG ).show()
+            groupFab.isClickable = false
 
         }
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+    /*override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when(item.itemId){
             R.id.group_fragment ->{
@@ -411,7 +497,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         drawer_layout.closeDrawer(GravityCompat.START)
 
         return true
-    }
+    }*/
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
@@ -441,7 +527,6 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         endTime: String,
         scheduleInfo: String?,
         shareAble: Boolean?,
-        shareEditAble: Boolean?,
         dateYear: Int,
         dateMonth: Int,
         date: Int
@@ -457,8 +542,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
             startTime,
             endTime,
             alarm,
-            shareAble,
-            shareEditAble
+            shareAble
         )
         dataArray.add(schedule)
         var a: String = schedule.scheduleName
@@ -475,7 +559,6 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         endTime: String,
         scheduleInfo: String?,
         shareAble: Boolean?,
-        shareEditAble: Boolean?,
         dateYear: Int,
         dateMonth: Int,
         date: Int
@@ -491,8 +574,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
             startTime,
             endTime,
             alarm,
-            shareAble,
-            shareEditAble
+            shareAble
         )
         dataArray.add(schedule)
         var a: String = schedule.scheduleName
