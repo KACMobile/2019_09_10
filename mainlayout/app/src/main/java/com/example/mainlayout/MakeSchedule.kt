@@ -44,7 +44,6 @@ class MakeSchedule :AppCompatActivity(){
         val month = cal.get(Calendar.MONTH)
         val day = cal.get(Calendar.DAY_OF_MONTH)
 
-        var cb_Share : CheckBox = findViewById(R.id.checkBox)
         var cb_alarm : CheckBox = findViewById(R.id.checkBox3)
 
         val nameText : TextInputEditText = findViewById(R.id.nameTextView)
@@ -153,8 +152,6 @@ class MakeSchedule :AppCompatActivity(){
 
 
         saveBtn.setOnClickListener {
-            if(cb_Share.isChecked)
-                isitShare = true
 
             if(cb_alarm.isChecked)
                 alarm = true
@@ -162,6 +159,9 @@ class MakeSchedule :AppCompatActivity(){
             scheduleName = nameText.text.toString()
             scheduleInfo = infoText.text.toString()
             tag = tag_text.text.toString()
+            if(tag_text.text == "Tag 선택"){
+                tag = "할 일"
+            }
 
             val userDB = databaseReference.child("Users/" + userID + "/Schedule")
             userDB.addValueEventListener( object: ValueEventListener {
