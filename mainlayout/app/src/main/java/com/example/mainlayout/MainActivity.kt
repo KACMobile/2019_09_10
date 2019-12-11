@@ -118,7 +118,12 @@ class MainActivity : AppCompatActivity() {
         editor.putString("UserID", userID)
         editor.commit()
 
+        var UserInfo = UserInfo(userID!!, "좋은 하루 되세요", "Users")
 
+
+
+
+        //var userNames: String, var userInfos: String, var userTypes: String, var userIcons: String?= null, var userHomepage: String? = null, var userTEL:String? = null, var locateLat:Double? = null, var locateLng:Double? = null)
 
         Log.d("tag", "mUser!!.displayName : " + mUser!!.displayName)
         Log.d("tag", "userID : " + userID)
@@ -174,7 +179,7 @@ class MainActivity : AppCompatActivity() {
         rotateForward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward)
         rotateBackward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward)
         //val userFollow = databaseReference.child("Users/" + userID + "/Follow")
-        //databaseReference.child("Users").child(userID).child("Follow").child("Groups").child("KAU").setValue(Color.RED)//DB에 임시추가
+        databaseReference.child("Users").child(userID!!).child("UserInfo").setValue(UserInfo)
         //val currentFragment : DailyFragment = FragmentManager
         fun animateFab()
         {
