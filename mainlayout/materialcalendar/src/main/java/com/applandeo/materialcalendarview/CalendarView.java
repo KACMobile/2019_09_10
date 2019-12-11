@@ -532,6 +532,7 @@ public class CalendarView extends LinearLayout {
 
     }
 
+
     public void setScheduleEvent(DataSnapshot dataSnapShot){
         for(DataSnapshot snapshot : dataSnapShot.getChildren()){
             for(DataSnapshot deeperSnapShot : snapshot.getChildren()){
@@ -539,12 +540,10 @@ public class CalendarView extends LinearLayout {
                     int scheduleCount = (int)deeperSnapShot.getChildrenCount();
                     insertEvents(Integer.parseInt(deepestSnapShot.child("dateYear").getValue().toString()), Integer.parseInt(deepestSnapShot.child("dateMonth").getValue().toString()), Integer.parseInt(deepestSnapShot.child("date").getValue().toString()),scheduleCount);
                 }
-
             }
-
         }
-
     }
+
     public void insertEvents(int year, int month, int date, int scheduleCount){
         Calendar cal = Calendar.getInstance();
         cal.set(year,month-1,date);
@@ -559,7 +558,5 @@ public class CalendarView extends LinearLayout {
         else
             events.add(new EventDay(cal,R.drawable.sample_four_icons));
         setEvents(events);
-
-
-    }
+        }
 }

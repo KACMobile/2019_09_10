@@ -406,6 +406,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             dateMonth - 1,
             date - 1
         )
+
         var dOW = dateToDOW()
         var idFromTime = 0
         if(count == 0)
@@ -436,7 +437,6 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
         }
         cal.set(currentYear,currentMonth,currentDate)
-
 
     }
 

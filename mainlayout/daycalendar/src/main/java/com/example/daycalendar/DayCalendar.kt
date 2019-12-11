@@ -320,7 +320,6 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 groupBackgroundColor = scheduleColorPreference.getInt(deeperSnapShot.child("userID").value.toString(), Color.BLUE)
                 setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>,groupBackgroundColor)
             }
-
         }
 
     }
