@@ -366,7 +366,7 @@ class MainActivity : AppCompatActivity() {
                 saveDataSnap = dataSnapshot.child("Schedule")
                 for(snapShot in dataSnapshot.child("Schedule").children){
                     for(deeperSnapShot in snapShot.child((CalendarInfo.currentMonth +1).toString()).children){
-                        //setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
+                        setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
 
                     }
                 }
@@ -378,7 +378,7 @@ class MainActivity : AppCompatActivity() {
         if(::saveDataSnap.isInitialized) {
             for (snapShot in saveDataSnap.children) {
                 for (deeperSnapShot in snapShot.child((Calendar.getInstance().get(Calendar.MONTH)+1).toString()).children) {
-                    //setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
+                    setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
                 }
             }
         }
@@ -569,8 +569,6 @@ class MainActivity : AppCompatActivity() {
         dataArray.add(schedule)
         var a: String = schedule.scheduleName
         databaseReference.child("Users").child(userName).child("Schedule").child(tag).child(dateMonth.toString()).setValue(dataArray)
-
-
     }
     fun insertGroup(
         userName: String,
@@ -620,7 +618,6 @@ class MainActivity : AppCompatActivity() {
         )
         databaseReference.child("Users").child(userName).child("UserInfo").setValue(groupInfo)
 
-
     }
 
     fun setAlarmScheduleOnCalendar(schedule: HashMap<String, Any>) {
@@ -643,13 +640,11 @@ class MainActivity : AppCompatActivity() {
 
         if(alarmAble==true && CalendarInfo.currentYear ==dateYear && (CalendarInfo.currentMonth +1)==dateMonth && CalendarInfo.currentDate ==date
             && currentHour<startTimeHour) {
-            Log.d("알람1", "들어옴")
             Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
         }
 
         if(alarmAble==true && CalendarInfo.currentYear ==dateYear && (CalendarInfo.currentMonth +1)==dateMonth && CalendarInfo.currentDate ==date
             && currentHour==startTimeHour && currentMinute<=startTimeMinute){
-            Log.d("알람1", "들어옴")
             Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
         }
 
