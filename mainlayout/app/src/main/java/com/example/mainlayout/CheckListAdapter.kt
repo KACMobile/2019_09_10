@@ -35,26 +35,14 @@ class CheckListAdapter(var names : ArrayList<String>, val context: Activity): Ba
 
         checkBox.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
             override fun onCheckedChanged(buttomView:CompoundButton, isChecked : Boolean){
-                when(textView.text){
-                    names[0] ->{
-                        if(checkBox.isChecked) {
+                for (i in 0..(names.size-1)){
+                    if (textView.text == names[i]){
+                        if (checkBox.isChecked){
                             Log.d("Tag", textView.text.toString())
+
                         }
-                    }
-                    names[1] ->{
-                        if (checkBox.isChecked) {
-                            Log.d("Tag", textView.text.toString())
-                        }
-                    }
-                    names[2] ->{
-                        if (checkBox.isChecked) {
-                            Log.d("Tag", textView.text.toString())
-                        }
-                    }
-                    names[3] ->{
-                        if (checkBox.isChecked) {
-                            Log.d("Tag", textView.text.toString())
-                        }
+
+
                     }
                 }
 

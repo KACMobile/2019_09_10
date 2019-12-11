@@ -159,9 +159,13 @@ class MainActivity : AppCompatActivity() {
                 groupFab2.show()
                 groupFab3.show()
                 isOpen = true
+
             }
         }
-
+        fab.setOnClickListener { view ->
+            val nextIntent = Intent(this, MakeSchedule::class.java)
+            startActivity(nextIntent)
+        }
         groupFab.setOnClickListener{
             animateFab()
         }
@@ -180,10 +184,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent)
         }
 
-        fab.setOnClickListener { view ->
-            val nextIntent = Intent(this, MakeSchedule::class.java)
-            startActivity(nextIntent)
-        }
+
         listView1.setOnItemClickListener { parent: AdapterView<*>, view:View, position:Int, id ->
             if (position == 0){
                 dailyFragment = DailyFragment()
@@ -403,14 +404,14 @@ class MainActivity : AppCompatActivity() {
         {
             fab.hide()
             groupFab.show()
-            //Toast.makeText(applicationContext, "isGroupFrag = ${isGroupFragment}", Toast.LENGTH_LONG ).show()
+            groupFab.isClickable = true
 
         }
         else //groupFragment = false
         {
             fab.show()
             groupFab.hide()
-            //Toast.makeText(applicationContext, "isGroupFrag = ${isGroupFragment}", Toast.LENGTH_LONG ).show()
+            groupFab.isClickable = false
 
         }
     }
