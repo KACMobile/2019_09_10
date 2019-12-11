@@ -172,19 +172,6 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     //달력 기본 설정
     fun calendardefaultsetting() {
-
-        var idFromTime = resources.getIdentifier("curr_year", "id", context.packageName)
-        var view = findViewById<TextView>(idFromTime)
-        view.text = currentYear.toString()
-
-        idFromTime = resources.getIdentifier("curr_month", "id", context.packageName)
-        view = findViewById<TextView>(idFromTime)
-        view.text = currentMonth.toString()
-
-        idFromTime = resources.getIdentifier("curr_date", "id", context.packageName)
-        view = findViewById<TextView>(idFromTime)
-        view.text = currentDate.toString()
-
         var currentLastDayOfMonth = cal.getActualMaximum(Calendar.DATE)
         var currentTime = cal.get(Calendar.HOUR_OF_DAY)
         val dateArray = arrayOf(

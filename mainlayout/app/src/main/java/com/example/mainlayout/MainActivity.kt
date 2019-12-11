@@ -12,12 +12,10 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import android.view.Menu
 
 import android.os.Build
 import android.os.PowerManager
 import android.util.Log
-import android.view.MenuItem
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import com.google.firebase.database.*
@@ -27,8 +25,8 @@ import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.net.Uri
 import android.provider.Settings
-import android.view.MotionEvent
-import android.widget.Toast
+import android.view.*
+import android.widget.*
 
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -41,7 +39,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
 
-class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelectedListener{
+class MainActivity : AppCompatActivity() {
 
     lateinit var dailyFragment: DailyFragment
     lateinit var weekFragment: WeekFragment
@@ -74,6 +72,10 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
     lateinit var muserInfo: UserInfo
 
+    var yearInfo = 2019
+    var monthInfo = 12
+    var dateInfo = 12
+
     public fun setActionBarTitle(str:String){
         actionBar?.title = str
     }
@@ -86,10 +88,24 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
         setSupportActionBar(toolBar)
 
-
-
         val actionBar = supportActionBar
-        actionBar?.title = " "
+        setActionBarTitle("" + yearInfo + monthInfo + dateInfo)
+
+        val listView1 : ListView = findViewById(R.id.navigation_drawer_list1)
+        val listView2 : ListView = findViewById(R.id.navigation_drawer_list2)
+
+        var gList = ArrayList<String>()
+        gList.add("Group1")
+        gList.add("Group2")
+        gList.add("Group3")
+        gList.add("Group4")
+
+        listView1.adapter = ListAdapter(this)
+        listView2.adapter = CheckListAdapter(gList, this)
+
+
+
+
 
         val drawerToggle : ActionBarDrawerToggle = object : ActionBarDrawerToggle(
             this,
@@ -111,7 +127,6 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         val groupFab2: FloatingActionButton = findViewById(R.id.groupfab2)
         val groupFab3: FloatingActionButton = findViewById(R.id.groupfab3)
         whichFab()
-
 
         fabOpen = AnimationUtils.loadAnimation(this, R.anim.fab_open)
         fabClose = AnimationUtils.loadAnimation(this, R.anim.fab_close)
@@ -169,7 +184,53 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
             val nextIntent = Intent(this, MakeSchedule::class.java)
             startActivity(nextIntent)
         }
+        listView1.setOnItemClickListener { parent: AdapterView<*>, view:View, position:Int, id ->
+            if (position == 0){
+                dailyFragment = DailyFragment()
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment, dailyFragment)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit()
 
+                isGroupFragment = false
+                whichFab()
+            }
+            if (position == 1){
+                weekFragment = WeekFragment()
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment, weekFragment)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit()
+
+                isGroupFragment = false
+                whichFab()
+            }
+            if (position == 2){
+                monthFragment = MonthFragment()
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment, monthFragment)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit()
+
+                isGroupFragment = false
+                whichFab()
+            }
+            if (position == 3){
+                groupFragment = GroupFragment()
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment, groupFragment)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit()
+
+                isGroupFragment = true
+                whichFab()
+            }
+            drawer_layout.closeDrawer(GravityCompat.START)
+        }
         /*insertGroup(
             "KAU", "KAU", "모바일SW", false, "1000", "1300", "13주",
             false, false, 2019, 11, 19
@@ -221,8 +282,10 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
 
-        navView.setNavigationItemSelectedListener(this)
+        //navView.setNavigationItemSelectedListener(this)
         navView.bringToFront();
+
+
 
         dailyFragment = DailyFragment()
         supportFragmentManager
@@ -256,7 +319,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
                 saveDataSnap = dataSnapshot.child("Schedule")
                 for(snapShot in dataSnapshot.child("Schedule").children){
                     for(deeperSnapShot in snapShot.child((CalendarInfo.currentMonth +1).toString()).children){
-                        //setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
+                        setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
 
                     }
                 }
@@ -292,6 +355,33 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
     }
     ////
 
+    //메뉴 리스트 1
+
+    class ListAdapter(private val context: Activity) : BaseAdapter(){
+        var names = arrayOf("일간", "주간", "월간", "그룹")
+
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+            var inflater = context.layoutInflater
+            var view1 = inflater.inflate(R.layout.fragment_list_row1, null)
+
+            var fTitle = view1.findViewById<TextView>(R.id.fragment_title)
+
+            fTitle.setText(names[position])
+            return view1
+        }
+
+        override fun getItem(position: Int): Any {
+            return position
+        }
+
+        override fun getItemId(position: Int): Long {
+            return position.toLong()
+        }
+
+        override fun getCount(): Int {
+            return 4
+        }
+    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         return true
@@ -325,7 +415,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         }
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+    /*override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when(item.itemId){
             R.id.group_fragment ->{
@@ -382,7 +472,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         drawer_layout.closeDrawer(GravityCompat.START)
 
         return true
-    }
+    }*/
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
@@ -392,6 +482,9 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         }
     }
 
+    override fun onContentChanged() {
+        super.onContentChanged()
+    }
 
     /*override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
@@ -507,97 +600,82 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
         if(alarmAble==true && CalendarInfo.currentYear ==dateYear && (CalendarInfo.currentMonth +1)==dateMonth && CalendarInfo.currentDate ==date
             && currentHour<startTimeHour) {
-
-            //Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
-            Log.d("Alarm1", "scheduleName : " + scheduleName + " currentHour : " + currentHour + " startTimeHour : " + startTimeHour)
-
+            Log.d("알람1", "들어옴")
             Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
-
         }
 
         if(alarmAble==true && CalendarInfo.currentYear ==dateYear && (CalendarInfo.currentMonth +1)==dateMonth && CalendarInfo.currentDate ==date
             && currentHour==startTimeHour && currentMinute<=startTimeMinute){
-
-            //Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
-            Log.d("Alarm2", "scheduleName : " + scheduleName + " currentHour : " + currentHour + " startTimeHour : " + startTimeHour)
-
+            Log.d("알람1", "들어옴")
             Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
         }
-
-    }
-
-    fun Alarm(notificaionId: Int){
-        Log.d("Alarm", "들어옴1!!!!!")
-        val alarm_manager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val calendar = Calendar.getInstance()
-
-
-        val my_intent = Intent(this@MainActivity,BroadCastD::class.java)
-
-        calendar.set(2019,11,19,5,42)
-
-        val notificationId = notificaionId
-        val scheduleName = "알람 이름"
-        val scheduleInfo = "알람 정보"
-
-        my_intent.putExtra("notificationId", notificationId)
-        my_intent.putExtra("scheduleName", scheduleName)
-        my_intent.putExtra("scheduleInfo", scheduleInfo)
-
-        val pendingIntent = PendingIntent.getBroadcast(
-            this, // context 정보
-            0, // 여러개의 알람을 등록하기 위한 primary id 값 세팅
-            my_intent, // 정보가 담긴 intent
-            PendingIntent.FLAG_UPDATE_CURRENT)
-
-        alarm_manager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
-
-
-        /*
-        val mAlarmIntent : Intent = Intent("android.intent.action.ALARM_START")
-        val mPendingIntent : PendingIntent = PendingIntent.getBroadcast(this, 0, mAlarmIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-
-        val mAlarmManager :AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val calendar = Calendar.getInstance()
-        mAlarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, mPendingIntent)
-
-        Log.d("in Alarm", "들어옴1")
-
-        //calendar.timeInMillis, mPendingIntent)
-
-         */
-
-
 
     }
 
     fun Alarm(scheduleName: String, scheduleInfo: String?, dateYear: Int, dateMonth: Int, date: Int,
               startTimeHour: Int, startTimeMinute:Int, endTime: String) {
-        val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val notificationmanager
+                = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
         val notificationId = dateYear + dateMonth + date + startTimeHour + startTimeMinute + endTime.toInt()
         val notyintent = Intent(this@MainActivity, BroadCastD::class.java) //BroadCastD 클래스로 보낼 intent
         notyintent.putExtra("notificationId", notificationId)
         notyintent.putExtra("scheduleName", scheduleName)
         notyintent.putExtra("scheduleInfo", scheduleInfo)
-        //notyintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        notyintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
 
-        Log.d("In Alarm", "Id : " + notificationId + " scheduleName : "+ scheduleName + " scheduleInfo : "+ scheduleInfo)
+        val alcal = Calendar.getInstance()
+        alcal.set(dateYear, dateMonth, date, startTimeHour, startTimeMinute)
 
-        val sender = PendingIntent.getBroadcast(
+        val pendingIntent = PendingIntent.getActivity(
+            this, // context 정보
+            notificationId, // 여러개의 알람을 등록하기 위한 primary id 값 세팅
+            notyintent, // 정보가 담긴 intent
+            PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val builder = Notification.Builder(this,NOTIFICATION_CHANNEL_ID)
+            .setSmallIcon(android.R.drawable.ic_btn_speak_now)
+            .setWhen(alcal.timeInMillis)
+            .setNumber(dateYear + dateMonth + date + startTimeHour + startTimeMinute + endTime.toInt())
+            .setContentTitle(scheduleName)
+            .setContentText(scheduleInfo)
+            .setColor(Color.RED)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+
+        if (Build.VERSION.SDK_INT >= 26){
+            val channelName :CharSequence = "noty_channel"
+            val importance :Int = NotificationManager.IMPORTANCE_HIGH
+
+            val channel: NotificationChannel = NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName , importance)
+
+            notificationmanager.createNotificationChannel(channel)
+        }
+
+        notificationmanager.notify(notificationId,builder.build())
+
+
+        //val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+
+
+        //Log.d("In Alarm", "Id : " + notificationId + " scheduleName : "+ scheduleName + " scheduleInfo : "+ scheduleInfo)
+
+        /*
+        val sender = Pendin
+        gIntent.getBroadcast(
             this, // context 정보
             notificationId, // 여러개의 알람을 등록하기 위한 primary id 값 세팅
             intent, // 정보가 담긴 intent
             0)
 
-        val calendar = Calendar.getInstance()
-        //calendar.set(dateYear, dateMonth, date, startTimeHour, startTimeMinute)
-        calendar.set(2019,11,19,2,59)
+         */
+
+
+        //calendar.set(2019,11,19,2,59)
 
         //val notificationmanager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-
-        val pendingIntent = PendingIntent.getActivity(
-            this, 0, notyintent, PendingIntent.FLAG_UPDATE_CURRENT)
 
 
         /*
@@ -635,10 +713,12 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
          */
 
         //notificationmanager.notify(dateYear + dateMonth + date + startTimeHour + startTimeMinute + endTime.toInt(), builder.build())
-
+        /*
         am.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
         am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, sender)
         Log.d("In Alarm", "after am set")
+
+         */
     }
 
 

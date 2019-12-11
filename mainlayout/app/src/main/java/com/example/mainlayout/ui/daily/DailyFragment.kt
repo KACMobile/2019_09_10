@@ -4,79 +4,73 @@ import android.app.ActionBar
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.mainlayout.R
 import com.example.mainlayout.MainActivity
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.daily_calender.*
+import kotlinx.android.synthetic.main.daily_calender.view.*
 
 
 
 
-
-
-class DailyFragment : Fragment() {//?���? 캘린?��
+class DailyFragment : Fragment() {//
 
     private lateinit var dailyViewModel: DailyViewModel
 
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         dailyViewModel = ViewModelProviders.of(this).get(DailyViewModel::class.java)
         val view = inflater.inflate(R.layout.daily_calender, container, false)
 
-        dailyViewModel.text.observe(this, Observer {})
+        var mcontext = context!!
 
-        val year = view.findViewById<View>(R.id.curr_year) as TextView
-        val yearinfo = year.text.toString()
-
-        val month = view.findViewById<View>(R.id.curr_month) as TextView
-        val monthinfo = month.text.toString()
-
-        val date = view.findViewById<View>(R.id.curr_date) as TextView
-        val dateinfo = date.text.toString()
+        var yearinfo = view.day_CalendarView.currentYear
+        var monthinfo = view.day_CalendarView.currentMonth + 1
 
         var actionBar = (activity as MainActivity).supportActionBar
-        actionBar!!.title = yearinfo + "년 " +  monthinfo + "월 " + dateinfo + "일"
+        actionBar!!.title = "" + yearinfo + "년 " + monthinfo + "월 "
 
+        view.setOnTouchListener(object : OnSwipeTouchListener(mcontext) {
+            override fun onSwipeLeft() {
+                super.onSwipeLeft()
+                day_CalendarView.setNextDay()
+                day_CalendarView.calendardefaultsetting()
 
-        view.setOnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_MOVE) {
-                val year = view.findViewById<View>(R.id.curr_year) as TextView
-                val yearinfo = year.text.toString()
-
-                val month = view.findViewById<View>(R.id.curr_month) as TextView
-                val monthinfo = month.text.toString()
-
-                val date = view.findViewById<View>(R.id.curr_date) as TextView
-                val dateinfo = date.text.toString()
+                var yearinfo = view.day_CalendarView.currentYear
+                var monthinfo = view.day_CalendarView.currentMonth + 1
 
                 var actionBar = (activity as MainActivity).supportActionBar
-                actionBar!!.title = yearinfo + "년 " +  monthinfo + "월 " + dateinfo + "일"
-
+                actionBar!!.title = "" + yearinfo + "년 " + monthinfo + "월 "
 
             }
-            true
-        }
+            override fun onSwipeRight() {
+                super.onSwipeRight()
+                day_CalendarView.setPreDay()
+                day_CalendarView.calendardefaultsetting()
+
+                var yearinfo = view.day_CalendarView.currentYear
+                var monthinfo = view.day_CalendarView.currentMonth + 1
+
+                var actionBar = (activity as MainActivity).supportActionBar
+                actionBar!!.title = "" + yearinfo + "년 " + monthinfo + "월 "
+            }
+        })
+        dailyViewModel.text.observe(this, Observer {
+
+        })
+
 
         return view
-
-
-
-
-
     }
-
-
-
-
-
-
-
-
-
 }
+
