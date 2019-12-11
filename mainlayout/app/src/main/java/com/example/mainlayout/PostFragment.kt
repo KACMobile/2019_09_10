@@ -35,7 +35,7 @@ class PostFragment : Fragment() {
 
         recyclerView.adapter = PostRecyclerAdapter(activity!!, postArray)
 
-        val userFollowDB =databaseReference.child(userInfo.userTypes + "/" +  userInfo.userNames + "/" + "Post")
+        val userFollowDB =databaseReference.child(userInfo.userType + "/" +  userInfo.userName + "/" + "Post")
         userFollowDB.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 postArray.clear()

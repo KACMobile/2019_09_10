@@ -45,9 +45,9 @@ class MyPageActivity : AppCompatActivity() {
 
         viewPager.adapter = GroupPagePagerAdapter(supportFragmentManager,3, userInfo)
         tabLayout.setupWithViewPager(viewPager)
-        userNameView.text=userInfo.userNames
-        if(userInfo.userIcons != "null")
-            Glide.with(this).load(userInfo.userIcons).into(userImageView)
+        userNameView.text=userInfo.userName
+        if(userInfo.userIcon != "null")
+            Glide.with(this).load(userInfo.userIcon).into(userImageView)
 
         closeButton.setOnClickListener {
             finish()

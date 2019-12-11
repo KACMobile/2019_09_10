@@ -38,9 +38,9 @@ class GroupPageInfoFragment : Fragment(), OnMapReadyCallback {
 
         mlatitude = userInfo.locateLat
         mlongitude = userInfo.locateLng
-        mUsername = userInfo.userNames
-        mUserInfo = userInfo.userInfos
-        infoText.text = userInfo.userInfos
+        mUsername = userInfo.userName
+        mUserInfo = userInfo.userInfo
+        infoText.text = userInfo.userInfo
         if(userInfo.userHomepage != "null") userHomepage.text = userInfo.userHomepage
         else userHomepage.text = "등록된 URL이 없습니다"
         if(userInfo.userTEL != "null") userTEL.text = userInfo.userTEL

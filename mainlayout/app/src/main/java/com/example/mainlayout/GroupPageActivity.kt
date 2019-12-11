@@ -43,7 +43,7 @@ class GroupPageActivity : AppCompatActivity() {
         val intent = intent
         val userInfo = intent.getSerializableExtra("userInfo") as UserInfo
         val databaseReference = FirebaseDatabase.getInstance().reference
-        val userFollowDB =databaseReference.child("Users/" + userID + "/Follow/"+ userInfo.userTypes + "/" + userInfo.userNames)
+        val userFollowDB =databaseReference.child("Users/" + userID + "/Follow/"+ userInfo.userType + "/" + userInfo.userName)
         userFollowDB.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapShot: DataSnapshot) {
                 if(dataSnapShot.value != null){
@@ -60,18 +60,18 @@ class GroupPageActivity : AppCompatActivity() {
         )
 
 
-        userNameView.text=userInfo.userNames
-        if(userInfo.userIcons != "null")
-            Glide.with(this).load(userInfo.userIcons).into(userImageView)
+        userNameView.text=userInfo.userName
+        if(userInfo.userIcon != "null")
+            Glide.with(this).load(userInfo.userIcon).into(userImageView)
         subscribeButton.setOnClickListener{
             if(subscribeButton.text == "구독"){
-                databaseReference.child("Users").child(userID).child("Follow").child(userInfo.userTypes).child(userInfo.userNames).setValue(Color.RED)
+                databaseReference.child("Users").child(userID).child("Follow").child(userInfo.userType).child(userInfo.userName).setValue(Color.RED)
                 subscribeButton.text = ("구독중")
                 Toast.makeText(it.context, "구독되었습니다.", Toast.LENGTH_SHORT).show()
                 subscribeButton.setBackgroundColor(Color.GRAY)
             }
             else{
-                databaseReference.child("Users").child(userID).child("Follow").child(userInfo.userTypes).child(userInfo.userNames).setValue(null)
+                databaseReference.child("Users").child(userID).child("Follow").child(userInfo.userType).child(userInfo.userName).setValue(null)
                 subscribeButton.text = ("구독")
                 Toast.makeText(it.context, "구독을 해지하셨습니다.", Toast.LENGTH_SHORT).show()
                 subscribeButton.setBackgroundColor(Color.WHITE)
