@@ -11,8 +11,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.weekcalendar.*
+
 import kotlinx.android.synthetic.main.weekcalendar.view.*
 import android.icu.util.ChineseCalendar
 
