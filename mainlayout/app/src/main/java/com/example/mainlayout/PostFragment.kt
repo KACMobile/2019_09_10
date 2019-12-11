@@ -1,5 +1,6 @@
 package com.example.mainlayout
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,7 +15,7 @@ import com.google.firebase.database.ValueEventListener
 
 
 class PostFragment : Fragment() {
-    val userID:String = "User01"
+    var userID:String = "User01"
 
     companion object {
         fun newInstance() = PostFragment()
@@ -24,6 +25,8 @@ class PostFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val idPreference = context!!.getSharedPreferences("UserID", Context.MODE_PRIVATE)
+        userID = idPreference.getString("UserID", "User01")!!
         val rootView = inflater.inflate(R.layout.post_fragment, container, false)
         val recyclerView = rootView.findViewById<RecyclerView>(R.id.post_RecyclerView)
         val userInfo = arguments!!.getSerializable("userInfo") as UserInfo

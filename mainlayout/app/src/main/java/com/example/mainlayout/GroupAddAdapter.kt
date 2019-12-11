@@ -16,12 +16,14 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class GroupAddAdapter(context: Context, val userInfosArr: ArrayList<UserInfo>) : BaseAdapter(){
-    private val userID:String = "User01"
+    private var userID:String = "User01"
 
     private val mContext : Context
 
     init {
         mContext = context
+        val idPreference = context.getSharedPreferences("UserID", Context.MODE_PRIVATE)
+        userID = idPreference.getString("UserID", "User01")!!
     }
 
     override fun getCount(): Int {

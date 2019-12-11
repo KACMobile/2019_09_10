@@ -30,9 +30,11 @@ class MakeSchedule :AppCompatActivity(){
 
     private val databaseReference = firebaseDatabase.reference
     var dataArray = arrayListOf<Any?>()
-    val userID:String = "User01"
+    var userID:String = "User01"
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val idPreference = getSharedPreferences("UserID", Context.MODE_PRIVATE)
+        userID = idPreference.getString("UserID", "User01")!!
         super.onCreate(savedInstanceState)
         setContentView(R.layout.make_schedule)
 

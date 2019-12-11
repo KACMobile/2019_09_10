@@ -39,6 +39,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import java.util.prefs.Preferences
 
 
 class MainActivity : AppCompatActivity() {
@@ -90,13 +91,17 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         mUser = mAuth.currentUser
+        Log.d("tag", "mUser!!.displayName : " + mUser!!.displayName)
         if(mUser != null){
             userID = mUser!!.displayName
+            Log.d("tag", "userID : " + userID)
+
         }
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         mAuth = FirebaseAuth.getInstance()
         mUser = mAuth.currentUser
 
@@ -104,7 +109,19 @@ class MainActivity : AppCompatActivity() {
         if(mUser==null){
             var intent = Intent(this@MainActivity, GoogleLoginActivity::class.java)
             startActivityForResult(intent, REQUEST_TEST)
+        }else{
+            userID = mUser!!.displayName
         }
+
+        val idPreference = getSharedPreferences("UserID", Context.MODE_PRIVATE)
+        val editor = idPreference.edit()
+        editor.putString("UserID", userID)
+        editor.commit()
+
+
+
+        Log.d("tag", "mUser!!.displayName : " + mUser!!.displayName)
+        Log.d("tag", "userID : " + userID)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
