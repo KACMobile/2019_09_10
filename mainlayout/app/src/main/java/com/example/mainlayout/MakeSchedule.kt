@@ -58,7 +58,7 @@ class MakeSchedule :AppCompatActivity(){
         var dateYear : Int = 2019
         var dateMonth : Int = 1
         var dateDay : Int = 1
-        var startTime : Int = 0
+        var startTime : String = " "
         var endTime : String = "1200"
         var scheduleInfo : String = " "
         var scheduleName : String = "무제"
@@ -105,17 +105,16 @@ class MakeSchedule :AppCompatActivity(){
                 cal.set(Calendar.MINUTE,minute)
                 editTimeStart.setText("" + hour + "시 " + minute + "분")
                 editTimeEnd.setText("" + (hour+1) + "시 " + minute + "분")
-
+                var minuteString: String? = null
                 if(minute<30) {
-                    startTime = 0
-                    endTime = (100 * (hour+1)).toString()
+                    minuteString = "00"
                 }
                 else {
-                    startTime = 30
+                    minuteString = "30"
                     endTime = (100 * (hour+1)+30).toString()
 
                 }
-                startTime += 100*hour
+                startTime = hour.toString() + minuteString
             }
             TimePickerDialog(this, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE),
                 true).show()
@@ -139,13 +138,14 @@ class MakeSchedule :AppCompatActivity(){
                 cal.set(Calendar.HOUR_OF_DAY,hour)
                 cal.set(Calendar.MINUTE,minute)
                 editTimeEnd.setText("" + hour + ":시 " + minute + "분")
-                val minuteString:String = " "
+                var minuteString:String = " "
                 if(minute<30) {
-                    endTime = (100 * hour).toString()
+                     minuteString = "00"
                 }
                 else {
-                    endTime = (100 * hour+30).toString()
+                    minuteString = "30"
                 }
+                endTime = hour.toString() + minuteString
             }
             TimePickerDialog(this, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE),
                 true).show()

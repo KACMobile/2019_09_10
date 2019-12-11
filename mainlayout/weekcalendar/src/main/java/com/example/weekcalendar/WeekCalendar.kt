@@ -410,12 +410,23 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
             date - 1
         )
         var dOW = dateToDOW()
-        var idFromTime = resources.getIdentifier(dOW + count, "id", context.packageName)
+        var idFromTime = 0
+        if(count == 0)
+            idFromTime = resources.getIdentifier(dOW + "000", "id", context.packageName)
+        else if(count == 30)
+            idFromTime = resources.getIdentifier(dOW + "030", "id", context.packageName)
+        else
+            idFromTime = resources.getIdentifier(dOW + count, "id", context.packageName)
         var view = findViewById<TextView>(idFromTime)
         if (dateArray[cal.get(Calendar.DAY_OF_WEEK)-1].text == (cal.get(Calendar.DATE) + 1).toString()) {
             view.text = scheduleName
             while (count < endTime.toString().toInt()) {
-                idFromTime = resources.getIdentifier(dOW + count, "id", context.packageName)
+                if(count == 0)
+                    idFromTime = resources.getIdentifier(dOW + "000", "id", context.packageName)
+                else if(count == 30)
+                    idFromTime = resources.getIdentifier(dOW + "030", "id", context.packageName)
+                else
+                    idFromTime = resources.getIdentifier(dOW + count, "id", context.packageName)
                 view = findViewById<TextView>(idFromTime)
                 view.setBackgroundColor(color)
                 changedCell.add(view)
