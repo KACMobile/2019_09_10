@@ -1,18 +1,67 @@
 package com.example.mainlayout
 
 import android.R
-import android.app.*
+import android.app.NotificationManager
 import android.content.Context
-import android.content.BroadcastReceiver
-import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 
 
+class BroadCastD :AppCompatActivity(){
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(com.example.mainlayout.R.layout.activity_main)
 
+        var noti_id:Int = 0
+        var noti_year:Int = 2019
+        var noti_month:Int = 11
+        var noti_date:Int = 19
+
+        val extras = intent.extras
+        if (extras == null) {}
+        else {
+            noti_id = extras.getInt("notificationId")
+            noti_year=noti_id.toString().slice(IntRange(0,3)).toInt()
+            noti_month=noti_id.toString().slice(IntRange(4,5)).toInt()
+            noti_year=noti_id.toString().slice(IntRange(6,7)).toInt()
+        }
+
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        notificationManager.cancel(noti_id)     //노티피케이션 제거
+    }
+}
+/*
+class BroadCastD : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        var noti_id:Int = 0
+        var noti_year:Int = 2019
+        var noti_month:Int = 11
+        var noti_date:Int = 19
+
+        val extras = intent.extras
+        if (extras == null) {}
+        else {
+            noti_id = extras.getInt("notificationId")
+            noti_year=noti_id.toString().slice(IntRange(0,3)).toInt()
+            noti_month=noti_id.toString().slice(IntRange(4,5)).toInt()
+            noti_year=noti_id.toString().slice(IntRange(6,7)).toInt()
+        }
+
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        notificationManager.cancel(noti_id)     //노티피케이션 제거
+    }
+
+}
+
+ */
+/*
 class BroadCastD :BroadcastReceiver(){
     override fun onReceive(context: Context, intent: Intent) {
         Log.d("Broadcase", "들어옴2!!!!!")
@@ -27,11 +76,11 @@ class BroadCastD :BroadcastReceiver(){
         mServiceIntent.putExtra("scheduleName", notischeduleName)
         mServiceIntent.putExtra("scheduleInfo", notischeduleInfo)
 
-        //context.startForegroundService(mServiceIntent)
         context.startService(mServiceIntent)
-
     }
 }
+
+ */
 /*
 class BroadCastD : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent){
@@ -91,32 +140,4 @@ class BroadCastD : BroadcastReceiver() {
 }
 
      */
-/*
-class BroadCastD : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        var noti_id:Int = 0
-        var noti_year:Int = 2019
-        var noti_month:Int = 11
-        var noti_date:Int = 19
-
-        val extras = intent.extras
-        if (extras == null) {}
-        else {
-            noti_id = extras.getInt("notificationId")
-            noti_year=noti_id.toString().slice(IntRange(0,3)).toInt()
-            noti_month=noti_id.toString().slice(IntRange(4,5)).toInt()
-            noti_year=noti_id.toString().slice(IntRange(6,7)).toInt()
-        }
-
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        notificationManager.cancel(noti_id)     //노티피케이션 제거
-    }
-
-}
-
- */

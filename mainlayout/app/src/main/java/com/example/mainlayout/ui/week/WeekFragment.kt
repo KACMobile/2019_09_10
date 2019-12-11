@@ -15,6 +15,9 @@ import com.example.mainlayout.MainActivity
 import com.example.mainlayout.R
 import com.example.weekcalendar.WeekCalendar
 import com.google.firebase.database.DataSnapshot
+import kotlinx.android.synthetic.main.daily_calender.view.*
+import kotlinx.android.synthetic.main.week_calender.*
+import kotlinx.android.synthetic.main.week_calender.view.*
 
 class WeekFragment : Fragment() {//주간 캘린더
 
@@ -22,64 +25,67 @@ class WeekFragment : Fragment() {//주간 캘린더
 
     private lateinit var saveDataSnapshot: DataSnapshot
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         weekViewModel =
             ViewModelProviders.of(this).get(WeekViewModel::class.java)
         val view = inflater.inflate(R.layout.week_calender, container, false)
 
+        var mcontext = context!!
 
-        val year = view.findViewById<View>(R.id.curr_year) as TextView
-        val yearinfo = year.text.toString()
-
-        val month = view.findViewById<View>(R.id.curr_month) as TextView
-        val monthinfo = month.text.toString()
-
-        val date = view.findViewById<View>(R.id.curr_date) as TextView
-        val dateinfo = date.text.toString()
+        var yearinfo = view.week_CalendarView.currentYear
+        var monthinfo = view.week_CalendarView.currentMonth + 1
+        var dateinfo = view.week_CalendarView.currentDate
 
         var actionBar = (activity as MainActivity).supportActionBar
-        actionBar!!.title = yearinfo + "년 " +  monthinfo + "월 "
+        actionBar!!.title = "" + yearinfo + "년 " +  monthinfo + "월 "
 
-        //var fragmentweekCalendar = week_CalendarView
 
-        /*if (wCalendar.get(Calendar.DATE)!=CalendarInfo.currentDate
-            || wCalendar. get(Calendar.MONTH)!=CalendarInfo.currentMonth
-            || wCalendar. get(Calendar.YEAR)!=CalendarInfo.currentYear)
-        {
-            weekCalendar.setCurrent(CalendarInfo.currentDate, CalendarInfo.currentMonth, CalendarInfo.currentYear)
-        }
-        */
-        //week_CalendarView.setCurrent(wCalendar.get(Calendar.YEAR), wCalendar.get(Calendar.MONTH), wCalendar.get(Calendar.DATE))
-        weekViewModel.text.observe(this, Observer {
-        })
-        view.setOnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_MOVE) {
-                val year = view.findViewById<View>(R.id.curr_year) as TextView
-                val yearinfo = year.text.toString()
 
-                val month = view.findViewById<View>(R.id.curr_month) as TextView
-                val monthinfo = month.text.toString()
+        view.setOnTouchListener(object : OnSwipeTouchListener(mcontext) {
+            override fun onSwipeLeft() {
+                super.onSwipeLeft()
+                week_CalendarView.setNextWeek()
+                week_CalendarView.calendardefaultsetting()
 
-                val date = view.findViewById<View>(R.id.curr_date) as TextView
-                val dateinfo = date.text.toString()
+                var yearinfo = view.week_CalendarView.currentYear
+                var monthinfo = view.week_CalendarView.currentMonth + 1
+                var dateinfo = view.week_CalendarView.currentDate
 
                 var actionBar = (activity as MainActivity).supportActionBar
-                actionBar!!.title = yearinfo + "년 " +  monthinfo + "월 "
-
+                actionBar!!.title = "" + yearinfo + "년 " + monthinfo + "월 "
             }
-            true
-        }
+
+            override fun onSwipeRight() {
+                super.onSwipeRight()
+                week_CalendarView.setPreWeek()
+                week_CalendarView.calendardefaultsetting()
+
+                var yearinfo = view.week_CalendarView.currentYear
+                var monthinfo = view.week_CalendarView.currentMonth + 1
+                var dateinfo = view.week_CalendarView.currentDate
+
+                var actionBar = (activity as MainActivity).supportActionBar
+                actionBar!!.title = "" + yearinfo + "년 " + monthinfo + "월 "
+            }
+        })
+
+        weekViewModel.text.observe(this, Observer {
+        })
 
 
         return view
     }
 
+    //var fragmentweekCalendar = week_CalendarView
+
+    /*if (wCalendar.get(Calendar.DATE)!=CalendarInfo.currentDate
+        || wCalendar. get(Calendar.MONTH)!=CalendarInfo.currentMonth
+        || wCalendar. get(Calendar.YEAR)!=CalendarInfo.currentYear)
+    {
+        weekCalendar.setCurrent(CalendarInfo.currentDate, CalendarInfo.currentMonth, CalendarInfo.currentYear)
+    }
+    */
+    //week_CalendarView.setCurrent(wCalendar.get(Calendar.YEAR), wCalendar.get(Calendar.MONTH), wCalendar.get(Calendar.DATE))
     /*override fun setArguments(args: Bundle?) {
         super.setArguments(args)
 
