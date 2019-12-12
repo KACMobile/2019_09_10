@@ -22,14 +22,12 @@ import kotlinx.android.synthetic.main.daily_calender.view.*
 
 class DailyFragment : Fragment() {//
 
-    private lateinit var dailyViewModel: DailyViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dailyViewModel = ViewModelProviders.of(this).get(DailyViewModel::class.java)
         val view = inflater.inflate(R.layout.daily_calender, container, false)
 
 
@@ -65,9 +63,6 @@ class DailyFragment : Fragment() {//
                 var actionBar = (activity as MainActivity).supportActionBar
                 actionBar!!.title = "" + yearinfo + "년 " + monthinfo + "월 "
             }
-        })
-        dailyViewModel.text.observe(this, Observer {
-
         })
 
 
