@@ -66,7 +66,7 @@ class GroupPageActivity : AppCompatActivity() {
             Glide.with(this).load(userInfo.userIcon).into(userImageView)
         subscribeButton.setOnClickListener{
             if(subscribeButton.text == "구독"){
-                databaseReference.child("Users").child(userID).child("Follow").child(userInfo.userType).child(userInfo.userName).setValue(Color.RED)
+                databaseReference.child("Users").child(userID).child("Follow").child(userInfo.userType).child(userInfo.userName).setValue((Math.random()*16777216).toInt())
                 subscribeButton.text = ("구독중")
                 Toast.makeText(it.context, "구독되었습니다.", Toast.LENGTH_SHORT).show()
                 subscribeButton.setBackgroundColor(Color.GRAY)
