@@ -74,7 +74,6 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
             }
 
-
         })
 
 
