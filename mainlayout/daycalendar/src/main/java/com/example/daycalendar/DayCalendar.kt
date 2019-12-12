@@ -36,12 +36,12 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
     var currentDate = cal.get(Calendar.DATE)
     var currentDOW = cal.get(Calendar.DAY_OF_WEEK)
 
-    val hollydays = arrayOf(hollyday(1,1, "?��?��", false), hollyday(1, 1, "?��?��", true),
-        hollyday(3, 1, "?��?��?��", false), hollyday(5, 5, "?��린이?��", false),
-        hollyday(4, 8, "�?처님 ?��?��?��", true),
-        hollyday(6, 6, "?��충일", false), hollyday(8, 15, "광복?��", false),
-        hollyday(8, 15, "추석", true), hollyday(10, 3, "개천?��", false),
-        hollyday(10, 9, "?���??��", false), hollyday(12, 25, "?��리스마스", false))
+    val hollydays = arrayOf(hollyday(1,1, "신정", false), hollyday(1, 1, "설날", true),
+        hollyday(3, 1, "삼일절", false), hollyday(5, 5, "어린이날", false),
+        hollyday(4, 8, "부처님 오신날", true),
+        hollyday(6, 6, "현충일", false), hollyday(8, 15, "광복절", false),
+        hollyday(8, 15, "추석", true), hollyday(10, 3, "개천절", false),
+        hollyday(10, 9, "한글날", false), hollyday(12, 25, "크리스마스", false))
 
     var changedCell= arrayListOf<TextView>()
     lateinit var saveDataSnap: DataSnapshot //DataSnapshot?�� 받으�? set?��
@@ -408,7 +408,6 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 else
                     idFromTime = resources.getIdentifier("day" + count, "id", context.packageName)
                 view = findViewById<TextView>(idFromTime)
-                Log.d("a", "This is!?" +count)
                 if(schedulePeriod <= 30) view.text = scheduleName + scheduleInfo
                 else if (count == startTime.toInt()) view.text = scheduleName
                 else if(count == (startTime.toInt() + 30)) view.text = scheduleInfo
