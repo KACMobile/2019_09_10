@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import java.util.*
 
-
+//그룹으로 들어오면 나오는 창, 오늘 팔로우 일정 및 포스트를 볼 수 있다. - 황선혁
 class GroupFragment : Fragment() {
     private val firebaseDatabase = FirebaseDatabase.getInstance()
     private val databaseReference = firebaseDatabase.reference

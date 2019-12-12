@@ -49,8 +49,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var monthFragment: MonthFragment
     lateinit var groupFragment: GroupFragment
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
-
     private var userID:String? = "User01"
 
     private val firebaseDatabase = FirebaseDatabase.getInstance()
@@ -81,15 +79,10 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var muserInfo: UserInfo
 
-    var yearInfo = 2019
-    var monthInfo = 12
-    var dateInfo = 12
 
     private var REQUEST_TEST :Int = 1
 
-    public fun setActionBarTitle(str:String){
-        actionBar?.title = str
-    }
+
 
     lateinit var mAuth :FirebaseAuth
     var  mUser: FirebaseUser? = null
@@ -109,7 +102,7 @@ class MainActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         mUser = mAuth.currentUser
 
-
+        //로그인이 안되어 있으면 GoogleLoginActivity 실행 - 조성완
         if(mUser==null){
             var intent = Intent(this@MainActivity, GoogleLoginActivity::class.java)
             startActivityForResult(intent, REQUEST_TEST)
@@ -119,25 +112,14 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-
-
-
-
-        //var userNames: String, var userInfos: String, var userTypes: String, var userIcons: String?= null, var userHomepage: String? = null, var userTEL:String? = null, var locateLat:Double? = null, var locateLng:Double? = null)
-
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val toolbar: Toolbar = findViewById(R.id.toolBar)
 
         setSupportActionBar(toolBar)
 
-        val actionBar = supportActionBar
-        setActionBarTitle("" + yearInfo + monthInfo + dateInfo)
-
         val listView1 : ListView = findViewById(R.id.navigation_drawer_list1)
         val listView2 : ListView = findViewById(R.id.navigation_drawer_list2)
-
+        // 체크리스트 어댑터 및 db에서 정보 가져오기 - 안용수, 황선혁
         var gList = ArrayList<String>()
         var cList = ArrayList<Int>()
 
@@ -180,6 +162,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
+        //메뉴 열고 닫기 - 안용수
         val drawerToggle : ActionBarDrawerToggle = object : ActionBarDrawerToggle(
             this,
             drawer_layout,
@@ -194,6 +177,7 @@ class MainActivity : AppCompatActivity() {
         drawerToggle.syncState()
 
 
+        //fab 설정 - 안용수
         fab = findViewById(R.id.fab)
         groupFab = findViewById(R.id.groupfab)
         groupFab1 = findViewById(R.id.groupfab1)
@@ -205,8 +189,6 @@ class MainActivity : AppCompatActivity() {
         fabClose = AnimationUtils.loadAnimation(this, R.anim.fab_close)
         rotateForward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward)
         rotateBackward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward)
-        //val userFollow = databaseReference.child("Users/" + userID + "/Follow")
-        //val currentFragment : DailyFragment = FragmentManager
         fun animateFab()
         {
             if (isOpen)
@@ -256,7 +238,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent)
         }
 
-
+        //fragment관련 메뉴 설정 리스너 - 안용수
         listView1.setOnItemClickListener { parent: AdapterView<*>, view:View, position:Int, id ->
             if (position == 0){
                 dailyFragment = DailyFragment()
@@ -305,15 +287,11 @@ class MainActivity : AppCompatActivity() {
             drawer_layout.closeDrawer(GravityCompat.START)
         }
 
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
-
-        //navView.setNavigationItemSelectedListener(this)
         navView.bringToFront();
 
 
-
+        //처음에 dailyFragment실행 - 안용수
         dailyFragment = DailyFragment()
         supportFragmentManager
             .beginTransaction()
@@ -321,15 +299,8 @@ class MainActivity : AppCompatActivity() {
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
 
-        /*appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.daily_calender, R.id.week_calender, R.id.month_calender, R.id.group_fragment
-            ), drawerLayout
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)*/
 
-        //navView.setupWithNavController(navController)사용할 경우 onNavigationItemSelected메소드 사용불
-
+        //내userInfo 받아오기 - 황선혁
         val userDB = databaseReference.child("Users/" + userID)
         userDB.addValueEventListener( object: ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -369,7 +340,7 @@ class MainActivity : AppCompatActivity() {
     ////
 
     //메뉴 리스트 1
-
+    //fragment관련 메뉴 설정 어댑터 - 안용수
     class ListAdapter(private val context: Activity) : BaseAdapter(){
         var names = arrayOf("일간", "주간", "월간", "그룹")
 
@@ -409,7 +380,7 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
+    //유저 정보 sharedpreference로 저장 - 조성완, 황선혁
     fun storeUserInfo(){
         userID = mUser!!.displayName
         val idPreference = getSharedPreferences("UserID", Context.MODE_PRIVATE)
@@ -421,7 +392,7 @@ class MainActivity : AppCompatActivity() {
         databaseReference.child("Users").child(userID!!).child("UserInfo").setValue(mUserInfo)
 
     }
-
+    //fab 컨트롤 - 안용수
     fun whichFab()
     {
         if (isGroupFragment)
@@ -445,65 +416,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /*override fun onNavigationItemSelected(item: MenuItem): Boolean {
-
-        when(item.itemId){
-            R.id.group_fragment ->{
-                groupFragment = GroupFragment()
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.nav_host_fragment, groupFragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()
-
-                isGroupFragment = true
-                whichFab()
-
-            }
-            R.id.daily_calender ->{
-                dailyFragment = DailyFragment()
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.nav_host_fragment, dailyFragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()
-
-                isGroupFragment = false
-                whichFab()
-
-            }
-            R.id.week_calender ->{
-                weekFragment = WeekFragment()
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.nav_host_fragment, weekFragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()
-
-                isGroupFragment = false
-                whichFab()
-
-
-
-            }
-            R.id.month_calender ->{
-                monthFragment = MonthFragment()
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.nav_host_fragment, monthFragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()
-
-                isGroupFragment = false
-                whichFab()
-
-            }
-        }
-        drawer_layout.closeDrawer(GravityCompat.START)
-
-        return true
-    }*/
-
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
@@ -511,98 +423,7 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
-
-    override fun onContentChanged() {
-        super.onContentChanged()
-    }
-
-    /*override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }*/
-
-
-
-    fun insertSchedule(
-        userName: String,
-        tag: String,
-        scheduleName: String,
-        alarm: Boolean,
-        startTime: String,
-        endTime: String,
-        scheduleInfo: String?,
-        shareAble: Boolean?,
-        dateYear: Int,
-        dateMonth: Int,
-        date: Int
-    ) {
-        val databaseReference = firebaseDatabase.reference
-        val schedule = Schedule(
-            userName,
-            scheduleName,
-            scheduleInfo,
-            dateYear,
-            dateMonth,
-            date,
-            startTime,
-            endTime,
-            alarm,
-            shareAble
-        )
-        dataArray.add(schedule)
-        var a: String = schedule.scheduleName
-        databaseReference.child("Users").child(userName).child("Schedule").child(tag).child(dateMonth.toString()).setValue(dataArray)
-    }
-    fun insertGroup(
-        userName: String,
-        tag: String,
-        scheduleName: String,
-        alarm: Boolean,
-        startTime: String,
-        endTime: String,
-        scheduleInfo: String?,
-        shareAble: Boolean?,
-        dateYear: Int,
-        dateMonth: Int,
-        date: Int
-    ) {
-        val databaseReference = firebaseDatabase.reference
-        val schedule = Schedule(
-            userName,
-            scheduleName,
-            scheduleInfo,
-            dateYear,
-            dateMonth,
-            date,
-            startTime,
-            endTime,
-            alarm,
-            shareAble
-        )
-        dataArray.add(schedule)
-        var a: String = schedule.scheduleName
-        databaseReference.child("Groups").child(userName).child("Schedule").child(dateMonth.toString()).setValue(dataArray)
-
-
-    }
-    public data class Info(var userName:String = "",
-                           var userInfo:String? = null,
-                           var userType:String? = "Group") {
-
-    }
-    fun insertGroupInfo(
-        userName: String,
-        userInfo: String?
-    ) {
-        val databaseReference = firebaseDatabase.reference
-        val groupInfo = Info(
-            userName,
-            userInfo
-        )
-        databaseReference.child("Users").child(userName).child("UserInfo").setValue(groupInfo)
-
-    }
-
+    //Notify -조성완
     fun setAlarmScheduleOnCalendar(schedule: HashMap<String, Any>) {
         val scheduleName = schedule.get("scheduleName").toString()
         val scheduleInfo = schedule.get("scheduleInfo").toString()
@@ -677,69 +498,7 @@ class MainActivity : AppCompatActivity() {
         notificationmanager.notify(notificationId,builder.build())
 
 
-        //val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-
-
-        //Log.d("In Alarm", "Id : " + notificationId + " scheduleName : "+ scheduleName + " scheduleInfo : "+ scheduleInfo)
-
-        /*
-        val sender = Pendin
-        gIntent.getBroadcast(
-            this, // context 정보
-            notificationId, // 여러개의 알람을 등록하기 위한 primary id 값 세팅
-            intent, // 정보가 담긴 intent
-            0)
-
-         */
-
-
-        //calendar.set(2019,11,19,2,59)
-
-        //val notificationmanager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-
-        /*
-        val builder = Notification.Builder(this,NOTIFICATION_CHANNEL_ID)
-            .setSmallIcon(android.R.drawable.ic_btn_speak_now)
-            .setWhen(calendar.timeInMillis)
-            .setNumber(dateYear + dateMonth + date + startTimeHour + startTimeMinute + endTime.toInt())
-            .setContentTitle(scheduleName)
-            .setContentText(scheduleInfo)
-            .setColor(Color.RED)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-         */
-
-
-        /*
-        if (Build.VERSION.SDK_INT >= 26){
-            val channelName :CharSequence = "noty_channel"
-            val importance :Int = NotificationManager.IMPORTANCE_HIGH
-
-            val channel: NotificationChannel = NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName , importance)
-
-            notificationmanager.createNotificationChannel(channel)
-        }
-         */
-
-
-
-        /*
-        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
-        val wakeLock = powerManager.newWakeLock(
-            PowerManager.FULL_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP or PowerManager.ON_AFTER_RELEASE,
-            "My:Tag") // 스마트폰 화면이 꺼져있으면 화면 켜고 알림 울리기위해서 (FULL_WAKE_LOCK)
-        wakeLock.acquire(5000)
-         */
-
-        //notificationmanager.notify(dateYear + dateMonth + date + startTimeHour + startTimeMinute + endTime.toInt(), builder.build())
-        /*
-        am.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
-        am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, sender)
-        Log.d("In Alarm", "after am set")
-
-         */
     }
 
 

@@ -18,7 +18,7 @@ import androidx.core.app.NotificationCompat
 
 
 
-
+//dummy - 조성완
 class AlarmService :Service(){
 
     private var notificationId:Int = 1111

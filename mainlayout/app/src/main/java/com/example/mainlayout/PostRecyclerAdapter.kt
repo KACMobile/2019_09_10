@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.post_fragment_row.view.*
-
-public class PostRecyclerAdapter(val context: Context, private val postList: ArrayList<Post>) : RecyclerView.Adapter<PostRecyclerAdapter.ViewHolder>() {
+//포스트 프래그먼트 어댑터 - 황선혁
+class PostRecyclerAdapter(val context: Context, private val postList: ArrayList<Post>) : RecyclerView.Adapter<PostRecyclerAdapter.ViewHolder>() {
     lateinit var muserInfo:UserInfo
     override fun getItemCount(): Int {
         return postList.size

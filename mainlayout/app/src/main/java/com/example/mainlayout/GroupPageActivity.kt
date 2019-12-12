@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlin.random.Random
-
+//그룹 패이지 - 황선혁
 class GroupPageActivity : AppCompatActivity() {
     var userID:String = "User01"
 
@@ -36,7 +36,6 @@ class GroupPageActivity : AppCompatActivity() {
         val closeButton = findViewById<ImageView>(R.id.group_page_close)
         val tabLayout = findViewById<TabLayout>(R.id.group_page_tablayout)
         val viewPager = findViewById<ViewPager>(R.id.group_page_viewpager)
-        val alarmImage = findViewById<ImageView>(R.id.group_page_alarm)
         val fab = findViewById<FloatingActionButton>(R.id.group_page_fab)
 
         fab.hide()

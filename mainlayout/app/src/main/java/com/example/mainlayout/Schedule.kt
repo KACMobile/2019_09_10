@@ -1,5 +1,5 @@
 package com.example.mainlayout
-
+//스케줄 자료 저장용 data class - 황선혁
 data class Schedule(var userID:String = "",
                            var scheduleName:String = "",
                            var scheduleInfo: String? = "",

@@ -63,7 +63,7 @@ import static com.applandeo.materialcalendarview.utils.CalendarProperties.FIRST_
  * <p>
  * Created by Mateusz Kornakiewicz on 23.05.2017.
  */
-
+//월별달력 출처 : https://github.com/Applandeo/Material-Calendar-View + 코드추가
 public class CalendarView extends LinearLayout {
 
     public static final int CLASSIC = 0;

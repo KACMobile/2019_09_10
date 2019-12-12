@@ -24,7 +24,7 @@ import com.google.firebase.storage.FirebaseStorage
 import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
-
+//글 작성. 이미지 첨부, 달력 첨부 - 황선혁
 class NewPostActivity : AppCompatActivity() {
 
     private val PICK_IMAGE_REQUEST:Int = 1

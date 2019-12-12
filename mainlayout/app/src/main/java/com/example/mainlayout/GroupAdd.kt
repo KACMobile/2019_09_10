@@ -17,7 +17,7 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-
+//그룹 추가 - 안용수, 황선혁
 class GroupAdd : AppCompatActivity() {
 
     private val firebaseDatabase = FirebaseDatabase.getInstance()

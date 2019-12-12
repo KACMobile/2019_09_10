@@ -22,13 +22,14 @@ import java.util.Calendar
 import android.widget.Toast
 
 
-
+//일정 추가 - 안용수, 황선혁
 class MakeSchedule :AppCompatActivity(){
 
 
     private val firebaseDatabase = FirebaseDatabase.getInstance()
 
     private val databaseReference = firebaseDatabase.reference
+    //일정 데이터
     var userID:String = "User01"
     var malarm : Boolean = false
     var misitShare : Boolean = false
@@ -60,22 +61,6 @@ class MakeSchedule :AppCompatActivity(){
         val nameText : TextInputEditText = findViewById(R.id.nameTextView)
         val infoText : TextInputEditText = findViewById(R.id.infoTextView)
 
-
-        //일정 데이터
-
-
-        /*val userDB = databaseReference.child("Users/" + userID + "/Schedule")
-        userDB.addValueEventListener( object: ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for(snapShot in dataSnapshot.children){
-                    for(deeperSnapShot in snapShot.child((CalendarInfo.currentMonth +1).toString()).children){
-                        dataArray.add(deeperSnapShot.value)//DB값을 다시 Array에 저장
-                    }
-                }
-            }
-            override fun onCancelled(dataSnapshot: DatabaseError) {
-            }
-        })*/
 
         editDateStart.setOnClickListener {
             val dpd = DatePickerDialog(

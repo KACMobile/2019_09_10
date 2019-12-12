@@ -14,7 +14,7 @@ import com.google.firebase.database.ValueEventListener
 import java.util.*
 import kotlin.Comparator
 
-
+//그룹 패이지 탭에서 스캐줄탭 - 황선혁
 class GroupPageScheduleFragment : Fragment() {
 
     companion object {

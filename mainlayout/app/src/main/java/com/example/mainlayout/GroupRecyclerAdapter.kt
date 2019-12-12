@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.group_fragment_row.view.*
-
+// 그룹 일정관련 어댑터 - 황선혁
 class GroupRecyclerAdapter(val context:Context, private val dataList: ArrayList<GroupFragmentData>) : RecyclerView.Adapter<GroupRecyclerAdapter.ViewHolder>() {
     override fun getItemCount(): Int {
         return dataList.size

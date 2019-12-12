@@ -8,7 +8,7 @@ import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mainlayout.R
 import com.google.firebase.database.*
-
+//팔로우한 그룹 리스트 - 황선혁
 class GroupList : AppCompatActivity() {
     private val firebaseDatabase = FirebaseDatabase.getInstance()
     private val databaseReference = firebaseDatabase.reference

@@ -13,7 +13,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-
+//포스트 표기관련 fragment - 황선혁
 class PostFragment : Fragment() {
     var userID:String = "User01"
 

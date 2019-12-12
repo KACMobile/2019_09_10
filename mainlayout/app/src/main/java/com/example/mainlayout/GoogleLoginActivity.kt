@@ -20,7 +20,7 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseUser
 
-
+//구글 로그인 - 조성완
 class GoogleLoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedListener {
     override fun onConnectionFailed(p0: ConnectionResult) {
     }
@@ -38,7 +38,6 @@ class GoogleLoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFai
 
     public fun signIn() {
         val signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
-        //val signInIntent = mGoogleSignInClient.getSignInIntent()
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
@@ -79,21 +78,11 @@ class GoogleLoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFai
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Toast.makeText(this, "로그인 결과?", Toast.LENGTH_SHORT).show()
 
         if(requestCode === RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             val account = task.getResult(ApiException::class.java)
             firebaseAuthWithGoogle(account!!)
-            /*
-            try{
-                val account = task.getResult(ApiException::class.java)
-                firebaseAuthWithGoogle(account!!)
-            } catch (e: ApiException){
-                Toast.makeText(this, "로그인 성공??", Toast.LENGTH_SHORT).show()
-            }
-
-             */
         }
 
     }

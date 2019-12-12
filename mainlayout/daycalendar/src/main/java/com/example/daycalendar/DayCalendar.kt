@@ -16,7 +16,7 @@ import com.google.firebase.database.*
 import java.util.*
 import kotlin.math.abs
 
-
+//일별 달력 - 조성완, 황선혁
 class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0 )
     : ConstraintLayout(context,attrs,defStyleAttr)
 {
@@ -57,7 +57,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         calendardefaultsetting()
         checkSP = context.getSharedPreferences("Check", Context.MODE_PRIVATE)
 
-
+        //내 일정추가
         val userDB = databaseReference.child("Users/" + userID + "/Schedule")
         userDB.addValueEventListener( object: ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -71,7 +71,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
         })
-        //follow추�??
+        //follow 일정추가
         val userfollow = databaseReference.child("Users/" + userID + "/Follow")
         userfollow.addValueEventListener( object: ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -156,7 +156,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             }
         })
 
-
+        //스와이프 - 외부코드
         this.dayTableScroll.setOnTouchListener(object : OnSwipeTouchListener(context) {
             override fun onSwipeLeft() {
                 super.onSwipeLeft()
@@ -177,7 +177,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             }
         })
     }
-
+    // 달력 초기화
     fun calendardefaultsetting() {
         var currentLastDayOfMonth = cal.getActualMaximum(Calendar.DATE)
         var currentTime = cal.get(Calendar.HOUR_OF_DAY)
@@ -400,7 +400,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         }
 
     }
-
+    // 전날, 다음날
     fun setPreDay() {
         cal.add(Calendar.DATE,-1)
         currentYear = cal.get(Calendar.YEAR)
@@ -426,39 +426,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         currentDate = date
     }
 
-
-    /*
-    fun insertSchedule(
-        userName: String,
-        tag: String,
-        scheduleName: String,
-        alarm: String,
-        endTime: String,
-        startTime: String,
-        scheduleInfo: String?,
-        shareAble: Boolean?,
-        shareEditAble: Boolean?,
-        dateYear: Int,
-        dateMonth: Int,
-        date: Int
-    ) {
-        val databaseReference = database.reference
-        val schedule = Schedule(
-            alarm,
-            endTime,
-            startTime,
-            scheduleInfo,
-            shareAble,
-            shareEditAble,
-            dateYear,
-            dateMonth,
-            date
-        )
-        databaseReference.child("Users").child(userID).child(tag).child(scheduleName).setValue(schedule)
-    }
-
-     */
-
+    //스케줄 표기
     fun setScheduleOnCalendar(schedule: HashMap<String, Any>,color:Int){
         val scheduleName = schedule.get("scheduleName").toString()
         val scheduleInfo= schedule.get("scheduleInfo").toString()

@@ -32,7 +32,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
 
-
+//지도 터치 및 지도 첨부에 호출되는 액티비티 - 황선혁
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap

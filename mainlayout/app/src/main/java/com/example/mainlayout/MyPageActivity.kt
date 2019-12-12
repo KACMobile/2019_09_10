@@ -18,7 +18,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-
+//마이 페이지 관련 액티비티 - 황선혁
 class MyPageActivity : AppCompatActivity() {
     private var userID:String = "User01"
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,13 +34,11 @@ class MyPageActivity : AppCompatActivity() {
         val closeButton = findViewById<ImageView>(R.id.group_page_close)
         val tabLayout = findViewById<TabLayout>(R.id.group_page_tablayout)
         val viewPager = findViewById<ViewPager>(R.id.group_page_viewpager)
-        val alarmImage = findViewById<ImageView>(R.id.group_page_alarm)
         val fab =findViewById<FloatingActionButton>(R.id.group_page_fab)
 
         val intent = intent
         val userInfo = intent.getSerializableExtra("userInfo") as UserInfo
         subscribeButton.visibility = View.GONE
-        alarmImage.visibility = View.GONE
 
 
         viewPager.adapter = GroupPagePagerAdapter(supportFragmentManager,3, userInfo)

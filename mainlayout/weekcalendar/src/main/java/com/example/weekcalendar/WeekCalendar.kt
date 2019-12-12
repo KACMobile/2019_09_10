@@ -22,7 +22,7 @@ import java.util.*
 import kotlin.collections.HashMap
 import kotlin.math.abs
 
-
+//주간 달력 - 황선혁, 구성은 day와 거의 같음
 class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0 )
     : ConstraintLayout(context,attrs,defStyleAttr) {
     var cc = ChineseCalendar()

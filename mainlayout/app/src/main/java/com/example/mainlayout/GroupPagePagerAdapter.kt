@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-
+//그룹 패이지 탭레이아웃 어댑터 - 황선혁
 public class GroupPagePagerAdapter(fm: FragmentManager, tabcount: Int, userInfo: UserInfo): FragmentStatePagerAdapter(fm) {
     val mtabcount = tabcount
     val muserInfo = userInfo

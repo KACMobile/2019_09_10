@@ -18,16 +18,13 @@ import kotlinx.android.synthetic.main.make_schedule.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-
+//팔로우 체크리스트 - 안용수, 황선혁
 //메뉴 리스트2, group checkBox
 class CheckListAdapter(var names : ArrayList<String>, var colorArray: ArrayList<Int>, val context: Activity): BaseAdapter(){
 
     val database = FirebaseDatabase.getInstance()
     val databaseReference = database.reference
     val userID: String = "User01"
-
-    var followListSnapshot = arrayListOf<DataSnapshot>() //followList DataSnapshot을 받으면 add함
-    val scheduleColorPreference = context.getSharedPreferences("ScheduleColorInfo", Context.MODE_PRIVATE)
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var inflater = context.layoutInflater
@@ -38,8 +35,6 @@ class CheckListAdapter(var names : ArrayList<String>, var colorArray: ArrayList<
         val name = names[position]
         val colorView = view2.findViewById<View>(R.id.show_color)
         val sharedPreferences: SharedPreferences = context.getSharedPreferences("Check", Context.MODE_PRIVATE)
-        //checkBox.setTag(position)
-        //checkBox.setText(names[position])
         colorView.setBackgroundColor(colorArray[position])
         checkBox.isChecked = sharedPreferences.getBoolean(name, true)
         textView.setText(name)

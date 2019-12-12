@@ -14,7 +14,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-
+//그룹 페이지에서 정보탭. - 황선혁
 class GroupPageInfoFragment : Fragment(), OnMapReadyCallback {
     lateinit var mapView:MapView
     var mlatitude:Double? = null

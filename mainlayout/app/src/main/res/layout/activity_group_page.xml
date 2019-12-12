@@ -52,15 +52,6 @@
         app:layout_constraintStart_toStartOf="@id/group_page_userimage"
         app:layout_constraintTop_toBottomOf="@id/group_page_userimage" />
 
-    <ImageView
-        android:id="@+id/group_page_alarm"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        app:layout_constraintBottom_toBottomOf="@id/group_page_add_button"
-        app:layout_constraintStart_toEndOf="@id/group_page_add_button"
-        app:layout_constraintTop_toTopOf="@id/group_page_add_button"
-        app:srcCompat="@drawable/ic_unalarm" />
     <View
         android:id="@+id/group_page_topline"
         android:layout_width="match_parent"
