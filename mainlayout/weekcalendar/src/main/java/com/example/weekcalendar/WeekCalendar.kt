@@ -1,5 +1,6 @@
 package com.example.weekcalendar
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
@@ -32,6 +33,8 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
     val databaseReference = database.reference
 
     val userID: String = "User01"
+
+    val mcontext = context
 
 
 
@@ -74,7 +77,6 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
                 calendardefaultsetting()
 
             }
-
 
         })
 

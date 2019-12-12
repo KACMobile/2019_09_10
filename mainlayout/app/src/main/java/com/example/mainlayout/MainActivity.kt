@@ -110,6 +110,22 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(intent, REQUEST_TEST)
         }
 
+        val idPreference = getSharedPreferences("UserID", Context.MODE_PRIVATE)
+        val editor = idPreference.edit()
+        editor.putString("UserID", userID)
+        editor.commit()
+
+        var UserInfo = UserInfo(userID!!, "좋은 하루 되세요", "Users",mAuth.currentUser!!.photoUrl.toString())
+        databaseReference.child("Users").child(userID!!).child("UserInfo").setValue(UserInfo)
+
+
+
+
+        //var userNames: String, var userInfos: String, var userTypes: String, var userIcons: String?= null, var userHomepage: String? = null, var userTEL:String? = null, var locateLat:Double? = null, var locateLng:Double? = null)
+
+        Log.d("tag", "mUser!!.displayName : " + mUser!!.displayName)
+        Log.d("tag", "userID : " + userID)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolBar)

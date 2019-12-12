@@ -20,13 +20,9 @@ import kotlinx.android.synthetic.main.week_calender.view.*
 
 class WeekFragment : Fragment() {//주간 캘린더
 
-    private lateinit var weekViewModel: WeekViewModel
 
-    private lateinit var saveDataSnapshot: DataSnapshot
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        weekViewModel =
-            ViewModelProviders.of(this).get(WeekViewModel::class.java)
         val view = inflater.inflate(R.layout.week_calender, container, false)
 
         var mcontext = context!!
@@ -65,32 +61,8 @@ class WeekFragment : Fragment() {//주간 캘린더
             }
         })
 
-        weekViewModel.text.observe(this, Observer {
-        })
 
 
         return view
     }
-
-    //var fragmentweekCalendar = week_CalendarView
-
-    /*if (wCalendar.get(Calendar.DATE)!=CalendarInfo.currentDate
-        || wCalendar. get(Calendar.MONTH)!=CalendarInfo.currentMonth
-        || wCalendar. get(Calendar.YEAR)!=CalendarInfo.currentYear)
-    {
-        weekCalendar.setCurrent(CalendarInfo.currentDate, CalendarInfo.currentMonth, CalendarInfo.currentYear)
-    }
-    */
-    //week_CalendarView.setCurrent(wCalendar.get(Calendar.YEAR), wCalendar.get(Calendar.MONTH), wCalendar.get(Calendar.DATE))
-    /*override fun setArguments(args: Bundle?) {
-        super.setArguments(args)
-
-        Log.d("aa","여기는 들어옴?")
-        saveDataSnapshot = args!!.getSerializable("DataSnapShot") as DataSnapshot
-    }
-
-    public fun setDataSnapShot(dataSnapshot: DataSnapshot){
-        saveDataSnapshot = dataSnapshot
-
-    }*/
 }
