@@ -27,6 +27,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
     val databaseReference = database.reference
 
     var userID:String = "User01"
+    var checkSP: SharedPreferences
 
 
     val lastDayOfMonth = arrayOf(31,28,31,30,31,30,31,31,30,31,30,31)
@@ -54,22 +55,8 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         LayoutInflater.from(context).inflate(R.layout.daycalendar,this,true)
         val scheduleColorPreference = context.getSharedPreferences("ScheduleColorInfo", Context.MODE_PRIVATE)
         calendardefaultsetting()
-        /*
-        this.setOnTouchListener(object : OnSwipeTouchListener(context) {
-            override fun onSwipeLeft() {
-                super.onSwipeLeft()
-                setNextDay()
-                calendardefaultsetting()
-            }
+        checkSP = context.getSharedPreferences("Check", Context.MODE_PRIVATE)
 
-            override fun onSwipeRight() {
-                super.onSwipeRight()
-                setPreDay()
-                calendardefaultsetting()
-            }
-        } )
-
-         */
 
         val userDB = databaseReference.child("Users/" + userID + "/Schedule")
         userDB.addValueEventListener( object: ValueEventListener{
@@ -88,8 +75,6 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         val userfollow = databaseReference.child("Users/" + userID + "/Follow")
         userfollow.addValueEventListener( object: ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val checkSP: SharedPreferences =
-                    context.getSharedPreferences("Check", Context.MODE_PRIVATE)
                 for (snapshot in dataSnapshot.children) {
                     if (snapshot.key.toString() == "Groups") {
                         for (deeperSnapshot in snapshot.children) {
@@ -130,6 +115,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                         for (deeperSnapshot in snapshot.children) {
                             var isChecked = checkSP.getBoolean(deeperSnapshot.key.toString(), true)
                             if (isChecked == true) {
+                                Log.d("a", "This is here?")
                                 val groupBackgroundColor = deeperSnapshot.value.toString().toInt()
                                 val groupDB =
                                     databaseReference.child("Users/" + deeperSnapshot.key.toString() + "/Schedule")
@@ -184,6 +170,12 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 calendardefaultsetting()
             }
         } )
+        checkSP.registerOnSharedPreferenceChangeListener(object: SharedPreferences.OnSharedPreferenceChangeListener{
+            override fun onSharedPreferenceChanged(p0: SharedPreferences?, p1: String?) {
+                Log.d("a", "This is")
+                calendardefaultsetting()
+            }
+        })
     }
 
     fun calendardefaultsetting() {
@@ -337,8 +329,18 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         for(snapShot in followListSnapshot){
             val scheduleColorPreference = context.getSharedPreferences("ScheduleColorInfo", Context.MODE_PRIVATE)
             for (deeperSnapShot in snapShot.child((currentMonth + 1).toString()).children) {
-                groupBackgroundColor = scheduleColorPreference.getInt(deeperSnapShot.child("userID").value.toString(), Color.BLUE)
-                setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>,groupBackgroundColor)
+
+                var isChecked = checkSP.getBoolean(deeperSnapShot.child("userID").value.toString(), true)
+                if(isChecked == true) {
+                    groupBackgroundColor = scheduleColorPreference.getInt(
+                        deeperSnapShot.child("userID").value.toString(),
+                        Color.BLUE
+                    )
+                    setScheduleOnCalendar(
+                        deeperSnapShot.value as HashMap<String, Any>,
+                        groupBackgroundColor
+                    )
+                }
             }
         }
 
@@ -410,7 +412,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         val dateYear = schedule.get("dateYear").toString().toInt()
         val dateMonth = schedule.get("dateMonth").toString().toInt()
         val date = schedule.get("date").toString().toInt()
-
+        Log.d("a", "This is here?" + scheduleName)
 
         var count = startTime.toInt()
         val schedulePeriod = endTime.toInt()-startTime.toInt()

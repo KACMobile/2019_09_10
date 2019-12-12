@@ -320,52 +320,6 @@ class MainActivity : AppCompatActivity() {
             }
             drawer_layout.closeDrawer(GravityCompat.START)
         }
-        /*insertGroup(
-            "KAU", "KAU", "모바일SW", false, "1000", "1300", "13주",
-            false, false, 2019, 11, 19
-        )
-        insertGroup(
-            "KAU", "KAU", "모바일SW", false, "1000", "1300", "14주",
-            false, false, 2019, 11, 26
-        )*/
-        /*insertGroup(
-            "KBO", "프리미어12", "결승", false, "1900", "2300", "대한민국 VS 일본",
-            false, false, 2019, 11, 17
-        )*/
-        //insertGroupInfo("User01", "User01")
-        /*insertSchedule(
-            userID, "할 일", "Test", false, "300", "600", "Test",
-            false, false, 2019, 11, 23
-        )*/
-        /*val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            insertSchedule(
-                userID, "할 일", "1", false, "400", "200", "Mob",
-                false, false, 2019, 11, 3
-            )
-            insertSchedule(
-                userID, "할 일", "2", false, "400", "100", "test",
-                false, false, 2019, 11, 5
-            )
-            insertSchedule(
-                userID, "할 일", "3", false, "400", "100", "test",
-                false, false, 2019, 11, 13
-            )
-            insertSchedule(
-                userID, "시간표", "컴퓨터 구조", false, "1200", "1000",
-                "과학관 110",false, false, 2019, 11, 4
-            )
-
-            insertSchedule(
-                userID, "시간표", "모바일 SW", false, "1300", "900",
-                "전자관 420", false, false, 2019, 11, 5
-            )
-
-            insertSchedule(
-                userID, "할 일","코딩", false, "1300", "1100",
-                "전자관 420", false, false, 2019, 11, 5
-            )
-        }*/
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -426,21 +380,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        /*//Switch관련 저장 및 처리
-        val userFollow = databaseReference.child("Users/" + userID + "Follow")
-        val checkPreference = getSharedPreferences("CheckPreference", Context.MODE_PRIVATE)
-        val editor = checkPreference.edit()
-        val groupSwitch: Switch = findViewById(R.id.check_group)
-        val switchSample = CheckSwitch("KAU", groupSwitch,this)
-        userFollow.child("Users").child(userID).child("KAU").setValue(null)//DB에 임시추가
-        groupSwitch.setOnCheckedChangeListener { checkButton, isChecked ->
 
-            if(isChecked)
-                editor.putBoolean("KAU", true)
-            else
-                editor.putBoolean("KAU", false)
-        }
-        groupSwitch.isChecked = checkPreference.getBoolean("KAU",true)*/
     }
     ////
 
@@ -504,9 +444,6 @@ class MainActivity : AppCompatActivity() {
         {
             fab.hide()
             groupFab.show()
-            groupFab1.show()
-            groupFab2.show()
-            groupFab3.show()
             groupFab.isClickable = true
 
         }

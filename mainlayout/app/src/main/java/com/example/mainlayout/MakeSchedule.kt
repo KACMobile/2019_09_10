@@ -29,8 +29,17 @@ class MakeSchedule :AppCompatActivity(){
     private val firebaseDatabase = FirebaseDatabase.getInstance()
 
     private val databaseReference = firebaseDatabase.reference
-    var dataArray = arrayListOf<Any?>()
     var userID:String = "User01"
+    var malarm : Boolean = false
+    var misitShare : Boolean = false
+    var mdateYear : Int = 2019
+    var mdateMonth : Int = 1
+    var mdateDay : Int = 1
+    var mstartTime : String = " "
+    var mendTime : String = " "
+    var mscheduleInfo : String = " "
+    var mscheduleName : String = "무제"
+    var mtag : String = "할 일"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val idPreference = getSharedPreferences("UserID", Context.MODE_PRIVATE)
@@ -54,16 +63,6 @@ class MakeSchedule :AppCompatActivity(){
         val tagText : TextView = findViewById(R.id.tag_text)
 
         //일정 데이터
-        var alarm : Boolean = false
-        var isitShare : Boolean = false
-        var dateYear : Int = 2019
-        var dateMonth : Int = 1
-        var dateDay : Int = 1
-        var startTime : String = " "
-        var endTime : String = " "
-        var scheduleInfo : String = " "
-        var scheduleName : String = "무제"
-        var tag : String = "할 일"
 
         tag_text.setOnClickListener {
             showdialog()
@@ -89,9 +88,9 @@ class MakeSchedule :AppCompatActivity(){
                 DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
                     editDateStart.setText("" + mYear + "/" + (mMonth + 1) + "/" + mDay)
                     editDateEnd.setText("" + mYear + "/" + (mMonth + 1) + "/" + mDay)
-                    dateYear = mYear
-                    dateMonth = mMonth
-                    dateDay = mDay
+                    mdateYear = mYear
+                    mdateMonth = mMonth
+                    mdateDay = mDay
                 },
                 year,
                 month,
@@ -112,12 +111,12 @@ class MakeSchedule :AppCompatActivity(){
                 }
                 else {
                     minuteString = "30"
-                    endTime = (100 * (hour+1)+30).toString()
+                    mendTime = (100 * (hour+1)+30).toString()
 
                 }
-                startTime = hour.toString() + minuteString
-                if(endTime == " ")
-                    endTime = (hour+1).toString() +minuteString
+                mstartTime = hour.toString() + minuteString
+                if(mendTime == " ")
+                    mendTime = (hour+1).toString() +minuteString
             }
             TimePickerDialog(this, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE),
                 true).show()
@@ -148,7 +147,7 @@ class MakeSchedule :AppCompatActivity(){
                 else {
                     minuteString = "30"
                 }
-                endTime = hour.toString() + minuteString
+                mendTime = hour.toString() + minuteString
             }
             TimePickerDialog(this, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE),
                 true).show()
@@ -158,31 +157,17 @@ class MakeSchedule :AppCompatActivity(){
         saveBtn.setOnClickListener {
 
             if(cb_alarm.isChecked)
-                alarm = true
+                malarm = true
 
-            scheduleName = nameText.text.toString()
-            scheduleInfo = infoText.text.toString()
-            tag = tag_text.text.toString()
-            if(tag_text.text == "Tag 선택"){
-                tag = "할 일"
-            }
+            mscheduleName = nameText.text.toString()
+            mscheduleInfo = infoText.text.toString()
 
-            val userDB = databaseReference.child("Users/" + userID + "/Schedule")
-            userDB.addValueEventListener( object: ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    for(snapShot in dataSnapshot.children){
-                        for(deeperSnapShot in snapShot.child((dateMonth +1).toString()).children){
-                            dataArray.add(deeperSnapShot.value)//DB값을 다시 Array에 저장
-                        }
-                    }
-                }
-                override fun onCancelled(dataSnapshot: DatabaseError) {
-                }
-            })
+
+
 
             insertSchedule(
-                userID, tag, scheduleName, alarm, startTime.toString(), endTime, scheduleInfo,
-                isitShare, dateYear, dateMonth+1, dateDay
+                userID, mtag, mscheduleName, malarm, mstartTime, mendTime, mscheduleInfo,
+                misitShare, mdateYear, mdateMonth+1, mdateDay
             )
 
 
@@ -201,6 +186,7 @@ class MakeSchedule :AppCompatActivity(){
 
             try {
                 tag_text.setText(selected)
+                mtag = tag_text.text.toString()
 
             }catch (e:IllegalArgumentException){
                 Toast.makeText(applicationContext, "Tag is not Selected", Toast.LENGTH_LONG ).show()
@@ -236,11 +222,7 @@ class MakeSchedule :AppCompatActivity(){
             endTime,
             alarm,
             shareAble)
-        dataArray.add(schedule)
-
-        var dataHashMap = HashMap<String,Any>()
-        dataHashMap["/Users/"+userName +"/Schedule/"+tag+"/" + dateMonth.toString()] = dataArray
-        databaseReference.updateChildren(dataHashMap)
+        databaseReference.child("Users/"+userName +"/Schedule/"+tag+"/" + dateMonth.toString()).push().setValue(schedule)
 
 
     }

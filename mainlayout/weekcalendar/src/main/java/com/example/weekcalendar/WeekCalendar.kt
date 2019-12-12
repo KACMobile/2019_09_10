@@ -29,6 +29,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
     var cal: Calendar = Calendar.getInstance()
     val database = FirebaseDatabase.getInstance()
     val databaseReference = database.reference
+    var checkSP: SharedPreferences
 
     var userID: String = "User01"
 
@@ -63,7 +64,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         userID = idPreference.getString("UserID", "User01")!!
         LayoutInflater.from(context).inflate(R.layout.weekcalendar, this, true)
         val scheduleColorPreference = context.getSharedPreferences("ScheduleColorInfo", Context.MODE_PRIVATE)
-
+        checkSP = context.getSharedPreferences("Check", Context.MODE_PRIVATE)
         this.weekTableScroll.setOnTouchListener(object : OnSwipeTouchListener(context) {
             override fun onSwipeLeft() {
                 super.onSwipeLeft()
@@ -102,8 +103,6 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         val userfollow = databaseReference.child("Users/" + userID + "/Follow")
         userfollow.addValueEventListener( object: ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val checkSP: SharedPreferences =
-                    context.getSharedPreferences("Check", Context.MODE_PRIVATE)
                 for (snapshot in dataSnapshot.children) {
                     if (snapshot.key.toString() == "Groups") {
 
@@ -185,6 +184,12 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         })
 
         calendardefaultsetting()
+        checkSP.registerOnSharedPreferenceChangeListener(object: SharedPreferences.OnSharedPreferenceChangeListener{
+            override fun onSharedPreferenceChanged(p0: SharedPreferences?, p1: String?) {
+                Log.d("a", "This is")
+                calendardefaultsetting()
+            }
+        })
 
 
     }
@@ -325,9 +330,18 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         var groupBackgroundColor = Color.RED
         for(snapShot in followListSnapshot){
             val scheduleColorPreference = context.getSharedPreferences("ScheduleColorInfo", Context.MODE_PRIVATE)
-            for (deeperSnapShot in snapShot.child((currentMonth + 1).toString()).children) {
-                groupBackgroundColor = scheduleColorPreference.getInt(deeperSnapShot.child("userID").value.toString(), Color.BLUE)
-                setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>,groupBackgroundColor)
+                for (deeperSnapShot in snapShot.child((currentMonth + 1).toString()).children) {
+                    var isChecked = checkSP.getBoolean(deeperSnapShot.child("userID").value.toString(), true)
+                    if(isChecked == true) {
+                    groupBackgroundColor = scheduleColorPreference.getInt(
+                        deeperSnapShot.child("userID").value.toString(),
+                        Color.BLUE
+                    )
+                    setScheduleOnCalendar(
+                        deeperSnapShot.value as HashMap<String, Any>,
+                        groupBackgroundColor
+                    )
+                }
 
             }
 
