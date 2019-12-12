@@ -123,4 +123,7 @@ class GoogleLoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFai
             Toast.makeText(this,"Hello ${user.displayName}",Toast.LENGTH_LONG).show()
         }
     }
+
+    override fun onBackPressed() {
+    }
 }

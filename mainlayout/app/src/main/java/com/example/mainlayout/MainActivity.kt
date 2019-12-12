@@ -57,6 +57,8 @@ class MainActivity : AppCompatActivity() {
 
     private val databaseReference = firebaseDatabase.reference
 
+    private var mUserInfo: UserInfo? = null
+
     lateinit var saveDataSnap: DataSnapshot
     var dataArray = arrayListOf<Any>()
 
@@ -91,11 +93,10 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         mUser = mAuth.currentUser
-        Log.d("tag", "mUser!!.displayName : " + mUser!!.displayName)
-        if(mUser != null){
+        if(mUser != null && resultCode == RESULT_OK){
             userID = mUser!!.displayName
-            var UserInfo = UserInfo(userID!!, "좋은 하루 되세요", "Users")
-            databaseReference.child("Users").child(userID!!).child("UserInfo").setValue(UserInfo)
+            mUserInfo = UserInfo(userID!!, "좋은 하루 되세요", "Users")
+            databaseReference.child("Users").child(userID!!).child("UserInfo").setValue(mUserInfo)
             Log.d("tag", "userID : " + userID)
 
         }
@@ -113,22 +114,21 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(intent, REQUEST_TEST)
         }else{
             userID = mUser!!.displayName
+            val idPreference = getSharedPreferences("UserID", Context.MODE_PRIVATE)
+            val editor = idPreference.edit()
+            editor.putString("UserID", userID)
+            editor.commit()
+
+            mUserInfo = UserInfo(userID!!, "좋은 하루 되세요", "Users",mAuth.currentUser!!.photoUrl.toString())
         }
 
-        val idPreference = getSharedPreferences("UserID", Context.MODE_PRIVATE)
-        val editor = idPreference.edit()
-        editor.putString("UserID", userID)
-        editor.commit()
 
-        var UserInfo = UserInfo(userID!!, "좋은 하루 되세요", "Users",mAuth.currentUser!!.photoUrl.toString())
 
 
 
 
         //var userNames: String, var userInfos: String, var userTypes: String, var userIcons: String?= null, var userHomepage: String? = null, var userTEL:String? = null, var locateLat:Double? = null, var locateLng:Double? = null)
 
-        Log.d("tag", "mUser!!.displayName : " + mUser!!.displayName)
-        Log.d("tag", "userID : " + userID)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -181,7 +181,7 @@ class MainActivity : AppCompatActivity() {
         rotateForward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward)
         rotateBackward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward)
         //val userFollow = databaseReference.child("Users/" + userID + "/Follow")
-        databaseReference.child("Users").child(userID!!).child("UserInfo").setValue(UserInfo)
+        databaseReference.child("Users").child(userID!!).child("UserInfo").setValue(mUserInfo)
         //val currentFragment : DailyFragment = FragmentManager
         fun animateFab()
         {
