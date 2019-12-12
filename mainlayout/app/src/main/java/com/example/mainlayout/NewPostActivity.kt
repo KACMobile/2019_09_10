@@ -1,10 +1,12 @@
 package com.example.mainlayout
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -183,6 +185,20 @@ class NewPostActivity : AppCompatActivity() {
             Glide.with(this).load(mapUrl).into(insertedMapView)
 
         }
+    }
+
+    override fun onBackPressed() {
+        Log.d("z","Back Pressed")
+
+        val alertDialog = AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog)
+        alertDialog.setMessage("작성중인 글을 삭제하고 돌아가시겠습니까?")
+        alertDialog.setPositiveButton("확인"){ dialog, which ->
+            super.onBackPressed()
+        }
+        alertDialog.setNegativeButton("취소"){ dialog, which ->
+
+        }
+        alertDialog.show()
     }
 
 

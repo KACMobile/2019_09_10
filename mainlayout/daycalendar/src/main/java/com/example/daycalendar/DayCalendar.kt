@@ -231,26 +231,53 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             for(j in hollydays){
                 if(j.islunar == false){
                     if(date>currentLastDayOfMonth) {
-                        dateArray[i - 1].text = (date - currentLastDayOfMonth).toString()
-                        if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth+2) {
-                            dateArray[i - 1].setBackgroundColor(Color.RED)
-                            if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                        if(currentMonth==11){
+                            dateArray[i - 1].text = (date - currentLastDayOfMonth).toString()
+                            if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == 1) {
+                                dateArray[i - 1].setBackgroundColor(Color.RED)
+                                if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                            }
+                        }else{
+                            dateArray[i - 1].text = (date - currentLastDayOfMonth).toString()
+                            if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth+2) {
+                                dateArray[i - 1].setBackgroundColor(Color.RED)
+                                if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                            }
                         }
+
                     }
                     else if(date<1)
                         if(currentYear%4 == 0) {
-                            dateArray[i - 1].text = (leapYearLastDayOfMonth[currentMonth - 1] - abs(date)).toString()
-                            if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth){
-                                dateArray[i - 1].setBackgroundColor(Color.RED)
-                                if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                            if(currentMonth==0){
+                                dateArray[i - 1].text = (leapYearLastDayOfMonth[11] - abs(date)).toString()
+                                if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth){
+                                    dateArray[i - 1].setBackgroundColor(Color.RED)
+                                    if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                                }
+                            }else{
+                                dateArray[i - 1].text = (leapYearLastDayOfMonth[currentMonth - 1] - abs(date)).toString()
+                                if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth){
+                                    dateArray[i - 1].setBackgroundColor(Color.RED)
+                                    if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                                }
                             }
+
                         }
                         else {
-                            dateArray[i-1].text = (lastDayOfMonth[currentMonth-1] - abs(date) ).toString()
-                            if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth){
-                                dateArray[i - 1].setBackgroundColor(Color.RED)
-                                if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                            if(currentMonth==0){
+                                dateArray[i-1].text = (lastDayOfMonth[11] - abs(date) ).toString()
+                                if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth){
+                                    dateArray[i - 1].setBackgroundColor(Color.RED)
+                                    if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                                }
+                            }else{
+                                dateArray[i-1].text = (lastDayOfMonth[currentMonth-1] - abs(date) ).toString()
+                                if(j.holydate.toString() == (dateArray[i-1].text) && j.holymonth == currentMonth){
+                                    dateArray[i - 1].setBackgroundColor(Color.RED)
+                                    if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                                }
                             }
+
                         }
                     else {
                         dateArray[i-1].text =  date.toString()
@@ -273,30 +300,58 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
                     if(ccyear == currentYear){
                         if(ccdate>currentLastDayOfMonth) {
-                            dateArray[i - 1].text = (ccdate - currentLastDayOfMonth).toString()
-                            if(ccdate.toString() == (dateArray[i-1].text) && ccmonth == currentMonth+2) {
-                                dateArray[i - 1].setBackgroundColor(Color.RED)
-                                if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                            if(currentMonth==11){
+                                dateArray[i - 1].text = (ccdate - currentLastDayOfMonth).toString()
+                                if(ccdate.toString() == (dateArray[i-1].text) && ccmonth == currentMonth+2 && ccyear == currentYear) {
+                                    dateArray[i - 1].setBackgroundColor(Color.RED)
+                                    if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                                }
+                            }else{
+                                dateArray[i - 1].text = (ccdate - currentLastDayOfMonth).toString()
+                                if(ccdate.toString() == (dateArray[i-1].text) && ccmonth == currentMonth+2 && ccyear == currentYear) {
+                                    dateArray[i - 1].setBackgroundColor(Color.RED)
+                                    if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                                }
                             }
+
                         }
                         else if(date<1)
                             if(currentYear%4 == 0) {
-                                dateArray[i - 1].text = (leapYearLastDayOfMonth[currentMonth - 1] - abs(date)).toString()
-                                if(ccdate.toString() == (dateArray[i-1].text) && ccmonth == currentMonth){
-                                    dateArray[i - 1].setBackgroundColor(Color.RED)
-                                    if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                                if(currentMonth==0){
+                                    dateArray[i - 1].text = (leapYearLastDayOfMonth[11] - abs(date)).toString()
+                                    if(ccdate.toString() == (dateArray[i-1].text) && ccmonth == currentMonth && ccyear == currentYear){
+                                        dateArray[i - 1].setBackgroundColor(Color.RED)
+                                        if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                                    }
+                                }else{
+                                    dateArray[i - 1].text = (leapYearLastDayOfMonth[currentMonth - 1] - abs(date)).toString()
+                                    if(ccdate.toString() == (dateArray[i-1].text) && ccmonth == currentMonth && ccyear == currentYear){
+                                        dateArray[i - 1].setBackgroundColor(Color.RED)
+                                        if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                                    }
                                 }
+
                             }
                             else {
-                                dateArray[i-1].text = (lastDayOfMonth[currentMonth-1] - abs(date) ).toString()
-                                if(ccdate.toString() == (dateArray[i-1].text) && ccmonth == currentMonth){
-                                    dateArray[i - 1].setBackgroundColor(Color.RED)
-                                    if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                                if(currentMonth==0) {
+                                    dateArray[i - 1].text =
+                                        (lastDayOfMonth[11] - abs(date)).toString()
+                                    if (ccdate.toString() == (dateArray[i - 1].text) && ccmonth == currentMonth && ccyear == currentYear) {
+                                        dateArray[i - 1].setBackgroundColor(Color.RED)
+                                        if (i == 1) dateArray[i - 1].setTextColor(Color.BLACK)
+                                    }
+                                }else{
+                                    dateArray[i-1].text = (lastDayOfMonth[currentMonth-1] - abs(date) ).toString()
+                                    if(ccdate.toString() == (dateArray[i-1].text) && ccmonth == currentMonth && ccyear == currentYear){
+                                        dateArray[i - 1].setBackgroundColor(Color.RED)
+                                        if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
+                                    }
                                 }
+
                             }
                         else {
                             dateArray[i-1].text =  date.toString()
-                            if(ccdate.toString() == (dateArray[i-1].text) && ccmonth == currentMonth+1){
+                            if(ccdate.toString() == (dateArray[i-1].text) && ccmonth == currentMonth+1 && ccyear == currentYear){
                                 dateArray[i - 1].setBackgroundColor(Color.RED)
                                 if(i==1) dateArray[i-1].setTextColor(Color.BLACK)
                             }
