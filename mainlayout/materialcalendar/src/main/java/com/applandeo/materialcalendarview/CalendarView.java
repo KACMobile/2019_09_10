@@ -1,6 +1,7 @@
 package com.applandeo.materialcalendarview;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import androidx.annotation.ColorRes;
@@ -117,6 +118,9 @@ public class CalendarView extends LinearLayout {
     private void initControl(Context context, AttributeSet attrs) {
         mContext = context;
         mCalendarProperties = new CalendarProperties(context);
+
+        SharedPreferences idPreference = context.getSharedPreferences("UserID", Context.MODE_PRIVATE);
+        userID = idPreference.getString("UserID", "User01");
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.calendar_view, this);

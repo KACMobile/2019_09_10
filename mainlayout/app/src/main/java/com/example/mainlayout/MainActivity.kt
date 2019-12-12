@@ -39,6 +39,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import java.util.prefs.Preferences
 
 
 class MainActivity : AppCompatActivity() {
@@ -94,13 +95,19 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         mUser = mAuth.currentUser
+        Log.d("tag", "mUser!!.displayName : " + mUser!!.displayName)
         if(mUser != null){
             userID = mUser!!.displayName
+            var UserInfo = UserInfo(userID!!, "좋은 하루 되세요", "Users")
+            databaseReference.child("Users").child(userID!!).child("UserInfo").setValue(UserInfo)
+            Log.d("tag", "userID : " + userID)
+
         }
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         mAuth = FirebaseAuth.getInstance()
         mUser = mAuth.currentUser
 
@@ -108,7 +115,24 @@ class MainActivity : AppCompatActivity() {
         if(mUser==null){
             var intent = Intent(this@MainActivity, GoogleLoginActivity::class.java)
             startActivityForResult(intent, REQUEST_TEST)
+        }else{
+            userID = mUser!!.displayName
         }
+
+        val idPreference = getSharedPreferences("UserID", Context.MODE_PRIVATE)
+        val editor = idPreference.edit()
+        editor.putString("UserID", userID)
+        editor.commit()
+
+        var UserInfo = UserInfo(userID!!, "좋은 하루 되세요", "Users",mAuth.currentUser!!.photoUrl.toString())
+
+
+
+
+        //var userNames: String, var userInfos: String, var userTypes: String, var userIcons: String?= null, var userHomepage: String? = null, var userTEL:String? = null, var locateLat:Double? = null, var locateLng:Double? = null)
+
+        Log.d("tag", "mUser!!.displayName : " + mUser!!.displayName)
+        Log.d("tag", "userID : " + userID)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -202,7 +226,7 @@ class MainActivity : AppCompatActivity() {
         rotateForward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward)
         rotateBackward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward)
         //val userFollow = databaseReference.child("Users/" + userID + "/Follow")
-        //databaseReference.child("Users").child(userID).child("Follow").child("Groups").child("KAU").setValue(Color.RED)//DB에 임시추가
+        databaseReference.child("Users").child(userID!!).child("UserInfo").setValue(UserInfo)
         //val currentFragment : DailyFragment = FragmentManager
         fun animateFab()
         {
@@ -389,7 +413,7 @@ class MainActivity : AppCompatActivity() {
                 saveDataSnap = dataSnapshot.child("Schedule")
                 for(snapShot in dataSnapshot.child("Schedule").children){
                     for(deeperSnapShot in snapShot.child((CalendarInfo.currentMonth +1).toString()).children){
-                        //setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
+                        setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
 
                     }
                 }
@@ -401,7 +425,7 @@ class MainActivity : AppCompatActivity() {
         if(::saveDataSnap.isInitialized) {
             for (snapShot in saveDataSnap.children) {
                 for (deeperSnapShot in snapShot.child((Calendar.getInstance().get(Calendar.MONTH)+1).toString()).children) {
-                    //setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
+                    setAlarmScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>)
                 }
             }
         }
@@ -488,6 +512,7 @@ class MainActivity : AppCompatActivity() {
             groupFab1.hide()
             groupFab2.hide()
             groupFab3.hide()
+
 
 
         }
@@ -600,8 +625,6 @@ class MainActivity : AppCompatActivity() {
         dataArray.add(schedule)
         var a: String = schedule.scheduleName
         databaseReference.child("Users").child(userName).child("Schedule").child(tag).child(dateMonth.toString()).setValue(dataArray)
-
-
     }
     fun insertGroup(
         userName: String,
@@ -651,7 +674,6 @@ class MainActivity : AppCompatActivity() {
         )
         databaseReference.child("Users").child(userName).child("UserInfo").setValue(groupInfo)
 
-
     }
     fun getUserGroup(userName: String, userInfo: String?){
         val databaseReference = firebaseDatabase.reference
@@ -677,13 +699,11 @@ class MainActivity : AppCompatActivity() {
 
         if(alarmAble==true && CalendarInfo.currentYear ==dateYear && (CalendarInfo.currentMonth +1)==dateMonth && CalendarInfo.currentDate ==date
             && currentHour<startTimeHour) {
-            Log.d("알람1", "들어옴")
             Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
         }
 
         if(alarmAble==true && CalendarInfo.currentYear ==dateYear && (CalendarInfo.currentMonth +1)==dateMonth && CalendarInfo.currentDate ==date
             && currentHour==startTimeHour && currentMinute<=startTimeMinute){
-            Log.d("알람1", "들어옴")
             Alarm(scheduleName, scheduleInfo, dateYear, dateMonth, date, startTimeHour, startTimeMinute, endTime)
         }
 

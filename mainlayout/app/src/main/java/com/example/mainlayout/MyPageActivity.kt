@@ -1,5 +1,6 @@
 package com.example.mainlayout
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -19,8 +20,10 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class MyPageActivity : AppCompatActivity() {
-    private val userID:String = "User01"
+    private var userID:String = "User01"
     override fun onCreate(savedInstanceState: Bundle?) {
+        val idPreference = getSharedPreferences("UserID", Context.MODE_PRIVATE)
+        userID = idPreference.getString("UserID", "User01")!!
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_group_page)
@@ -42,9 +45,9 @@ class MyPageActivity : AppCompatActivity() {
 
         viewPager.adapter = GroupPagePagerAdapter(supportFragmentManager,3, userInfo)
         tabLayout.setupWithViewPager(viewPager)
-        userNameView.text=userInfo.userNames
-        if(userInfo.userIcons != "null")
-            Glide.with(this).load(userInfo.userIcons).into(userImageView)
+        userNameView.text=userInfo.userName
+        if(userInfo.userIcon != "null")
+            Glide.with(this).load(userInfo.userIcon).into(userImageView)
 
         closeButton.setOnClickListener {
             finish()

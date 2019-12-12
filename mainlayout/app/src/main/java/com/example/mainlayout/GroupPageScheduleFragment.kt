@@ -34,7 +34,7 @@ class GroupPageScheduleFragment : Fragment() {
         val cal = Calendar.getInstance()
         val todayDate = cal.get(Calendar.DATE)
         val todayMonth = cal.get(Calendar.MONTH)
-        val groupDB = databaseReference.child(userInfo.userTypes + "/" + userInfo.userNames)
+        val groupDB = databaseReference.child(userInfo.userType + "/" + userInfo.userName)
         Log.d("a","This is"  + userInfo.toString())
         val recyclerView = rootView.findViewById<RecyclerView>(R.id.group_schedule_recyclerview)
         recyclerView.adapter = GroupRecyclerAdapter(activity!!, fragmentDataList)
@@ -42,15 +42,15 @@ class GroupPageScheduleFragment : Fragment() {
         groupDB.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 fragmentDataList.clear()
-                if(userInfo.userTypes == "Groups") {
+                if(userInfo.userType == "Groups") {
                     for (groupSnapshot in dataSnapshot.child("Schedule/" + (todayMonth + 1).toString()).children) {
                         if (groupSnapshot.child("date").value.toString().toInt() >= todayDate.toString().toInt()) {
                             fragmentDataList.add(
                                 GroupFragmentData(
-                                    userInfo.userNames,
-                                    userInfo.userInfos,
-                                    userInfo.userTypes,
-                                    userInfo.userIcons,
+                                    userInfo.userName,
+                                    userInfo.userInfo,
+                                    userInfo.userType,
+                                    userInfo.userIcon,
                                     groupSnapshot.child("scheduleName").value.toString(),
                                     groupSnapshot.child("scheduleInfo").value.toString(),
                                     groupSnapshot.child("dateYear").value.toString().toInt(),
@@ -70,10 +70,10 @@ class GroupPageScheduleFragment : Fragment() {
                             if (deeperUserDataSnapshot.child("date").value.toString().toInt() >= todayDate.toString().toInt()) {
                                 fragmentDataList.add(
                                     GroupFragmentData(
-                                        userInfo.userNames,
-                                        userInfo.userInfos,
-                                        userInfo.userTypes,
-                                        userInfo.userIcons,
+                                        userInfo.userName,
+                                        userInfo.userInfo,
+                                        userInfo.userType,
+                                        userInfo.userIcon,
                                         deeperUserDataSnapshot.child("scheduleName").value.toString(),
                                         deeperUserDataSnapshot.child("scheduleInfo").value.toString(),
                                         deeperUserDataSnapshot.child("dateYear").value.toString().toInt(),

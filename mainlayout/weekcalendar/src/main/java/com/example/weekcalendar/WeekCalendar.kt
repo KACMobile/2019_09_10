@@ -5,9 +5,6 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.database.*
@@ -31,7 +28,7 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
     val database = FirebaseDatabase.getInstance()
     val databaseReference = database.reference
 
-    val userID: String = "User01"
+    var userID: String = "User01"
 
 
 
@@ -58,6 +55,8 @@ class WeekCalendar @JvmOverloads constructor(context: Context, attrs: AttributeS
         hollyday(10, 9, "한글날", false), hollyday(12, 25, "크리스마스", false))
 
     init {
+        val idPreference = context.getSharedPreferences("UserID", Context.MODE_PRIVATE)
+        userID = idPreference.getString("UserID", "User01")!!
         LayoutInflater.from(context).inflate(R.layout.weekcalendar, this, true)
         val scheduleColorPreference = context.getSharedPreferences("ScheduleColorInfo", Context.MODE_PRIVATE)
 
