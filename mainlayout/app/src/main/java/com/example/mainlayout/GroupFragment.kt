@@ -1,6 +1,5 @@
 package com.example.mainlayout
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -17,7 +16,7 @@ class GroupFragment : Fragment() {
     private val databaseReference = firebaseDatabase.reference
     var fragmentDataList = arrayListOf<GroupFragmentData>()
     var postArray = arrayListOf<Post>()
-    private var userID:String = "User01"
+    private val userID:String = "User01"
     val cal = Calendar.getInstance()
     val todayDate = cal.get(Calendar.DATE)
     val todayMonth = cal.get(Calendar.MONTH)
@@ -34,8 +33,6 @@ class GroupFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val idPreference = context!!.getSharedPreferences("UserID", Context.MODE_PRIVATE)
-        userID = idPreference.getString("UserID", "User01")!!
         val rootView = inflater.inflate(R.layout.group_fragment, container, false)
         val recyclerView = rootView.findViewById<RecyclerView>(R.id.group_fragment_schedule_recyclerView)
         val postRecyclerView = rootView.findViewById<RecyclerView>(R.id.group_fragment_post_recyclerView)

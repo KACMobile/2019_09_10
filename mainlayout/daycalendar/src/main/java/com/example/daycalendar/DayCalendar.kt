@@ -25,8 +25,7 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
     val database = FirebaseDatabase.getInstance()
     val databaseReference = database.reference
 
-    var userID:String = "User01"
-
+    val userID:String= "User01"
 
     val lastDayOfMonth = arrayOf(31,28,31,30,31,30,31,31,30,31,30,31)
     val leapYearLastDayOfMonth = arrayOf(31,29,31,30,31,30,31,31,30,31,30,31)
@@ -48,8 +47,6 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
     var followListSnapshot = arrayListOf<DataSnapshot>() //followList DataSnapshot?�� 받으�? add?��
 
     init {
-        val idPreference = context.getSharedPreferences("UserID", Context.MODE_PRIVATE)
-        userID = idPreference.getString("UserID", "User01")!!
         LayoutInflater.from(context).inflate(R.layout.daycalendar,this,true)
         val scheduleColorPreference = context.getSharedPreferences("ScheduleColorInfo", Context.MODE_PRIVATE)
         calendardefaultsetting()

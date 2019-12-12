@@ -30,11 +30,9 @@ class MakeSchedule :AppCompatActivity(){
 
     private val databaseReference = firebaseDatabase.reference
     var dataArray = arrayListOf<Any?>()
-    var userID:String = "User01"
+    val userID:String = "User01"
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val idPreference = getSharedPreferences("UserID", Context.MODE_PRIVATE)
-        userID = idPreference.getString("UserID", "User01")!!
         super.onCreate(savedInstanceState)
         setContentView(R.layout.make_schedule)
 
@@ -60,7 +58,7 @@ class MakeSchedule :AppCompatActivity(){
         var dateMonth : Int = 1
         var dateDay : Int = 1
         var startTime : String = " "
-        var endTime : String = " "
+        var endTime : String = "1200"
         var scheduleInfo : String = " "
         var scheduleName : String = "무제"
         var tag : String = "할 일"
@@ -116,8 +114,6 @@ class MakeSchedule :AppCompatActivity(){
 
                 }
                 startTime = hour.toString() + minuteString
-                if(endTime == " ")
-                    endTime = (hour+1).toString() +minuteString
             }
             TimePickerDialog(this, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE),
                 true).show()

@@ -30,7 +30,6 @@ class DailyFragment : Fragment() {//
     ): View? {
         val view = inflater.inflate(R.layout.daily_calender, container, false)
 
-
         var mcontext = context!!
 
         var yearinfo = view.day_CalendarView.currentYear

@@ -23,14 +23,12 @@ class GroupAdd : AppCompatActivity() {
     private val firebaseDatabase = FirebaseDatabase.getInstance()
     private val databaseReference = firebaseDatabase.reference
     var userInfos = arrayListOf<UserInfo>()
-    private var userID:String = "User01"
+    private val userID:String = "User01"
 
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val idPreference = getSharedPreferences("UserID", Context.MODE_PRIVATE)
-        userID = idPreference.getString("UserID", "User01")!!
         super.onCreate(savedInstanceState)
         setContentView(R.layout.group_add)
         val listView = findViewById<ListView>(R.id.group_add_list)
