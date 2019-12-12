@@ -1,7 +1,6 @@
 package com.example.mainlayout
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -29,7 +28,7 @@ class NewPostActivity : AppCompatActivity() {
     lateinit var insertedImageView:ImageView
     lateinit var insertedMapView:ImageView
     lateinit var muserInfo: UserInfo
-    private var userID:String = "User01"
+    private val userID:String = "User01"
     private val firebaseDatabase = FirebaseDatabase.getInstance()
     private val databaseReference = firebaseDatabase.reference
     private val mstorage = FirebaseStorage.getInstance()
@@ -40,8 +39,6 @@ class NewPostActivity : AppCompatActivity() {
     var filePath:Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val idPreference = getSharedPreferences("UserID", Context.MODE_PRIVATE)
-        userID = idPreference.getString("UserID", "User01")!!
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_post)
         val insertImageBtn = findViewById<ImageView>(R.id.new_post_gallery)
@@ -89,7 +86,6 @@ class NewPostActivity : AppCompatActivity() {
 
         mapsBtn.setOnClickListener {
             val intent =Intent(this, MapsActivity::class.java)
-            intent.putExtra("RequestCode", requestMapCode)
             startActivityForResult(intent,requestMapCode)
         }
 
@@ -115,7 +111,7 @@ class NewPostActivity : AppCompatActivity() {
                         val fileName: String = userID + "_" + System.currentTimeMillis()
                         val storageRef =
                             mstorage.getReferenceFromUrl("gs://mobilesw8-d30db.appspot.com/MobileProject8")
-                                .child(muserInfo.userType + "/" + muserInfo.userName + "/" + fileName)
+                                .child(muserInfo.userTypes + "/" + muserInfo.userNames + "/" + fileName)
                         storageRef.putFile(filePath!!).addOnSuccessListener(OnSuccessListener {
                             Toast.makeText(this, "Image Uploaded Successfully", Toast.LENGTH_SHORT).show();
 

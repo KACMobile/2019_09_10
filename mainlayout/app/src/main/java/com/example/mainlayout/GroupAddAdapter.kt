@@ -16,14 +16,12 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class GroupAddAdapter(context: Context, val userInfosArr: ArrayList<UserInfo>) : BaseAdapter(){
-    private var userID:String = "User01"
+    private val userID:String = "User01"
 
     private val mContext : Context
 
     init {
         mContext = context
-        val idPreference = context.getSharedPreferences("UserID", Context.MODE_PRIVATE)
-        userID = idPreference.getString("UserID", "User01")!!
     }
 
     override fun getCount(): Int {
@@ -45,17 +43,17 @@ class GroupAddAdapter(context: Context, val userInfosArr: ArrayList<UserInfo>) :
         val rowMain = layoutInflater.inflate(R.layout.group_add_row, viewGroup, false)
 
         val nameTextView = rowMain.findViewById<TextView>(R.id.add_group_name)
-        nameTextView.text = userInfosArr[position].userName
+        nameTextView.text = userInfosArr[position].userNames
 
 
         val infoTextView = rowMain.findViewById<TextView>(R.id.add_group_info)
-        infoTextView.text = userInfosArr[position].userInfo
+        infoTextView.text = userInfosArr[position].userInfos
 
         val followBtn = rowMain.findViewById<Button>(R.id.add_group_button)
-        val userFollowDB =databaseReference.child("Users/" + userID + "/Follow/"+ userInfosArr[position].userType + "/" + userInfosArr[position].userName)
+        val userFollowDB =databaseReference.child("Users/" + userID + "/Follow/"+ userInfosArr[position].userTypes + "/" + userInfosArr[position].userNames)
         val icImageView = rowMain.findViewById<ImageView>(R.id.add_group_icon)
-        if(userInfosArr[position].userIcon != "null") {
-            Glide.with(mContext).load(userInfosArr[position].userIcon).into(icImageView)
+        if(userInfosArr[position].userIcons != "null") {
+            Glide.with(mContext).load(userInfosArr[position].userIcons).into(icImageView)
         }
         userFollowDB.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(dataSnapShot: DataSnapshot) {
@@ -71,20 +69,20 @@ class GroupAddAdapter(context: Context, val userInfosArr: ArrayList<UserInfo>) :
         }
 
         )
-        if(databaseReference.child("Users").child(userID).child("Follow").child(userInfosArr[position].userName) == null) {
+        if(databaseReference.child("Users").child(userID).child("Follow").child(userInfosArr[position].userNames) == null) {
             followBtn.text = ("구독중")
             followBtn.setBackgroundColor(Color.GRAY)
         }
 
         followBtn.setOnClickListener{
             if(followBtn.text == "구독"){
-                databaseReference.child("Users").child(userID).child("Follow").child(userInfosArr[position].userType).child(userInfosArr[position].userName).setValue(Color.RED)
+                databaseReference.child("Users").child(userID).child("Follow").child(userInfosArr[position].userTypes).child(userInfosArr[position].userNames).setValue(Color.RED)
                 followBtn.text = ("구독중")
                 Toast.makeText(it.context, "구독되었습니다.", Toast.LENGTH_SHORT).show()
                 followBtn.setBackgroundColor(Color.GRAY)
             }
             else{
-                databaseReference.child("Users").child(userID).child("Follow").child(userInfosArr[position].userType).child(userInfosArr[position].userName).setValue(null)
+                databaseReference.child("Users").child(userID).child("Follow").child(userInfosArr[position].userTypes).child(userInfosArr[position].userNames).setValue(null)
                 followBtn.text = ("구독")
                 Toast.makeText(it.context, "구독을 해지하셨습니다.", Toast.LENGTH_SHORT).show()
                 followBtn.setBackgroundColor(Color.WHITE)

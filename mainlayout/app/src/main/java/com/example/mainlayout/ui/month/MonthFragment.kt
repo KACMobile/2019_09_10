@@ -14,7 +14,6 @@ import com.applandeo.materialcalendarview.utils.*
 import kotlinx.android.synthetic.main.month_calender.*
 import java.util.Calendar
 import com.applandeo.materialcalendarview.*
-import com.example.mainlayout.MainActivity
 
 class MonthFragment : Fragment() {//월간 캘린더
 
@@ -35,8 +34,6 @@ class MonthFragment : Fragment() {//월간 캘린더
         val root = inflater.inflate(R.layout.month_calender, container, false)
         monthViewModel.text.observe(this, Observer {
         })
-        var actionBar = (activity as MainActivity).supportActionBar
-        actionBar!!.title = " "
         return root
     }
 }

@@ -1,6 +1,5 @@
 package com.example.mainlayout
 
-import android.content.Context
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,11 +19,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class GroupPageActivity : AppCompatActivity() {
-    var userID:String = "User01"
+    val userID:String = "User01"
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val idPreference = getSharedPreferences("UserID", Context.MODE_PRIVATE)
-        userID = idPreference.getString("UserID", "User01")!!
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_group_page)
@@ -43,7 +40,7 @@ class GroupPageActivity : AppCompatActivity() {
         val intent = intent
         val userInfo = intent.getSerializableExtra("userInfo") as UserInfo
         val databaseReference = FirebaseDatabase.getInstance().reference
-        val userFollowDB =databaseReference.child("Users/" + userID + "/Follow/"+ userInfo.userType + "/" + userInfo.userName)
+        val userFollowDB =databaseReference.child("Users/" + userID + "/Follow/"+ userInfo.userTypes + "/" + userInfo.userNames)
         userFollowDB.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapShot: DataSnapshot) {
                 if(dataSnapShot.value != null){
@@ -60,18 +57,18 @@ class GroupPageActivity : AppCompatActivity() {
         )
 
 
-        userNameView.text=userInfo.userName
-        if(userInfo.userIcon != "null")
-            Glide.with(this).load(userInfo.userIcon).into(userImageView)
+        userNameView.text=userInfo.userNames
+        if(userInfo.userIcons != "null")
+            Glide.with(this).load(userInfo.userIcons).into(userImageView)
         subscribeButton.setOnClickListener{
             if(subscribeButton.text == "구독"){
-                databaseReference.child("Users").child(userID).child("Follow").child(userInfo.userType).child(userInfo.userName).setValue(Color.RED)
+                databaseReference.child("Users").child(userID).child("Follow").child(userInfo.userTypes).child(userInfo.userNames).setValue(Color.RED)
                 subscribeButton.text = ("구독중")
                 Toast.makeText(it.context, "구독되었습니다.", Toast.LENGTH_SHORT).show()
                 subscribeButton.setBackgroundColor(Color.GRAY)
             }
             else{
-                databaseReference.child("Users").child(userID).child("Follow").child(userInfo.userType).child(userInfo.userName).setValue(null)
+                databaseReference.child("Users").child(userID).child("Follow").child(userInfo.userTypes).child(userInfo.userNames).setValue(null)
                 subscribeButton.text = ("구독")
                 Toast.makeText(it.context, "구독을 해지하셨습니다.", Toast.LENGTH_SHORT).show()
                 subscribeButton.setBackgroundColor(Color.WHITE)

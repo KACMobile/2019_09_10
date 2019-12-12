@@ -1,6 +1,5 @@
 package com.example.mainlayout
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.widget.BaseAdapter
@@ -13,10 +12,8 @@ class GroupList : AppCompatActivity() {
     private val firebaseDatabase = FirebaseDatabase.getInstance()
     private val databaseReference = firebaseDatabase.reference
     var userInfos = arrayListOf<UserInfo>()
-    private var userID:String = "User01"
+    private val userID:String = "User01"
     override fun onCreate(savedInstanceState: Bundle?) {
-        val idPreference = getSharedPreferences("UserID", Context.MODE_PRIVATE)
-        userID = idPreference.getString("UserID", "User01")!!
         super.onCreate(savedInstanceState)
         setContentView(R.layout.group_list)
         val listView = findViewById<ListView>(R.id.group_list_list)
