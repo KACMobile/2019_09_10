@@ -124,6 +124,10 @@ class MainActivity : AppCompatActivity() {
 
 
 
+        var UserInfo = UserInfo(userID!!, "좋은 하루 되세요", "Users",mAuth.currentUser!!.photoUrl.toString())
+        databaseReference.child("Users").child(userID!!).child("UserInfo").setValue(UserInfo)
+
+
 
 
 
