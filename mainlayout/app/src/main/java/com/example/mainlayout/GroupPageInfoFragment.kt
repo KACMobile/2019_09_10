@@ -74,8 +74,7 @@ class GroupPageInfoFragment : Fragment(), OnMapReadyCallback {
         markerOptions.title(mUsername)
         markerOptions.snippet(mUserInfo)
         googleMap!!.addMarker(markerOptions)
-        googleMap!!.moveCamera(CameraUpdateFactory.newLatLng(location))
-        googleMap!!.animateCamera(CameraUpdateFactory.zoomTo(16.5f))
+        googleMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
 
 
     }
