@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/daily_calender">
+
+    <fragment
+        android:id="@+id/daily_calender"
+        android:name="com.example.mainlayout.ui.daily.DailyFragment"
+        android:label="일" >
+        <action
+            android:id="@+id/Daily_CurrentToNext"
+            app:destination="@id/nextDailyPage"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_in_right"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/Daily_CurrentToPre"
+            app:destination="@id/preDailyPage"
+            app:enterAnim="@anim/slide_out_right"
+            app:exitAnim="@anim/slide_in_left"
+            app:popEnterAnim="@anim/slide_out_left"
+            app:popExitAnim="@anim/slide_in_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/week_calender"
+        android:name="com.example.mainlayout.ui.week.WeekFragment"
+        android:label="주간"
+        tools:layout="@layout/week_calender" >
+        <action
+            android:id="@+id/Week_CurrentToNext"
+            app:destination="@id/nextWeekPage"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/Week_CurrentToPre"
+            app:destination="@id/preWeekPage"
+            app:enterAnim="@anim/slide_out_right"
+            app:exitAnim="@anim/slide_in_left"
+            app:popEnterAnim="@anim/slide_out_left"
+            app:popExitAnim="@anim/slide_in_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/month_calender"
+        android:name="com.example.mainlayout.ui.month.MonthFragment"
+        android:label="월"
+        tools:layout="@layout/month_calender" />
+
+    <fragment
+        android:id="@+id/group_fragment"
+        android:name="com.example.mainlayout.GroupFragment"
+        android:label="그룹"
+        tools:layout="@layout/group_fragment" />
+    <fragment
+        android:id="@+id/nextDailyPage"
+        android:name="com.example.mainlayout.ui.daily.NextDailyPage"
+        android:label="NextDailyPage" >
+        <action
+            android:id="@+id/Daily_NextToCurrent"
+            app:destination="@id/daily_calender" />
+    </fragment>
+    <fragment
+        android:id="@+id/preDailyPage"
+        android:name="com.example.mainlayout.ui.daily.PreDailyPage"
+        android:label="PreDailyPage" >
+        <action
+            android:id="@+id/Daily_PreToCurrent"
+            app:destination="@id/daily_calender" />
+    </fragment>
+    <fragment
+        android:id="@+id/nextWeekPage"
+        android:name="com.example.mainlayout.ui.week.NextWeekPage"
+        android:label="NextWeekPage" >
+        <action
+            android:id="@+id/Week_NextToCurrent"
+            app:destination="@id/week_calender" />
+    </fragment>
+    <fragment
+        android:id="@+id/preWeekPage"
+        android:name="com.example.mainlayout.ui.week.PreWeekPage"
+        android:label="PreWeekPage" >
+        <action
+            android:id="@+id/Week_PreToCurrent"
+            app:destination="@id/week_calender" />
+    </fragment>
+
+</navigation>
