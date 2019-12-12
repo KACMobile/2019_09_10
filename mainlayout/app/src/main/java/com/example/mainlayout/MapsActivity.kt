@@ -40,17 +40,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private var mMarkerOptions: MarkerOptions = MarkerOptions()
     private lateinit var previousMarker: Marker
     lateinit var lm:LocationManager
-    var requestCode: Int? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
-
         val actionBar = supportActionBar
         actionBar!!.title = ""
         actionBar!!.setDisplayHomeAsUpEnabled(true)
-        requestCode =intent.getIntExtra("RequestCode", 0)
 
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -65,64 +62,45 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         geocoder = Geocoder(this)
-        if( requestCode== 1001) {
-            lm = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        lm =getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-            if (!lm.isProviderEnabled(GPS_PROVIDER)) {
-                //GPS 설정화면으로 이동
-                val intent = Intent(ACTION_LOCATION_SOURCE_SETTINGS)
-                intent.addCategory(CATEGORY_DEFAULT)
-                startActivity(intent)
-                finish()
+        if (!lm.isProviderEnabled(GPS_PROVIDER)) {
+            //GPS 설정화면으로 이동
+            val intent = Intent(ACTION_LOCATION_SOURCE_SETTINGS)
+            intent.addCategory(CATEGORY_DEFAULT)
+            startActivity(intent)
+            finish()
+        }
+        if(Build.VERSION.SDK_INT >= 23){
+            //권한이 없는 경우
+            if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                Log.d("a","This is 2222?!?" )
+                val permissionArray = arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)
+                ActivityCompat.requestPermissions(this, permissionArray, 1);
             }
-            if (Build.VERSION.SDK_INT >= 23) {
-                //권한이 없는 경우
-                if (ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS
-                    ) != PackageManager.PERMISSION_GRANTED ||
-                    ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    Log.d("a", "This is 2222?!?")
-                    val permissionArray = arrayOf(
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    )
-                    ActivityCompat.requestPermissions(this, permissionArray, 1);
-                }
-                //권한이 있는 경우
-                else {
-                    requestMyLocation();
-                }
-            }
-            //마시멜로 아래
-            else {
+            //권한이 있는 경우
+            else{
                 requestMyLocation();
             }
-
-
-
-
-            mMap.setOnMapClickListener(object : GoogleMap.OnMapClickListener {
-                override fun onMapClick(point: LatLng?) {
-                    if (point != null) {
-                        val lat = point.latitude
-                        val lng = point.longitude
-                        addMarkerOnMap(lat, lng, null)
-                    }
-                }
-
-            })
         }
+        //마시멜로 아래
         else{
-            val lat = intent.getDoubleExtra("Lat", 0.0)
-            val lng = intent.getDoubleExtra("Lng", 0.0)
-            Log.d("a" , "This is" + lat + lng)
-            addMarkerOnMap(lat,lng,null)
+            requestMyLocation();
         }
+
+
+
+        mMap.setOnMapClickListener ( object: GoogleMap.OnMapClickListener{
+            override fun onMapClick(point: LatLng?) {
+                if(point!=null) {
+                    val lat = point.latitude
+                    val lng = point.longitude
+                    addMarkerOnMap(lat,lng, null)
+                }
+            }
+
+        } )
 
     }
 
@@ -144,47 +122,44 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        if( requestCode== 1001) {
-            val inflater = menuInflater
-            inflater.inflate(R.menu.activity_maps_menu, menu)
-            val searchItem = menu.findItem(R.id.maps_search)
-            val searchView = searchItem.actionView as SearchView
+
+        val inflater = menuInflater
+        inflater.inflate(R.menu.activity_maps_menu, menu)
+        val searchItem = menu.findItem(R.id.maps_search)
+        val searchView = searchItem.actionView as SearchView
 
 
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
 
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    var addressList: List<Address>? = null
-                    try {
-                        addressList = geocoder.getFromLocationName(query, 10)
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-                    if (addressList != null && addressList.size != 0) {
-
-                        val splitStr: List<String> = addressList.get(0).toString().split(",")
-                        val adress: String = splitStr[0].substring(
-                            splitStr[0].indexOf("\"") + 1,
-                            splitStr[0].length - 2
-                        )
-                        val lat: Double = addressList.get(0).latitude
-                        val lng: Double = addressList.get(0).longitude
-
-                        val point = LatLng(lat, lng)
-                        addMarkerOnMap(lat, lng, adress)
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15f))
-                    } else
-                        Toast.makeText(this@MapsActivity, "검색결과가 없습니다", Toast.LENGTH_LONG).show()
-                    return true
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                var addressList:List<Address>? = null
+                try {
+                    addressList = geocoder.getFromLocationName(query, 10)
                 }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    return true
-
+                catch (e:IOException){
+                    e.printStackTrace()
                 }
-            })
-            return true
-        }
+                if(addressList!= null && addressList.size != 0) {
+
+                    val splitStr: List<String> = addressList.get(0).toString().split(",")
+                    val adress: String = splitStr[0].substring(splitStr[0].indexOf("\"") + 1, splitStr[0].length - 2 )
+                    val lat:Double = addressList.get(0).latitude
+                    val lng:Double = addressList.get(0).longitude
+
+                    val point = LatLng(lat, lng)
+                    addMarkerOnMap(lat,lng,adress)
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15f))
+                }
+                else
+                    Toast.makeText(this@MapsActivity,"검색결과가 없습니다",Toast.LENGTH_LONG).show()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return true
+
+            }
+        })
         return true
     }
 

@@ -8,11 +8,9 @@ import com.google.firebase.database.FirebaseDatabase
 class CheckSwitch(switchname:String, switch:Switch, context:Context) {
     private val firebaseDatabase = FirebaseDatabase.getInstance()
     private val databaseReference = firebaseDatabase.reference
-    private var userID:String = "User01"
+    private val userID:String = "User01"
     lateinit  var switchView:Switch
     fun CheckSwitch(switchname:String, switch:Switch, context:Context){
-        val idPreference = context.getSharedPreferences("UserID", Context.MODE_PRIVATE)
-        userID = idPreference.getString("UserID", "User01")!!
         val userFollow = databaseReference.child("Users/" + userID + "Follow")
         val checkPreference = context.getSharedPreferences("CheckPreference", Context.MODE_PRIVATE)
         val editor = checkPreference.edit()

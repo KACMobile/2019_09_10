@@ -2,7 +2,6 @@ package com.example.mainlayout
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -26,38 +25,33 @@ class GoogleLoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFai
 
     private lateinit var mGoogleApiClient : GoogleApiClient
 
-    private lateinit var mAuth: FirebaseAuth
 
-    private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private var googleSignInClient: GoogleSignInClient? = null
 
     lateinit var gso:GoogleSignInOptions
 
-
+    lateinit var mGoogleApiClient : GoogleApiClient
 
 
     public fun signIn() {
-        val signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
-        //val signInIntent = mGoogleSignInClient.getSignInIntent()
+        val signInIntent = googleSignInClient!!.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
     private val RC_SIGN_IN = 9001
 
-
+    private lateinit var mAuth: FirebaseAuth
 
     public override fun onStart(){
         super.onStart()
-        val currentUser = mAuth!!.currentUser
-        updateUI(currentUser)
+        val currentUser = mAuth.currentUser
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_googlelogin)
 
-        mAuth = FirebaseAuth.getInstance()
-
-        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
@@ -67,8 +61,9 @@ class GoogleLoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFai
             .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
             .build()
 
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-        Log.d("in oncreate", "msg : " + mGoogleSignInClient)
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        mAuth = FirebaseAuth.getInstance()
 
         googleLoginBtn.setOnClickListener {
             signIn()
@@ -76,33 +71,27 @@ class GoogleLoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFai
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
         Toast.makeText(this, "로그인 결과?", Toast.LENGTH_SHORT).show()
 
         if(requestCode === RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            val account = task.getResult(ApiException::class.java)
-            firebaseAuthWithGoogle(account!!)
-            /*
             try{
                 val account = task.getResult(ApiException::class.java)
                 firebaseAuthWithGoogle(account!!)
             } catch (e: ApiException){
                 Toast.makeText(this, "로그인 성공??", Toast.LENGTH_SHORT).show()
+
             }
-
-             */
         }
-
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount){
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         mAuth.signInWithCredential(credential)
-            .addOnCompleteListener(this) {task ->
+            .addOnCompleteListener(this) { task->
                 if(task.isSuccessful){
-                    val user = mAuth.currentUser
-                    updateUI(user)
+                    val user = mAuth?.currentUser
                     Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
 
                     val intent = Intent(this@GoogleLoginActivity, MainActivity::class.java)
@@ -111,19 +100,12 @@ class GoogleLoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFai
                     finish()
                 }else{
                     Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
-                    updateUI(null)
                 }
             }
 
     }
 
-    fun updateUI(user: FirebaseUser?){
-        if(user != null){
-            //Do your Stuff
-            Toast.makeText(this,"Hello ${user.displayName}",Toast.LENGTH_LONG).show()
-        }
-    }
-
     override fun onBackPressed() {
     }
+
 }
