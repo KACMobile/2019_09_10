@@ -13,7 +13,6 @@ import com.example.mainlayout.R
 
 class PreDailyPage : Fragment() {
 
-    private lateinit var dailyViewModel: DailyViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?

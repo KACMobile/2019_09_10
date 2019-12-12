@@ -18,23 +18,14 @@ import com.example.mainlayout.MainActivity
 
 class MonthFragment : Fragment() {//월간 캘린더
 
-    private lateinit var monthViewModel: MonthViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //var mCalendar: Calendar = CalendarInfo.calendar
-
-        //mCalendar.set
-        //mCalendar.set(2022, 5, 15)
-        //MycalendarView.setCurrentCal(mCalendar)
-        monthViewModel =
-            ViewModelProviders.of(this).get(MonthViewModel::class.java)
         val root = inflater.inflate(R.layout.month_calender, container, false)
-        monthViewModel.text.observe(this, Observer {
-        })
         var actionBar = (activity as MainActivity).supportActionBar
         actionBar!!.title = " "
         return root
