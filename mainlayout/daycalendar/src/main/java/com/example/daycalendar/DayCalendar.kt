@@ -1,6 +1,7 @@
 package com.example.daycalendar
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.icu.util.ChineseCalendar
 import android.util.AttributeSet
@@ -87,63 +88,79 @@ class DayCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         val userfollow = databaseReference.child("Users/" + userID + "/Follow")
         userfollow.addValueEventListener( object: ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val checkSP: SharedPreferences =
+                    context.getSharedPreferences("Check", Context.MODE_PRIVATE)
                 for (snapshot in dataSnapshot.children) {
                     if (snapshot.key.toString() == "Groups") {
                         for (deeperSnapshot in snapshot.children) {
-                            val groupBackgroundColor = deeperSnapshot.value.toString().toInt()
-                            val groupDB = databaseReference.child("Groups/" + deeperSnapshot.key.toString()+ "/Schedule")
-                            val editor = scheduleColorPreference.edit()
-                            editor.putInt(deeperSnapshot.key.toString(), groupBackgroundColor)
-                            editor.commit()
-                            groupDB.addValueEventListener(object : ValueEventListener {
-                                override fun onDataChange(groupDataSnapshot: DataSnapshot) {
-                                    followListSnapshot.add(groupDataSnapshot)
+                            var isChecked = checkSP.getBoolean(deeperSnapshot.key.toString(), true)
+                            if (isChecked == true) {
+                                val groupBackgroundColor = deeperSnapshot.value.toString().toInt()
+                                val groupDB =
+                                    databaseReference.child("Groups/" + deeperSnapshot.key.toString() + "/Schedule")
+                                val editor = scheduleColorPreference.edit()
+                                editor.putInt(deeperSnapshot.key.toString(), groupBackgroundColor)
+                                editor.commit()
+                                groupDB.addValueEventListener(object : ValueEventListener {
+                                    override fun onDataChange(groupDataSnapshot: DataSnapshot) {
+                                        followListSnapshot.add(groupDataSnapshot)
 
-                                    for (deeperSnapShot in groupDataSnapshot.child((currentMonth + 1).toString()).children) {
-                                        setScheduleOnCalendar(deeperSnapShot.value as HashMap<String, Any>,groupBackgroundColor)
+                                        for (deeperSnapShot in groupDataSnapshot.child((currentMonth + 1).toString()).children) {
+                                            setScheduleOnCalendar(
+                                                deeperSnapShot.value as HashMap<String, Any>,
+                                                groupBackgroundColor
+                                            )
+
+                                        }
+
 
                                     }
 
+                                    override fun onCancelled(groupDataSnapshot: DatabaseError) {
+
+                                    }
 
                                 }
-
-                                override fun onCancelled(groupDataSnapshot: DatabaseError) {
-
-                                }
+                                )
 
                             }
-                            )
-
                         }
                     }
                     if (snapshot.key.toString() == "Users"){
                         for (deeperSnapshot in snapshot.children) {
-                            val groupBackgroundColor = deeperSnapshot.value.toString().toInt()
-                            val groupDB = databaseReference.child("Users/" + deeperSnapshot.key.toString()+"/Schedule")
-                            val editor = scheduleColorPreference.edit()
-                            editor.putInt(deeperSnapshot.key.toString(), groupBackgroundColor)
-                            editor.commit()
-                            groupDB.addValueEventListener(object : ValueEventListener {
-                                override fun onDataChange(groupDataSnapshot: DataSnapshot) {
+                            var isChecked = checkSP.getBoolean(deeperSnapshot.key.toString(), true)
+                            if (isChecked == true) {
+                                val groupBackgroundColor = deeperSnapshot.value.toString().toInt()
+                                val groupDB =
+                                    databaseReference.child("Users/" + deeperSnapshot.key.toString() + "/Schedule")
+                                val editor = scheduleColorPreference.edit()
+                                editor.putInt(deeperSnapshot.key.toString(), groupBackgroundColor)
+                                editor.commit()
+                                groupDB.addValueEventListener(object : ValueEventListener {
+                                    override fun onDataChange(groupDataSnapshot: DataSnapshot) {
 
-                                    for(deeperSnapshot in groupDataSnapshot.children) {
-                                        followListSnapshot.add(deeperSnapshot)
-                                        for (deepestSnapshot in deeperSnapshot.child((currentMonth + 1).toString()).children) {
-                                            setScheduleOnCalendar(deepestSnapshot.value as HashMap<String, Any>, groupBackgroundColor)
+                                        for (deeperSnapshot in groupDataSnapshot.children) {
+                                            followListSnapshot.add(deeperSnapshot)
+                                            for (deepestSnapshot in deeperSnapshot.child((currentMonth + 1).toString()).children) {
+                                                setScheduleOnCalendar(
+                                                    deepestSnapshot.value as HashMap<String, Any>,
+                                                    groupBackgroundColor
+                                                )
 
+                                            }
                                         }
+
+
                                     }
 
+                                    override fun onCancelled(groupDataSnapshot: DatabaseError) {
+
+                                    }
 
                                 }
-
-                                override fun onCancelled(groupDataSnapshot: DatabaseError) {
-
-                                }
+                                )
 
                             }
-                            )
-
                         }
                     }
                 }

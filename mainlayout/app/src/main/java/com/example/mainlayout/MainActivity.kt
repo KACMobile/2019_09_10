@@ -74,6 +74,10 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var fab : FloatingActionButton
     lateinit var groupFab : FloatingActionButton
+    lateinit var groupFab1 : FloatingActionButton
+    lateinit var groupFab2 : FloatingActionButton
+    lateinit var groupFab3 : FloatingActionButton
+
 
     lateinit var muserInfo: UserInfo
 
@@ -94,10 +98,7 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         mUser = mAuth.currentUser
         if(mUser != null && resultCode == RESULT_OK){
-            userID = mUser!!.displayName
-            mUserInfo = UserInfo(userID!!, "좋은 하루 되세요", "Users")
-            databaseReference.child("Users").child(userID!!).child("UserInfo").setValue(mUserInfo)
-            Log.d("tag", "userID : " + userID)
+            storeUserInfo()
 
         }
     }
@@ -113,13 +114,8 @@ class MainActivity : AppCompatActivity() {
             var intent = Intent(this@MainActivity, GoogleLoginActivity::class.java)
             startActivityForResult(intent, REQUEST_TEST)
         }else{
-            userID = mUser!!.displayName
-            val idPreference = getSharedPreferences("UserID", Context.MODE_PRIVATE)
-            val editor = idPreference.edit()
-            editor.putString("UserID", userID)
-            editor.commit()
+            storeUserInfo()
 
-            mUserInfo = UserInfo(userID!!, "좋은 하루 되세요", "Users",mAuth.currentUser!!.photoUrl.toString())
         }
 
 
@@ -143,13 +139,58 @@ class MainActivity : AppCompatActivity() {
         val listView2 : ListView = findViewById(R.id.navigation_drawer_list2)
 
         var gList = ArrayList<String>()
-        gList.add("Group1")
-        gList.add("Group2")
-        gList.add("Group3")
-        gList.add("Group4")
 
         listView1.adapter = ListAdapter(this)
         listView2.adapter = CheckListAdapter(gList, this)
+
+        val userfollow = databaseReference.child("Users/" + userID + "/Follow")
+        userfollow.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                gList.clear()
+
+                for(snapshot in dataSnapshot.children){
+                    if(snapshot.key.toString() == "Groups"){
+                        for(deeperSnapshot in snapshot.children){
+                            gList.add(deeperSnapshot.key.toString())
+                            (listView2.adapter as BaseAdapter).notifyDataSetChanged()
+                        }
+                    }
+                    if(snapshot.key.toString() == "Users") {
+                        for(deeperSnapshot in snapshot.children){
+                            gList.add(deeperSnapshot.key.toString())
+                            (listView2.adapter as BaseAdapter).notifyDataSetChanged()
+                        }
+
+
+                    }
+
+
+                }
+                val userschedule = databaseReference.child("Users/" + userID)
+                userschedule.addValueEventListener(object: ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                        for (snapshot in dataSnapshot.children) {
+                            if (snapshot.key.toString() == "Schedule") {
+                                for (deeperSnapshot in snapshot.children) {
+                                    gList.add(deeperSnapshot.key.toString())
+                                    (listView2.adapter as BaseAdapter).notifyDataSetChanged()
+                                }
+                            }
+
+                        }
+
+                    }
+                    override fun onCancelled(p0: DatabaseError) {
+
+                    }
+                })
+            }
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+        })
+
 
 
 
@@ -171,9 +212,9 @@ class MainActivity : AppCompatActivity() {
 
         fab = findViewById(R.id.fab)
         groupFab = findViewById(R.id.groupfab)
-        val groupFab1: FloatingActionButton = findViewById(R.id.groupfab1)
-        val groupFab2: FloatingActionButton = findViewById(R.id.groupfab2)
-        val groupFab3: FloatingActionButton = findViewById(R.id.groupfab3)
+        groupFab1 = findViewById(R.id.groupfab1)
+        groupFab2 = findViewById(R.id.groupfab2)
+        groupFab3 = findViewById(R.id.groupfab3)
         whichFab()
 
         fabOpen = AnimationUtils.loadAnimation(this, R.anim.fab_open)
@@ -181,7 +222,6 @@ class MainActivity : AppCompatActivity() {
         rotateForward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward)
         rotateBackward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward)
         //val userFollow = databaseReference.child("Users/" + userID + "/Follow")
-        databaseReference.child("Users").child(userID!!).child("UserInfo").setValue(mUserInfo)
         //val currentFragment : DailyFragment = FragmentManager
         fun animateFab()
         {
@@ -446,12 +486,27 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    fun storeUserInfo(){
+        userID = mUser!!.displayName
+        val idPreference = getSharedPreferences("UserID", Context.MODE_PRIVATE)
+        val editor = idPreference.edit()
+        editor.putString("UserID", userID)
+        editor.commit()
+
+        mUserInfo = UserInfo(userID!!, "좋은 하루 되세요", "Users",mAuth.currentUser!!.photoUrl.toString())
+        databaseReference.child("Users").child(userID!!).child("UserInfo").setValue(mUserInfo)
+
+    }
+
     fun whichFab()
     {
         if (isGroupFragment)
         {
             fab.hide()
             groupFab.show()
+            groupFab1.show()
+            groupFab2.show()
+            groupFab3.show()
             groupFab.isClickable = true
 
         }
@@ -459,6 +514,10 @@ class MainActivity : AppCompatActivity() {
         {
             fab.show()
             groupFab.hide()
+            groupFab1.hide()
+            groupFab2.hide()
+            groupFab3.hide()
+
             groupFab.isClickable = false
 
 

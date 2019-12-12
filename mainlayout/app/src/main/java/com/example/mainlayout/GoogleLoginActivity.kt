@@ -3,6 +3,7 @@ package com.example.mainlayout
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Window
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -52,6 +53,7 @@ class GoogleLoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFai
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_googlelogin)
 

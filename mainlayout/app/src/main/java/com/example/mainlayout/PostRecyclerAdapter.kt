@@ -44,6 +44,8 @@ public class PostRecyclerAdapter(val context: Context, private val postList: Arr
             val mapImageView =view.post_mapImage
             if(userInfo.userIcon != "null")
                 Glide.with(context).load(userInfo.userIcon).into(view.post_userIcon)
+            else
+                Glide.with(context).load(R.drawable.user_icon).into(view.post_userIcon)
             if(post.postImage != "null")
                 Glide.with(context).load(post.postImage).into(view.post_Image)
             else

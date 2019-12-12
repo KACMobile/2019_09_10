@@ -17,7 +17,7 @@
         android:id="@+id/post_Image"
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         android:adjustViewBounds="true"
         android:visibility="visible"
@@ -82,7 +82,8 @@
         android:text="TextView"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/post_userIcon"
-        app:layout_constraintTop_toBottomOf="@+id/post_userIcon" />
+        app:layout_constraintTop_toBottomOf="@+id/post_userIcon"
+        android:autoLink="all"/>
 
     <Space
         android:layout_width="wrap_content"
