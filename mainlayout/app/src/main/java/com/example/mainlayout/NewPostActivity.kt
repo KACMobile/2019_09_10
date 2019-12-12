@@ -188,7 +188,6 @@ class NewPostActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        Log.d("z","Back Pressed")
 
         val alertDialog = AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog)
         alertDialog.setMessage("작성중인 글을 삭제하고 돌아가시겠습니까?")

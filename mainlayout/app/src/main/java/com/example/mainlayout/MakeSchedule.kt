@@ -39,7 +39,7 @@ class MakeSchedule :AppCompatActivity(){
     var mendTime : String = " "
     var mscheduleInfo : String = " "
     var mscheduleName : String = "무제"
-    var mtag : String = "할 일"
+    var mtag : String = "일정"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val idPreference = getSharedPreferences("UserID", Context.MODE_PRIVATE)
@@ -60,13 +60,8 @@ class MakeSchedule :AppCompatActivity(){
         val nameText : TextInputEditText = findViewById(R.id.nameTextView)
         val infoText : TextInputEditText = findViewById(R.id.infoTextView)
 
-        val tagText : TextView = findViewById(R.id.tag_text)
 
         //일정 데이터
-
-        tag_text.setOnClickListener {
-            showdialog()
-        }
 
 
         /*val userDB = databaseReference.child("Users/" + userID + "/Schedule")
@@ -176,26 +171,6 @@ class MakeSchedule :AppCompatActivity(){
         }
 
 
-    }
-    private fun showdialog() {
-        val array = arrayOf("할 일", "시간표", "일정", "알림")
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Tag")
-        builder.setItems(array,{_, which ->
-            val selected = array[which]
-
-            try {
-                tag_text.setText(selected)
-                mtag = tag_text.text.toString()
-
-            }catch (e:IllegalArgumentException){
-                Toast.makeText(applicationContext, "Tag is not Selected", Toast.LENGTH_LONG ).show()
-            }
-        })
-
-        val dialog = builder.create()
-
-        dialog.show()
     }
 
     fun insertSchedule(
