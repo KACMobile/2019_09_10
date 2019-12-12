@@ -71,6 +71,10 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var fab : FloatingActionButton
     lateinit var groupFab : FloatingActionButton
+    lateinit var groupFab1 : FloatingActionButton
+    lateinit var groupFab2 : FloatingActionButton
+    lateinit var groupFab3 : FloatingActionButton
+
 
     lateinit var muserInfo: UserInfo
 
@@ -119,15 +123,56 @@ class MainActivity : AppCompatActivity() {
         val listView2 : ListView = findViewById(R.id.navigation_drawer_list2)
 
         var gList = ArrayList<String>()
-        gList.add("Group1")
-        gList.add("Group2")
-        gList.add("Group3")
-        gList.add("Group4")
 
         listView1.adapter = ListAdapter(this)
         listView2.adapter = CheckListAdapter(gList, this)
 
+        val userfollow = databaseReference.child("Users/" + userID + "/Follow")
+        userfollow.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
 
+                for(snapshot in dataSnapshot.children){
+                    if(snapshot.key.toString() == "Groups"){
+                        for(deeperSnapshot in snapshot.children){
+                            gList.add(deeperSnapshot.key.toString())
+                            (listView2.adapter as BaseAdapter).notifyDataSetChanged()
+                        }
+                    }
+                    if(snapshot.key.toString() == "Users") {
+                        for(deeperSnapshot in snapshot.children){
+                            gList.add(deeperSnapshot.key.toString())
+                            (listView2.adapter as BaseAdapter).notifyDataSetChanged()
+                        }
+
+
+                    }
+
+
+                }
+            }
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+        })
+        val userschedule = databaseReference.child("Users/" + userID)
+        userschedule.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                for (snapshot in dataSnapshot.children) {
+                    if (snapshot.key.toString() == "Schedule") {
+                        for (deeperSnapshot in snapshot.children) {
+                            gList.add(deeperSnapshot.key.toString())
+                            (listView2.adapter as BaseAdapter).notifyDataSetChanged()
+                        }
+                    }
+
+                }
+
+            }
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+        })
 
 
 
@@ -147,9 +192,9 @@ class MainActivity : AppCompatActivity() {
 
         fab = findViewById(R.id.fab)
         groupFab = findViewById(R.id.groupfab)
-        val groupFab1: FloatingActionButton = findViewById(R.id.groupfab1)
-        val groupFab2: FloatingActionButton = findViewById(R.id.groupfab2)
-        val groupFab3: FloatingActionButton = findViewById(R.id.groupfab3)
+        groupFab1 = findViewById(R.id.groupfab1)
+        groupFab2 = findViewById(R.id.groupfab2)
+        groupFab3 = findViewById(R.id.groupfab3)
         whichFab()
 
         fabOpen = AnimationUtils.loadAnimation(this, R.anim.fab_open)
@@ -429,6 +474,10 @@ class MainActivity : AppCompatActivity() {
             fab.hide()
             groupFab.show()
             groupFab.isClickable = true
+            groupFab1.show()
+            groupFab2.show()
+            groupFab3.show()
+
 
         }
         else //groupFragment = false
@@ -436,6 +485,10 @@ class MainActivity : AppCompatActivity() {
             fab.show()
             groupFab.hide()
             groupFab.isClickable = false
+            groupFab1.hide()
+            groupFab2.hide()
+            groupFab3.hide()
+
 
         }
     }
@@ -599,6 +652,9 @@ class MainActivity : AppCompatActivity() {
         databaseReference.child("Users").child(userName).child("UserInfo").setValue(groupInfo)
 
 
+    }
+    fun getUserGroup(userName: String, userInfo: String?){
+        val databaseReference = firebaseDatabase.reference
     }
 
     fun setAlarmScheduleOnCalendar(schedule: HashMap<String, Any>) {
