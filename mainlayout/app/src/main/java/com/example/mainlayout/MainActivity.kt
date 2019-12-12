@@ -166,25 +166,6 @@ class MainActivity : AppCompatActivity() {
 
 
                 }
-                val userschedule = databaseReference.child("Users/" + userID)
-                userschedule.addValueEventListener(object: ValueEventListener {
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                        for (snapshot in dataSnapshot.children) {
-                            if (snapshot.key.toString() == "Schedule") {
-                                for (deeperSnapshot in snapshot.children) {
-                                    gList.add(deeperSnapshot.key.toString())
-                                    (listView2.adapter as BaseAdapter).notifyDataSetChanged()
-                                }
-                            }
-
-                        }
-
-                    }
-                    override fun onCancelled(p0: DatabaseError) {
-
-                    }
-                })
             }
             override fun onCancelled(p0: DatabaseError) {
 
