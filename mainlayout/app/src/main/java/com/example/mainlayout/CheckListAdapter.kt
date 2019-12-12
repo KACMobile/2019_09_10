@@ -16,10 +16,11 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.make_schedule.view.*
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 //메뉴 리스트2, group checkBox
-class CheckListAdapter(var names : ArrayList<String>, val context: Activity): BaseAdapter(){
+class CheckListAdapter(var names : ArrayList<String>, var colorArray: ArrayList<Int>, val context: Activity): BaseAdapter(){
 
     val database = FirebaseDatabase.getInstance()
     val databaseReference = database.reference
@@ -35,10 +36,11 @@ class CheckListAdapter(var names : ArrayList<String>, val context: Activity): Ba
         val textView : TextView = view2.findViewById(R.id.checkBox_text)
         val checkBox : CheckBox = view2.findViewById(R.id.checkBox_group)
         val name = names[position]
+        val colorView = view2.findViewById<View>(R.id.show_color)
         val sharedPreferences: SharedPreferences = context.getSharedPreferences("Check", Context.MODE_PRIVATE)
         //checkBox.setTag(position)
         //checkBox.setText(names[position])
-
+        colorView.setBackgroundColor(colorArray[positions])
         checkBox.isChecked = sharedPreferences.getBoolean(name, true)
         textView.setText(name)
 

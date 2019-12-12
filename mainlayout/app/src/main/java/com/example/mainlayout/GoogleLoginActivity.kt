@@ -126,6 +126,6 @@ class GoogleLoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFai
         }
     }
 
-    override fun onBackPressed() {
-    }
+    //override fun onBackPressed() {
+    //}
 }

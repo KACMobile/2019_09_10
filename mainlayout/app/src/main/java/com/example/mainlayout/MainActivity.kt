@@ -139,9 +139,10 @@ class MainActivity : AppCompatActivity() {
         val listView2 : ListView = findViewById(R.id.navigation_drawer_list2)
 
         var gList = ArrayList<String>()
+        var cList = ArrayList<Int>()
 
         listView1.adapter = ListAdapter(this)
-        listView2.adapter = CheckListAdapter(gList, this)
+        listView2.adapter = CheckListAdapter(gList, cList,this)
 
         val userfollow = databaseReference.child("Users/" + userID + "/Follow")
         userfollow.addValueEventListener(object: ValueEventListener{
@@ -152,12 +153,14 @@ class MainActivity : AppCompatActivity() {
                     if(snapshot.key.toString() == "Groups"){
                         for(deeperSnapshot in snapshot.children){
                             gList.add(deeperSnapshot.key.toString())
+                            cList.add(deeperSnapshot.value.toString().toInt())
                             (listView2.adapter as BaseAdapter).notifyDataSetChanged()
                         }
                     }
                     if(snapshot.key.toString() == "Users") {
                         for(deeperSnapshot in snapshot.children){
                             gList.add(deeperSnapshot.key.toString())
+                            cList.add(deeperSnapshot.value.toString().toInt())
                             (listView2.adapter as BaseAdapter).notifyDataSetChanged()
                         }
 
