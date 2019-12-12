@@ -40,7 +40,7 @@ class CheckListAdapter(var names : ArrayList<String>, var colorArray: ArrayList<
         val sharedPreferences: SharedPreferences = context.getSharedPreferences("Check", Context.MODE_PRIVATE)
         //checkBox.setTag(position)
         //checkBox.setText(names[position])
-        colorView.setBackgroundColor(colorArray[positions])
+        colorView.setBackgroundColor(colorArray[position])
         checkBox.isChecked = sharedPreferences.getBoolean(name, true)
         textView.setText(name)
 
