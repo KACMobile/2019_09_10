@@ -2,6 +2,7 @@ package com.example.mainlayout
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Window
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -16,15 +17,12 @@ import com.google.android.gms.auth.api.Auth
 import androidx.core.content.ContextCompat.getSystemService
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
-import com.google.firebase.auth.FirebaseUser
+
 
 
 class GoogleLoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedListener {
     override fun onConnectionFailed(p0: ConnectionResult) {
     }
-
-    private lateinit var mGoogleApiClient : GoogleApiClient
-
 
     private var googleSignInClient: GoogleSignInClient? = null
 
@@ -48,10 +46,11 @@ class GoogleLoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFai
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_googlelogin)
 
-        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
+        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
