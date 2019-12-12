@@ -25,8 +25,6 @@ class MonthFragment : Fragment() {//월간 캘린더
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.month_calender, container, false)
-        monthViewModel.text.observe(this, Observer {
-        })
         return root
     }
 }
