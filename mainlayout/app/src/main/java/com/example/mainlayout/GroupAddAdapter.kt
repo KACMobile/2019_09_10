@@ -1,5 +1,6 @@
 package com.example.mainlayout
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -84,10 +85,20 @@ class GroupAddAdapter(context: Context, val userInfosArr: ArrayList<UserInfo>) :
                 followBtn.setBackgroundColor(Color.GRAY)
             }
             else{
-                databaseReference.child("Users").child(userID).child("Follow").child(userInfosArr[position].userType).child(userInfosArr[position].userName).setValue(null)
-                followBtn.text = ("구독")
-                Toast.makeText(it.context, "구독을 해지하셨습니다.", Toast.LENGTH_SHORT).show()
-                followBtn.setBackgroundColor(Color.WHITE)
+                val alertDialog = AlertDialog.Builder(mContext, R.style.Theme_AppCompat_Light_Dialog)
+                alertDialog.setMessage("구독을 해지하시겠습니까?")
+
+                alertDialog.setPositiveButton("확인"){ _, _ ->
+                    databaseReference.child("Users").child(userID).child("Follow").child(userInfosArr[position].userType).child(userInfosArr[position].userName).setValue(null)
+                    followBtn.text = ("구독")
+                    Toast.makeText(it.context, "구독을 해지하셨습니다.", Toast.LENGTH_SHORT).show()
+                    followBtn.setBackgroundColor(Color.WHITE)
+                }
+                alertDialog.setNegativeButton("취소"){ _ , _ ->
+
+                }
+                alertDialog.show()
+
 
             }
 

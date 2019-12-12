@@ -504,9 +504,6 @@ class MainActivity : AppCompatActivity() {
         {
             fab.hide()
             groupFab.show()
-            groupFab1.show()
-            groupFab2.show()
-            groupFab3.show()
             groupFab.isClickable = true
 
         }

@@ -1,5 +1,6 @@
 package com.example.mainlayout
 
+import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -71,10 +72,20 @@ class GroupPageActivity : AppCompatActivity() {
                 subscribeButton.setBackgroundColor(Color.GRAY)
             }
             else{
-                databaseReference.child("Users").child(userID).child("Follow").child(userInfo.userType).child(userInfo.userName).setValue(null)
-                subscribeButton.text = ("구독")
-                Toast.makeText(it.context, "구독을 해지하셨습니다.", Toast.LENGTH_SHORT).show()
-                subscribeButton.setBackgroundColor(Color.WHITE)
+                val alertDialog = AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog)
+                alertDialog.setMessage("구독을 해지하시겠습니까?")
+
+                alertDialog.setPositiveButton("확인"){ _, _ ->
+                    databaseReference.child("Users").child(userID).child("Follow").child(userInfo.userType).child(userInfo.userName).setValue(null)
+                    subscribeButton.text = ("구독")
+                    Toast.makeText(it.context, "구독을 해지하셨습니다.", Toast.LENGTH_SHORT).show()
+                    subscribeButton.setBackgroundColor(Color.WHITE)
+                }
+                alertDialog.setNegativeButton("취소"){ _ , _ ->
+
+                }
+                alertDialog.show()
+
 
             }
 
